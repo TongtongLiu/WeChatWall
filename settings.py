@@ -2,4 +2,4 @@
 
 # global settings here
 
-LOCAL_PORT = 8008
+LOCAL_PORT = 8000
