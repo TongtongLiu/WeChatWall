@@ -6,7 +6,7 @@ import sys
 path = os.path.dirname(os.path.abspath(__file__)).replace('\\','/') + '/qrhandler'
 if path not in sys.path:
     sys.path.insert(1, path)
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "qrhandler.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wechat_wall.settings")
 
 from django.core.handlers.wsgi import WSGIHandler
 django_WSGI = WSGIHandler()
