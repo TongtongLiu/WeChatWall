@@ -5,4 +5,4 @@ from django.shortcuts import render_to_response
 
 
 def phone_page(requrst):
-    return render_to_response('phone_base.html')
+    return render_to_response('phone_page.html')

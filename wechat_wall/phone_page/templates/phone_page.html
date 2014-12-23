@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <link href="{% static 'css/phone_page.css'%}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.11.1.min.js' %}"></script>
+    {% block css %}
+    {% endblock %}
+    <title>微信墙</title>
+</head>
+<body>
+    <div class="wrap">
+        <div class="header">
+           <h3 class="title">我是野生活动名</h3>
+        </div>
+        <div class="content">
+            <div class="a_message">
+                <div class="photo"><img src="#"/></div>
+                <div class="name">123</div>
+                <div class="message">hahahahh</div>
+            </div>
+        </div>
+        <div class="footer">
+            <input type="text"  placeholder="请输入姓">
+        </div>
+    </div>
+</body>
+</html>
