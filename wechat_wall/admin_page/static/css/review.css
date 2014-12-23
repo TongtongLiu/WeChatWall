@@ -1,0 +1,40 @@
+#reviewMessages {
+	width: 70%;
+	margin: 0px 2%;
+	float: left;
+}
+
+#tbody-messages .td-avatar {
+	min-width: 80px;
+}
+
+#tbody-messages .img-avatar {
+	width: 50px;
+	height: 50px;
+}
+
+#tbody-messages .td-name {
+	vertical-align: middle;
+}
+
+#tbody-messages .td-content {
+	vertical-align: middle;
+}
+
+#tbody-messages .td-operator {
+	vertical-align: middle;
+}
+
+#reviewedMessages {
+	width: 25%;
+	float: right;
+}
+
+#tbody-reviewedMessages .td-name {
+	vertical-align: middle;
+	width: 25%;
+}
+
+#tbody-reviewedMessages .td-content {
+	vertical-align: middle;
+}

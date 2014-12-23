@@ -9,6 +9,10 @@ class User(models.Model):
 class Message(models.Model):
     message_id = models.IntegerField()
     user = models.ForeignKey(User)
-    content = models.CharField(maxlen=1023)
+    content = models.CharField(max_length=1023)
     time = models.DateTimeField()
     status = models.IntegerField()
+    # status:
+    #  0: wait to be reviewed
+    #  1: pass the review
+    # -1: does not pass the review
