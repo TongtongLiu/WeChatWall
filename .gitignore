@@ -2,4 +2,4 @@
 *.pyc
 *.pyo
 *_backup
-wechat_wall/wechat_wall/settings.py
+./wechat_wall/wechat_wall/settings.py
