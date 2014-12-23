@@ -19,7 +19,7 @@ def loading(request):
         return redirect(s_reverse_uc_account(openid))
 
 
-def wall(request):
+def wall(request, openid):
     return render_to_response('wall.html')
 
 
