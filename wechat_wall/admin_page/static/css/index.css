@@ -1,0 +1,179 @@
+* {
+    position: absolute;
+    font-size: 90px;
+    font-family: "SimHei", "Microsoft YaHei";
+    color: white;
+    text-shadow: #000000 2px 3px 2px;
+}
+
+body {
+    margin: 0;
+    background: url(../img/wallbg.jpg);
+    background-attachment: fixed;
+    -webkit-animation: bg-move 600s infinite;
+    overflow: hidden;
+}
+
+#test-zone {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+}
+
+#test-msg-zone {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+    font-size: 65px;
+}
+
+#test-name-zone {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+    font-size: 45px;
+}
+
+@font-face {
+    font-family: ledFont;
+    src: url(../font/led.TTF);
+}
+
+#counter {
+    left: 25px;
+    font-size: 100px;
+    font-family: ledFont;
+    color: red;
+    text-shadow: red 2px 2px 20px;
+}
+
+#logo {
+    left: 25px;
+    top: 25px;
+}
+
+#img-logo {
+    width: 200px;
+}
+
+#img-cloud {
+    -webkit-animation: cloud-shine 60s infinite;
+}
+
+#notice {
+    left: 240px;
+    top: 25px;
+}
+
+#bg-glass {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+}
+
+#notice-msg {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.msg-glass {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.msg-shine {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: none;
+}
+
+.msg-sender {
+    font-size: 45px;
+    color: lightyellow;
+}
+
+.msg-sender>* {
+    font-size: 45px;
+}
+
+.msg-avatar {
+
+}
+
+.msg-avatar>img {
+    width: 132px;
+    height: 132px;
+}
+
+.msg-content {
+    white-space: nowrap;
+    font-size: 65px;
+}
+
+.msg-content>* {
+    font-size: 65px;
+}
+
+.msg-content>span>* {
+    font-size: 65px;
+}
+
+#bs-glass {
+    width: 100%;
+    height: 100%;
+    background: url(../img/bsbg.jpg);
+    opacity: 1;
+    border-radius: 50px;
+}
+
+#big-screen>span {
+    color: black;
+    font-size: 75px;
+    text-shadow: none;
+    word-break: break-all;
+}
+
+#big-screen>span>* {
+    font-size: 75px;
+}
+
+#big-screen>span>* {
+    position: initial;
+}
+
+.bs-avatar.bs-info {
+    width: 165px;
+    height: 165px;
+}
+
+.bs-avatar>img {
+    width: 135px;
+    height: 135px;
+    padding: 15px;
+    border-radius: 50%;
+}
+
+.bs-info {
+    float: left;
+}
+
+.bs-sender.bs-info {
+    font-size: 60px;
+    padding-left: 10px;
+    padding-right: 20px;
+    color: red;
+}
+
+.bs-sender.bs-info>* {
+    font-size: 60px;
+}

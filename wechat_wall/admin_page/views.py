@@ -112,3 +112,6 @@ def pass_message(id):
 
 def reject_message(id):
     Message.objects.filter(message_id=id).update(status=-1)
+
+def index(request):
+    return render_to_response('index.html', context_instance=RequestContext(request))

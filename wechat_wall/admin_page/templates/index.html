@@ -1,0 +1,154 @@
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/index-me.css" %}"/>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "lib/jq/jquery-1.10.2.min.js" %}"></script>
+    <script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
+    <script src="{% static "js/index.js" %}"></script>
+{% endblock %}
+
+
+{% block content %}
+<body style="background-image:url({% static "img/bg.jpg" %});">
+    <div id="wholePage">
+        <div id="header" class="clearfix">
+            <div id="logoScroll" class="left" style="background-image:url({% static "img/logo.png" %});"></div>
+            <div id="wordScroll" class="left" style="background-image:url({% static "img/sc_bg.png" %});">
+                <div id="scrollBox" class="left">
+                    <ul id="wordList" class="left">
+                            <li class="themeBox" style="display:list-item;">微信大屏幕官方演示页面<br>     点击下方对应功能按钮可查看功能演示</li>
+                            <li class="themeBox" style="display:none;">微信号：hudongdapingmu<br>关注后发送内容即可上墙></li>
+                            <li class="themeBox" style="display:none;">编辑短信内容#微信墙#+您想说的话 <br>到 1069-  0133- 0101-1350 即可上墙</li>
+                    </ul>
+                </div>
+                <div id="numberBox" class="left" style="background-image:url({% static "img/left_line.png" %});">
+                    <ul id="numberList" class="left">
+                        <li class="themeBox" style="font-size:18px;"><em>84</em><br>条信息</li> 
+                </div>
+            </div>
+            <div id="qrScroll" class="right">
+                <div id="qrImg"><img src="{% static "img/qrCode.png" %}" style="height:100%;width:100%;"></div>
+            </div>
+        </div><!--header end-->
+        <div id="container" class="clearfix">
+            <ul id="userBox">
+                <li class="clearfix userList" style="display:block;">
+                    <div class="userPhoto left">
+                        <img src="{% static "img/user1photo.jpg" %}" class="photo right">
+                    </div>
+                    <div class="contentBox left">
+                        <p class="c-word">
+                            <a class="userName">赵小馨</a>
+                            <span class="displayContent">我来墙里玩玩一会就走~</span>
+                        </p>
+                        
+                    </div>
+                </li>
+                <li class="clearfix userList" style="display:block;">
+                    <div class="userPhoto left">
+                        <img src="{% static "img/user1photo.jpg" %}" class="photo right">
+                    </div>
+                    <div class="contentBox left">
+                        <p class="c-word">
+                            <a class="userName">赵小馨</a>
+                            <span class="displayContent">我来墙里玩玩一会就走~</span>
+                        </p>
+                        
+                    </div>
+                </li>
+                <li class="clearfix userList" style="display:block;">
+                    <div class="userPhoto left">
+                        <img src="{% static "img/user1photo.jpg" %}" class="photo right">
+                    </div>
+                    <div class="contentBox left">
+                        <p class="c-word">
+                            <a class="userName">赵小馨</a>
+                            <span class="displayContent">我来墙里玩玩一会就走~</span>
+                        </p>
+                        
+                    </div>
+                </li>
+            </ul>
+            
+        </div>
+    </div> 
+</body>
+
+<!--
+    <div id="counter">
+        FFFF
+    </div>
+
+    <div id="logo">
+        <img src="{% static "img/cloud.png" %}" id="img-cloud">
+        <img src="{% static "img/welcome.png" %}" id="img-welcome">
+        <img src="{% static "img/logo.png" %}" id="img-logo">
+    </div>
+
+    <div id="notice">
+        <div id="bg-glass" style="display: none;">
+
+        </div>
+        <div id="notice-msg" style="display: none;">
+
+        </div>
+    </div>
+
+    <div id="wallmsgs">
+        <div class="msg" msgid="1" msg-place="1">
+            <div class="msg-glass">
+
+            </div>
+            <div class="msg-sender">
+                哈哈
+            </div>
+            <div class="msg-avatar">
+                <img src="img/user.gif">
+            </div>
+            <div class="msg-content">
+                哈哈哈
+            </div>
+        </div>
+
+        <div class="msg" msgid="2" msg-place="2">
+            <div class="msg-glass">
+
+            </div>
+            <div class="msg-sender">
+                哈哈
+            </div>
+            <div class="msg-avatar">
+                <img src="img/user.gif">
+            </div>
+            <div class="msg-content">
+                哈哈哈
+            </div>
+        </div>
+
+        <div class="msg" msgid="3" msg-place="3">
+            <div class="msg-glass">
+
+            </div>
+            <div class="msg-sender">
+                哈哈
+            </div>
+            <div class="msg-avatar">
+                <img src="img/user.gif">
+            </div>
+            <div class="msg-content">
+                哈哈哈
+            </div>
+        </div>
+    </div>
+
+    <div id="big-screen" style="display: none">
+        <div id="bs-glass"></div>
+        <span>
+        </span>
+    </div>
+
+    <div id="protector"></div>-->
+{% endblock %}
