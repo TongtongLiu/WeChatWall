@@ -4,7 +4,7 @@
 <head lang="zh-CN">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <link href="{% static 'css/phone_page.css'%}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="{% static 'lib/jq/jquery-1.11.1.min.js' %}"></script>
     {% block css %}
     {% endblock %}
@@ -23,7 +23,10 @@
             </div>
         </div>
         <div class="footer">
-            <input type="text"  placeholder="请输入姓">
+            <form action="" method="">
+                <input class="text_content" type="text"  placeholder="XXX"/>
+                <input type="submit" value="发送"/>
+            </form>
         </div>
     </div>
 </body>
