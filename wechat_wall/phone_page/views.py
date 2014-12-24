@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import json
+import time
 
 from admin_page import get_whether_review
 from phone_page.banned_names import is_name_valid
@@ -48,9 +49,8 @@ def select_messages_by_id(message_id):
 
 
 def select_new_messages(max_len):
-    messages = Message.objects.filter(status=0)
-    messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
-    return messages[0:max_len]
+    messages = Message.objects.filter(status=0).order_by('-time')
+    return messages[:max_len]
 
 
 def select_new_messages_after_id(message_id, max_len):
@@ -61,9 +61,8 @@ def select_new_messages_after_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__gt=message.time) |
                                              Q(time=message.time,
                                                message_id__gt=message_id),
-                                             status=0)
-    return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
-    return return_messages[0:max_len]
+                                             status=0).order_by('-time')
+    return return_messages[:max_len]
 
 
 def select_old_messages_before_id(message_id, max_len):
@@ -74,9 +73,8 @@ def select_old_messages_before_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__lt=message.time) |
                                              Q(time=message.time,
                                                message_id__lt=message_id),
-                                             status=0)
-    return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
-    return return_messages[0:max_len]
+                                             status=0).order_by('-time')
+    return return_messages[:max_len]
 
 ######################## Date Operation End ###############################
 
@@ -119,9 +117,9 @@ def login_check(request):
 
 def login_register(request):
     if (not request.POST or
-            not 'openid' in request.POST or
-            not 'name' in request.POST or
-            not 'photo' in request.POST):
+            not ('openid' in request.POST) or
+            not ('name' in request.POST) or
+            not ('photo' in request.POST)):
         raise Http404
     openid = request.POST['openid']
     name = request.POST['name']
@@ -153,8 +151,8 @@ def wall(request, openid):
 @csrf_exempt
 def w_post_message(request):
     if (not request.POST or
-            not 'openid' in request.POST or
-            not 'content' in request.POST):
+            not ('openid' in request.POST) or
+            not ('content' in request.POST)):
         raise Http404
     users = select_users_by_openid(request.POST['openid'])
     if not users:
@@ -175,13 +173,19 @@ def w_post_message(request):
 
 @csrf_exempt
 def w_get_new_messages(request):
-    if not request.POST:
+    if not request.POST or not 'message_id' in request.POST:
         raise Http404
-    if request.POST.get('message_id', ''):
-        messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
-    else:
-        messages = select_new_messages(MESSAGES_NUM)
-    return HttpResponse(json.dumps({'messages': messages}), content_type='application/json')
+    messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
+    return_json = {'messages': []}
+    for message in messages:
+        return_json['messages'].append({
+            'message_id': message.message_id,
+            'user_name': message.user.name,
+            'user_photo': message.user.photo,
+            'content': message.content,
+            'time': int(time.mktime(message.time.timetuple()))
+        })
+    return HttpResponse(json.dumps(return_json), content_type='application/json')
 
 
 @csrf_exempt
@@ -189,4 +193,13 @@ def w_get_old_messages(request):
     if not request.POST or not 'message_id' in request.POST:
         raise Http404
     messages = select_old_messages_before_id(request.POST['message_id'], MESSAGES_NUM)
-    return HttpResponse(json.dumps({'messages': messages}), content_type='application/json')
+    return_json = {'messages': []}
+    for message in messages:
+        return_json['messages'].append({
+            'message_id': message.message_id,
+            'user_name': message.user.name,
+            'user_photo': message.user.photo,
+            'content': message.content,
+            'time': int(time.mktime(message.time.timetuple()))
+        })
+    return HttpResponse(json.dumps(return_json), content_type='application/json')
