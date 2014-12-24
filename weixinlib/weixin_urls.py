@@ -1,9 +1,7 @@
 __author__ = 'Epsirom'
 
 
-
 from weixinlib.url_generators import *
-
 
 
 WEIXIN_URLS = {

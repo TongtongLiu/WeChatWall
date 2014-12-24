@@ -9,7 +9,7 @@ class User(models.Model):
 
 
 class Message(models.Model):
-    message_id = models.IntegerField()
+    message_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     content = models.CharField(max_length=1023)
     time = models.DateTimeField()
