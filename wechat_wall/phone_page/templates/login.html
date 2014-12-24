@@ -18,6 +18,7 @@
         </div>
         <div class="login">
             <form id="login_form" action="{% url 'phone_page.views.login_register' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="input_line">
                     <label class="label">昵称:</label>
                     <input id="input_name" name="name" type="text">

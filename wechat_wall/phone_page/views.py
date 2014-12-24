@@ -116,6 +116,7 @@ def login_check(request):
         return HttpResponse('Invalid')
 
 
+@csrf_exempt
 def login_register(request):
     # if (not request.POST or
     #         not ('openid' in request.POST) or
