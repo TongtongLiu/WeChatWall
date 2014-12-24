@@ -6,6 +6,7 @@ class User(models.Model):
     openid = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     photo = models.CharField(max_length=255)
+    message_num = models.IntegerField(default=0)
 
 
 class Message(models.Model):
