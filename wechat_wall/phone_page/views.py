@@ -140,7 +140,7 @@ def login_register(request):
     photo = 'http://cl.ly/image/1g322X0b0N0g/default.png'
     try:
         insert_user(openid, name, photo)
-        return redirect(s_reverse_wall(openid))
+        return HttpResponse(s_reverse_wall(openid))
     except Exception as e:
         print 'Error occured!!!!!!' + str(e)
         return HttpResponse('Error')
