@@ -1,4 +1,6 @@
 WHETHER_REVIEW = 1
+# 1: need to be reviewed
+# 0: don't need
 
 
 def get_whether_review():
