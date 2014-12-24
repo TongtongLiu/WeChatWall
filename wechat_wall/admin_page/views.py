@@ -62,11 +62,13 @@ def review(request):
     to_review_message = get_to_review_message(3000)
     new_message_reviewed = get_new_message_reviewed(6000)
     whether_review = get_whether_review()
+    print whether_review
     return render_to_response('review.html', {
         'to_review_message': to_review_message,
         'new_message_reviewed': new_message_reviewed,
         'whether_review': whether_review,
     })
+
 
 def get_to_review_message(delta_time):
     now = datetime.now()
@@ -97,12 +99,13 @@ def wrap_message_dict(message):
 
 @csrf_exempt
 def change_review_state(request):
-    if not request.POST:
+    if not request.is_ajax:
         raise Http404
 
+    print "changed !!!!!!!"
     current_state = get_whether_review()
     set_whether_review(1 - current_state)
-    return "success"
+    return HttpResponse(json.dumps({}), content_type='application/json')
 
 
 @csrf_exempt
