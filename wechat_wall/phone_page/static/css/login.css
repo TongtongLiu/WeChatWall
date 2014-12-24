@@ -1,0 +1,132 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a, a:focus, input, input:focus, button, button:focus {
+    outline:none;
+}
+
+body {
+    font-family: "微软雅黑";
+    background-color: rgb(226, 226, 226);
+    color: rgb(250, 250, 250);
+}
+
+.warp {
+
+}
+
+.login {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    border: 1px solid #393939;
+    box-shadow: 0 1px 0 #616a74 inset,10px 10px 20px #212528;
+    background: -webkit-linear-gradient(top,#474d54,#2f363d);
+    background: -moz-linear-gradient(top,#474d54,#2f363d);
+    background: -ms-linear-gradient(top,#474d54,#2f363d);
+    background: -o-linear-gradient(top,#474d54,#2f363d);
+    background: linear-gradient(top,#474d54,#2f363d);
+}
+
+.input_line {
+    height: 1.5em;
+    border: 1px solid #202124;
+    border-radius: 0.3em;
+    box-shadow: 0 1px 0 #616a74 inset,0 1px 5px #212528;
+    padding: 0.3em;
+    margin: 0.5em;
+}
+
+.label {
+    width: 20%;
+}
+
+#input_name {
+    width: 70%;
+    height:90%;
+    padding-left: 0.5em;
+    border: 1px solid rgb(186, 178, 178);
+    border-radius: 0.3em;
+    box-shadow: 0 1px 3px #737B84 inset;
+}
+#input_info {
+    width: 60%;
+    height:90%;
+    padding-left: 0.5em;
+    border: 1px solid rgb(186, 178, 178);
+    border-radius: 0.3em;
+    box-shadow: 0 1px 3px #737B84 inset;
+    background: rgb(212, 212, 212);
+    color: rgb(36, 36, 36);
+}
+
+#input_photo {
+    width: 72%;
+    display:none;
+}
+#default_photo {
+    display: none;
+}
+.submit {
+    width: 90%;
+    height: 2em;
+    margin: 0 5% 5% 5%;
+    border: 1px solid rgb(52, 53, 52);
+    border-radius: 0.3em;
+    color: rgb(235, 244, 235);
+    font-weight: bold;
+    background: -webkit-linear-gradient(top, #49BE3B, #179622);
+    background: -moz-linear-gradient(top,#474d54,#2f363d);
+    background: -ms-linear-gradient(top,#474d54,#2f363d);
+    background: -o-linear-gradient(top,#474d54,#2f363d);
+    background: linear-gradient(top,#474d54,#2f363d);
+    box-shadow: 0 0.5px 1px rgb(126, 123, 123);
+    cursor: pointer;
+}
+
+#choose {
+    cursor: pointer;
+}
+.choose:active {
+    color: #CAC6C6;
+}
+
+.photo_choose {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50%;
+    border: 1px solid #393939;
+    box-shadow: 0 1px 0 #616a74 inset,10px 10px 20px #212528;
+    background: -webkit-linear-gradient(top,#474d54,#2f363d);
+    background: -moz-linear-gradient(top,#474d54,#2f363d);
+    background: -ms-linear-gradient(top,#474d54,#2f363d);
+    background: -o-linear-gradient(top,#474d54,#2f363d);
+    background: linear-gradient(top,#474d54,#2f363d);
+
+    transform: translate(1000px);
+    -ms-transform: translate(1000px);
+    -webkit-transform: translate(1000px);
+    -o-transform: translate(1000px);
+    -moz-transform: translate(1000px);
+    transition: transform .2s linear 0s;
+    -moz-transition:transform .2s linear 0s;
+    -webkit-transition:transform .2s linear 0s;
+    -o-transition:transform .2s linear 0s;
+}
+
+.exposed .photo_choose {
+    transform: translate(0px);
+    -ms-transform: translate(0px);
+    -webkit-transform: translate(0px);
+    -o-transform: translate(0px);
+    -moz-transform: translate(0px);
+    transition: transform .3s linear 0s;
+    -moz-transition:transform .3s linear 0s;
+    -webkit-transition:transform .3s linear 0s;
+    -o-transition:transform .3s linear 0s;
+}
