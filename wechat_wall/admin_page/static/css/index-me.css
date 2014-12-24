@@ -1,6 +1,8 @@
 body {
-font-family: "Microsoft yahei", "SimHei";
-color: #fff;
+	font-family: "Microsoft yahei", "SimHei";
+	color: #fff;
+	background: center 0 no-repeat;
+	background-position: 50% 50%; 
 }
 
 ul{
@@ -119,11 +121,13 @@ ul{
 }
 
 #userBox{
+	width: 800px;
 	position:relative;
 	transform: translate(0px,0px);
 	display: block;
 	padding-left: 0;
-	margin-top: 0;
+	margin: auto;
+	margin-top: 5px;
 }
 
 .themeBox{
@@ -141,6 +145,7 @@ ul{
 	height: 166px;
 	margin-bottom: 15px;
 	background: rgba(255,255,255,0.5);
+	border-radius: 10px;
 }
 
 .userPhoto{
@@ -152,11 +157,11 @@ ul{
 	margin-top:23px;
 	width: 120px;
 	height: 120px;
-	border-radius: 50px;
+	border-radius: 60px;
 }
 
 .contentBox{
-	width: 700px;
+	width: 600px;
 	height: 100%;
 	color:#bf191d;
 	margin-left: 25px;
@@ -171,7 +176,7 @@ ul{
 .userName{
 	font-size: 30px;
 	display: inline-block;
-	width: 690px;
+	width: 500px;
 	height: 38px;
 	line-height: 38px;
 	overflow: hidden;
@@ -183,7 +188,7 @@ ul{
 	word-break: break-all;
 	word-wrap: break-word;
 	overflow: hidden;
-	font-size: 55px;
+	font-size: 45px;
 	height: 60px;
 	line-height: 60px;
 }
