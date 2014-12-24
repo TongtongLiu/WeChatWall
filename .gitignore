@@ -1,5 +1,5 @@
-.idea
+^wechat_wall/wechat_wall/settings.py$
+^.idea$
 *.pyc
 *.pyo
 *_backup
-wechat_wall/wechat_wall/settings.py

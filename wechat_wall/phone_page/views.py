@@ -49,7 +49,7 @@ def select_messages_by_id(message_id):
 
 
 def select_new_messages(max_len):
-    messages = Message.objects.filter(status=0).order_by('-time')
+    messages = Message.objects.filter(status=1).order_by('-time')
     return messages[:max_len]
 
 
@@ -61,7 +61,7 @@ def select_new_messages_after_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__gt=message.time) |
                                              Q(time=message.time,
                                                message_id__gt=message_id),
-                                             status=0).order_by('-time')
+                                             status=1).order_by('-time')
     return return_messages[:max_len]
 
 
@@ -73,7 +73,7 @@ def select_old_messages_before_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__lt=message.time) |
                                              Q(time=message.time,
                                                message_id__lt=message_id),
-                                             status=0).order_by('-time')
+                                             status=1).order_by('-time')
     return return_messages[:max_len]
 
 ######################## Date Operation End ###############################
@@ -107,7 +107,7 @@ def check_name(name):
 
 
 def login_check(request):
-    if not request.POST or not 'name' in request.POST:
+    if not request.POST or not ('name' in request.POST):
         raise Http404
     if check_name(request.POST['name']):
         return HttpResponse('Valid')
@@ -162,7 +162,10 @@ def w_post_message(request):
     if not is_content_valid(content):
         return HttpResponse('BannedContent')
     time = datetime.datetime.now()
-    status = get_whether_review()
+    if get_whether_review() == 1:
+        status = 0
+    else:
+        status = 1
     try:
         insert_message(user, content, time, status)
         return HttpResponse('Success')
@@ -173,7 +176,7 @@ def w_post_message(request):
 
 @csrf_exempt
 def w_get_new_messages(request):
-    if not request.POST or not 'message_id' in request.POST:
+    if not request.POST or not ('message_id' in request.POST):
         raise Http404
     messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
@@ -190,7 +193,7 @@ def w_get_new_messages(request):
 
 @csrf_exempt
 def w_get_old_messages(request):
-    if not request.POST or not 'message_id' in request.POST:
+    if not request.POST or not ('message_id' in request.POST):
         raise Http404
     messages = select_old_messages_before_id(request.POST['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
