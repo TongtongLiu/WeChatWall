@@ -56,14 +56,12 @@ def logout(request):
 def review(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect(s_reverse_admin_home())
-
     to_review_message = get_to_review_message(30)
     new_message_reviewed = get_new_message_reviewed(60)
     return render_to_response('review.html', {
         'to_review_message': to_review_message,
         'new_message_reviewed': new_message_reviewed,
     })
-
 
 def get_to_review_message(deltatime):
     now = datetime.now()
