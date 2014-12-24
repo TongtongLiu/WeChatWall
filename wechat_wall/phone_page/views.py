@@ -77,6 +77,8 @@ def select_old_messages_before_id(message_id, max_len):
     return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
     return return_messages[0:max_len]
 
+######################## Date Operation End ###############################
+
 
 def loading(request):
     code = request.GET.get('code')
@@ -88,8 +90,6 @@ def loading(request):
         return redirect(s_reverse_wall(openid))
     else:
         return redirect(s_reverse_login(openid))
-
-######################## Date Operation End ###############################
 
 
 def login(request, openid):
