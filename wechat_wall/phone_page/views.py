@@ -85,7 +85,7 @@ def loading(request, openid):
     # res = http_get(url)
     # rtn_json = json.loads(res)
     # openid = rtn_json['openid']
-    if select_users_by_openid(openid):
+    if not select_users_by_openid(openid):
         name = u'匿名用户'
         photo = 'http://cl.ly/image/1g322X0b0N0g/default.png'
         insert_user(openid, name, photo)
