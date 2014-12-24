@@ -92,11 +92,10 @@ $(document).ready(function() {
     function createsMessages(message) {
 
             var divMessage = $('<div />',{
-                text:"this is a div",
                 "class":"message"
             });
             var divMContent = $('<div />',{
-                text:message[i].content,
+                text:message.content,
                 "class":"message_content"
             });
             var divMHeader = $('<div />',{
@@ -106,19 +105,19 @@ $(document).ready(function() {
                 "class":"message_header_right"
             });
             var divName = $('<div />',{
-                text:message[i].user_name,
+                text:message.user_name,
                 "class":"name"
             });
             var divTime = $('<div />',{
-                text:message[i].time,
+                text:message.time,
                 "class":"time"
             });
             var divPhoto = $('<div />',{
-                src:message[i].user_photo,
+                src:message.user_photo,
                 "class":"photo"
             });
             var divMessageId = $('<div />',{
-                text:message[i].message_id,
+                text:message.message_id,
                 "class":"message_id"
             });
             divName.appendTo(divMHeaderRight);
