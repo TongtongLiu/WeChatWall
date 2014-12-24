@@ -15,8 +15,6 @@
 
 {% block js %}
 	<script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
-    <script src="{% static "js/review.js" %}"></script>
-	<script src="{% static "lib/bs/js/bootstrap-switch.min.js" %}"></script>
     <script>
         var toReviewMessages = [
             {% for message in to_review_message %}
@@ -42,18 +40,11 @@
         ];
         var whether_review = {{ whether_review }};
 
-		$('#reviewState').click(function(e) {
-			$.ajax({
-				url: "{% url "admin_page.views.change_review_state" %}",
-				type: 'post',
-				success: changeState
-				error: function() {
-					alert('error');
-				}
+		var changeStateUrl =  "{% url "admin_page.views.change_review_state" %}"
 
-			})
-		});
     </script>
+	<script src="{% static "lib/bs/js/bootstrap-switch.min.js" %}"></script>
+    <script src="{% static "js/review.js" %}"></script>
 {% endblock %}
 
 {% block username %}
@@ -70,11 +61,12 @@
 	        	<h3 class="pull-left">待审核状态</h3>
                 <button id="allReject" class="btn btn-danger pull-right" style="margin:12px 5px">全部拒绝</button>
                 <button id="allPass" class="btn btn-success pull-right" style="margin:12px 5px">全部通过</button>
-				<div class="reviewState">
-					<p>开启审核</p>
-					<div class="switch">
-						<input type="checkbox" checked />
-					</div>
+				<div id="switch" class="switch has pull-right" style="margin:12px 5px">
+					{% if whether_review == 1 %}
+						<input type="checkbox" name="checkbox" checked />
+					{% else %}
+						<input type="checkbox" name="checkbox" />
+					{% endif %}
 				</div>
 	        </div>
 	        <div class="reviewingMessageTable">

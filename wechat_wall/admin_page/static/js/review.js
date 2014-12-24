@@ -5,15 +5,28 @@ function getTd(para) {
 /*
  * handle something about whether_review
  */
+$("[name='checkbox']").bootstrapSwitch();
+$(".bootstrap-switch").tooltip({'title': '打开/关闭审核功能，关闭后所发消息无需审核即可上墙'});
 
-function changePrimaryBtn() {
-	if whether_review == 1
-		$('#reviewState').text('关闭审核');
+$("[name='checkbox']").on('switchChange.bootstrapSwitch', function(e, data) {
+			$.ajax({
+				url: changeStateUrl,
+				type: 'POST',
+				success: changeState,
+				error: function() {
+					alert('error');
+				}
+
+			})
+		});
+
+function changeState() {
+	whether_review = 1 - whether_review;
+	if (whether_review == 1)
+		showResult('审核开启成功');
 	else
-		$('#reviewState').text('开启审核');
+		showResult('审核关闭成功');
 }
-
-changePrimaryBtn();
 
 /*
  * handle those waiting to be reviewed
