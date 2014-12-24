@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'lib/fa/css/font-awesome.min.css'%}" rel="stylesheet">
     <link href="{% static 'css/login.css'%}" rel="stylesheet" type="text/css" />
 <title>登录</title>
 </head>
 <body>
     <div class="wrap">
+        <div class="header">
+            登录微信墙
+        </div>
         <div class="login">
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="input_line">
@@ -19,16 +22,35 @@
                 </div>
                 <div class="input_line">
                     <label class="label">头像:</label>
-                    <input id="input_photo" name="photo" type="file">
                     <input id="default_photo" name="default_photo" type="text">
                     <input id="input_info" readonly="readonly" type="text" value="未选择">
-                    <i class="fa fa-camera-retro fa-lg" id="choose"></i>
+                    <div class="covering">
+                        <i class="fa fa-picture-o fa-lg" id="choose"></i>
+                        <input id="input_photo" name="photo" type="file">
+                    </div>
                 </div>
                 <input class="submit" type="submit" value="确定">
             </form>
         </div>
-        <div class="photo_choose"></div>
+        <div class="photo_choose">
+            <div class="example_info">
+                <p class="example_header">选择预设头像</p>
+            </div>
+            <div class="examples">
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+            </div>
+            <div class="examples">
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example"><img src="#" class="example_img"/></div></div>
+            </div>
+        </div>
     </div>
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
 </body>
 </html>
