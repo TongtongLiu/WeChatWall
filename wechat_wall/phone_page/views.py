@@ -107,7 +107,7 @@ def check_name(name):
 
 
 def login_check(request):
-    if not request.POST or not 'name' in request.POST:
+    if not request.POST or not ('name' in request.POST):
         raise Http404
     if check_name(request.POST['name']):
         return HttpResponse('Valid')
@@ -176,7 +176,7 @@ def w_post_message(request):
 
 @csrf_exempt
 def w_get_new_messages(request):
-    if not request.POST or not 'message_id' in request.POST:
+    if not request.POST or not ('message_id' in request.POST):
         raise Http404
     messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
@@ -193,7 +193,7 @@ def w_get_new_messages(request):
 
 @csrf_exempt
 def w_get_old_messages(request):
-    if not request.POST or not 'message_id' in request.POST:
+    if not request.POST or not ('message_id' in request.POST):
         raise Http404
     messages = select_old_messages_before_id(request.POST['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
