@@ -18,6 +18,7 @@ $(document).ready(function() {
             success: function (data){
                 switch (data) {
                     case "Success":
+                        $('#content').val("");
                         $('#refresh').trigger("click");
                         break;
 
@@ -41,12 +42,17 @@ $(document).ready(function() {
     $('#refresh').click(function () {
         var refresh = $('#refresh i');
         refresh.addClass('fa-spin');
+        var message_id;
+        if ($('#content-container .message_id').length == 0)
+            message_id = 0;
+        else
+            message_id = parseInt($('#content-container .message_id')[0].innerHTML);
 
         $.ajax({
-            url: get_new,
+            url: get_new_messages,
             type: "POST",
             data: {
-                message_id: 1
+                message_id: message_id
             },
             success: function (data) {
                 console.info(data);
@@ -67,11 +73,19 @@ $(document).ready(function() {
 
     //获取历史消息按钮
     $('#get_old').click(function () {
+        var message_id;
+        if ($('#content-container .message_id').length == 0)
+            message_id = 0;
+        else {
+            var len = $('#content-container .message_id').length;
+            message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+        }
+
         $.ajax({
-            url: get_old,
+            url: get_old_messages,
             type: "POST",
             data: {
-                message_id: 1
+                message_id: message_id
             },
             success: function (data){
                 console.info(data);

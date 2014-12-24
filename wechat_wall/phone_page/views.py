@@ -73,9 +73,8 @@ def select_old_messages_before_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__lt=message.time) |
                                              Q(time=message.time,
                                                message_id__lt=message_id),
-                                             status=0)
-    return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
-    return return_messages[0:max_len]
+                                             status=0).order_by('-time')
+    return return_messages[:max_len]
 
 ######################## Date Operation End ###############################
 
@@ -174,12 +173,9 @@ def w_post_message(request):
 
 @csrf_exempt
 def w_get_new_messages(request):
-    if not request.POST:
+    if not request.POST or not 'message_id' in request.POST:
         raise Http404
-    if request.POST.get('message_id', ''):
-        messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
-    else:
-        messages = select_new_messages(MESSAGES_NUM)
+    messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
     for message in messages:
         return_json['messages'].append({
