@@ -4,6 +4,7 @@ import datetime
 from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render_to_response
+from django.template import RequestContext
 import json
 
 from admin_page import get_whether_review
@@ -13,6 +14,13 @@ from weixinlib import http_get
 from weixinlib.weixin_urls import WEIXIN_URLS
 
 MESSAGES_NUM = 20
+
+######################## Date Operation Begin ###############################
+
+
+def insert_user(openid, name, photo):
+    new_user = User.objects.create(openid=openid, name=name, photo=photo)
+    new_user.save()
 
 
 def select_users_by_openid(openid):
@@ -44,7 +52,10 @@ def select_new_messages_after_id(message_id, max_len):
     if not messages:
         return select_new_messages(max_len)
     message = messages[0]
-    return_messages = Message.objects.filter(Q(time__gt=message.time) | Q(time=message.time, message_id=message_id), status=1)
+    return_messages = Message.objects.filter(Q(time__gt=message.time) |
+                                             Q(time=message.time,
+                                               message_id__gt=message_id),
+                                             status=1)
     return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
     return return_messages[0:max_len]
 
@@ -54,7 +65,10 @@ def select_old_messages_before_id(message_id, max_len):
     if not messages:
         return select_new_messages(max_len)
     message = messages[0]
-    return_messages = Message.objects.filter(Q(time__gt=message.time) | Q(time=message.time, message_id=message_id), status=1)
+    return_messages = Message.objects.filter(Q(time__lt=message.time) |
+                                             Q(time=message.time,
+                                               message_id__lt=message_id),
+                                             status=1)
     return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
     return return_messages[0:max_len]
 
@@ -70,12 +84,15 @@ def loading(request):
     else:
         return redirect(s_reverse_login(openid))
 
+######################## Date Operation End ###############################
+
 
 def login(request, openid):
-    if (not request.POST or
-            not 'name' in request.POST or
-            not 'photo' in request.POST):
-        raise Http404
+    if select_users_by_openid(openid):
+        return redirect(s_reverse_wall(openid))
+    else:
+        return render_to_response('login.html',
+                                  context_instance=RequestContext(request))
 
 
 def login_check(request):
@@ -87,14 +104,43 @@ def login_check(request):
         return HttpResponse('Invalid')
 
 
-def wall(request, openid):
-    return render_to_response('wall.html')
-
-
-def w_post_message(request, openid):
-    if not request.POST or not 'content' in request.POST:
+def login_register(request):
+    if (not request.POST or
+            not 'openid' in request.POST or
+            not 'name' in request.POST or
+            not 'photo' in request.POST):
         raise Http404
+    openid = request.POST['openid']
+    name = request.POST['name']
+    photo = request.POST['photo']
+    if select_users_by_openid(openid):
+        return HttpResponse('ExistOpenid')
+    if select_users_by_name(name):
+        return HttpResponse('ExistName')
+    try:
+        insert_user(openid, name, photo)
+        return redirect(s_reverse_wall(openid))
+    except Exception as e:
+        print 'Error occured!!!!!!' + str(e)
+        return HttpResponse('Error')
+
+
+def wall(request, openid):
     users = select_users_by_openid(openid)
+    if not users:
+        return HttpResponse('NoUser')
+    user = users[0]
+    return render_to_response('wall.html',
+                              {'name': user.name, 'photo': user.photo},
+                              context_instance=RequestContext(request))
+
+
+def w_post_message(request):
+    if (not request.POST or
+            not 'openid' in request.POST or
+            not 'content' in request.POST):
+        raise Http404
+    users = select_users_by_openid(request.POST['openid'])
     if not users:
         return HttpResponse('NoUser')
     user = users[0]
@@ -116,11 +162,11 @@ def w_get_new_messages(request):
         messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
     else:
         messages = select_new_messages(MESSAGES_NUM)
-    return messages
+    return HttpResponse(json.dumps({'messages': messages}), content_type='application/json')
 
 
 def w_get_old_messages(request):
     if not request.POST or not 'message_id' in request.POST:
         raise Http404
     messages = select_old_messages_before_id(request.POST['message_id'], MESSAGES_NUM)
-    return messages
+    return HttpResponse(json.dumps({'messages': messages}), content_type='application/json')
