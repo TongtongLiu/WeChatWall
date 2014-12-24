@@ -90,8 +90,8 @@ $(document).ready(function() {
     var send = $('.send');
     send.attr("disabled","disabled");
     send.css("color","rgba(235, 244, 235,0.5)");
-    $('.text_content').on('input',function(){
-        var input = $('.text_content').val();
+    $('#content').on('input',function(){
+        var input = $('#content').val();
         if(input == "") {
             send.attr("disabled","disabled");
             send.css("color","rgba(235, 244, 235,0.5)");
