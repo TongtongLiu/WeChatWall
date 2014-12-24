@@ -22,9 +22,15 @@ WEIXIN_EVENT_KEYS = {
 
 WEIXIN_USERCENTER_URL = "http://wx2.igeek.asia/u/uc_center"
 
-WEIXIN_OAUTH2_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WEIXIN_APPID+\
-                        "&redirect_uri="+WEIXIN_USERCENTER_URL+\
-                        "&response_type=code&scope=snsapi_base&state=0#wechat_redirect"
+WEIXIN_USERCENTER_OAUTH2_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WEIXIN_APPID + \
+                               "&redirect_uri=" + WEIXIN_USERCENTER_URL + \
+                               "&response_type=code&scope=snsapi_base&state=0#wechat_redirect"
+
+WEIXIN_WALL_URL = "http://wx2.igeek.asia/u/loading"
+
+WEIXIN_WALL_OAUTH2_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + WEIXIN_APPID + \
+                         "&redirect_uri=" + WEIXIN_WALL_URL + \
+                         "&response_type=code&scope=snsapi_base&state=0#wechat_redirect"
 
 WEIXIN_CUSTOM_MENU_TEMPLATE = {
     "button": [
@@ -75,12 +81,12 @@ WEIXIN_CUSTOM_MENU_TEMPLATE = {
                 {
                     "type": "view",
                     "name": "个人中心",
-                    "url": WEIXIN_OAUTH2_URL
+                    "url": WEIXIN_USERCENTER_OAUTH2_URL
                 },
                 {
                     "type": "view",
                     "name": "我要上墙",
-                    "url": WEIXIN_OAUTH2_URL
+                    "url": WEIXIN_WALL_OAUTH2_URL
                 },
                 #{
                 #    "type": "click",
