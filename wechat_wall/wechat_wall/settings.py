@@ -87,7 +87,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 STATIC_URL = '/static1/'
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'phone_page/static').replace('\\', '/'),

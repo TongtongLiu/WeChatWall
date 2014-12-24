@@ -1,3 +1,13 @@
+#resultBox {
+	position: absolute;
+	width: 100%;
+	top: 50px;
+	left: 0px;
+	text-align: center;
+	background-color: navajowhite;
+	display: none;
+}
+
 #reviewMessages {
 	width: 70%;
 	margin: 0px 2%;
@@ -5,7 +15,7 @@
 }
 
 #tbody-messages .td-avatar {
-	min-width: 80px;
+	width: 80px;
 }
 
 #tbody-messages .img-avatar {
@@ -15,14 +25,21 @@
 
 #tbody-messages .td-name {
 	vertical-align: middle;
+	width: 15%;
 }
 
 #tbody-messages .td-content {
 	vertical-align: middle;
+	_width: 60%;
 }
 
 #tbody-messages .td-operator {
 	vertical-align: middle;
+	width: 20%;
+}
+
+#tbody-messages .td-operator .btn {
+	margin-left: 4px;
 }
 
 #reviewedMessages {
@@ -37,4 +54,9 @@
 
 #tbody-reviewedMessages .td-content {
 	vertical-align: middle;
+}
+
+.reviewingMessageTable {
+	height: 500px;
+	overflow: scroll;
 }

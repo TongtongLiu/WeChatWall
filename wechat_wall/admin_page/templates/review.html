@@ -20,8 +20,8 @@
 	            	'id': {{ message.message_id }},
 	            	'content': '{{ message.content|escapejs }}',
 	            	'time': new Date('{{ message.time|date:"r" }}'),
-	            	'name': '{{ message.user.name|escapejs }}',
-	            	'avatar': '{{ message.user.photo|escapejs }}'
+	            	'name': '{{ message.name|escapejs }}',
+	            	'avatar': '{{ message.avatar|escapejs }}'
 	            }{% if forloop.last %}{% else %},{% endif %}
             {% endfor %}
         ];
@@ -31,12 +31,11 @@
 	            	'id': {{ message.message_id }},
 	            	'content': '{{ message.content|escapejs }}',
 	            	'time': new Date('{{ message.time|date:"r" }}'),
-	            	'userName': '{{ message.user.name|escapejs }}',
-	            	'userAvatar': '{{ message.user.photo|escapejs }}'
+	            	'name': '{{ message.name|escapejs }}',
+	            	'avatar': '{{ message.photo|escapejs }}'
 	            }{% if forloop.last %}{% else %},{% endif %}
             {% endfor %}
         ];
-        var postUrl = '{% url "admin_page.views.review_message" %}'
     </script>
     <script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
     <script src="{% static "js/review.js" %}"></script>
@@ -48,6 +47,7 @@
 
 {% block content %}
 <div class="container clearfix" xmlns="http://www.w3.org/1999/html">
+	<div id="resultBox">结果反馈</div>
 
 	<div id="reviewMessages">
 	    <div class="panel panel-default">
@@ -56,29 +56,31 @@
                 <button id="allReject" class="btn btn-danger pull-right" style="margin:12px 5px">全部拒绝</button>
                 <button id="allPass" class="btn btn-primary pull-right" style="margin:12px 5px">全部通过</button>
 	        </div>
-	        <table class="table table-hover">
-	            <thead>
-	            <tr>
-	                <th></th>
-	                <th>用户名</th>
-	                <th>内容</th>
-	                <th>操作</th>
-	            </tr>
-	            </thead>
-	            <tbody id="tbody-messages">
-	            	<tr id="123">
-	            		<td class="td-avatar">
-	            			<img class="img-avatar" src="http://tp1.sinaimg.cn/1654555752/180/5694857169/1">
-	            		</td>
-	            		<td class="td-name">测试一下名字</td>
-						<td class="td-content">这里其实应该是一条微信墙的状态啊哈哈哈哈哈哈哈哈哈啊哈</td>
-						<td class="td-operator">
-							<button class="btn btn-primary">通过</button>
-							<button class="btn btn-danger">拒绝</button>
-						</td>
-	            	</tr>
-	            </tbody>
-	        </table>
+	        <div class="reviewingMessageTable">
+		        <table class="table table-hover">
+		            <thead>
+		            <tr>
+		                <th></th>
+		                <th>用户名</th>
+		                <th>内容</th>
+		                <th>操作</th>
+		            </tr>
+		            </thead>
+		            <tbody id="tbody-messages">
+		            	<tr id="123">
+		            		<td class="td-avatar">
+		            			<img class="img-avatar" src="http://tp1.sinaimg.cn/1654555752/180/5694857169/1">
+		            		</td>
+		            		<td class="td-name">测试一下名字</td>
+							<td class="td-content">这里其实应该是一条微信墙的状态啊哈哈哈哈哈哈哈哈哈啊哈</td>
+							<td class="td-operator">
+								<button class="btn btn-primary">通过</button>
+								<button class="btn btn-danger">拒绝</button>
+							</td>
+		            	</tr>
+		            </tbody>
+		        </table>
+	   		</div>
 	    </div>
     </div>
 
