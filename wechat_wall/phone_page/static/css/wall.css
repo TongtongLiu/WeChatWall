@@ -33,11 +33,35 @@ body {
     background: linear-gradient(top,#474d54,#2f363d);
 }
 .title {
-
+    position: relative;
 }
 .refresh {
-
+    position: absolute;
+    height: 60%;
+    width: 15%;
+    right: 8%;
+    top: 20%;
+    border: 1px solid #202124;
+    border-radius: 0.3em;
+    color: #EAEAEA;
+    font-weight: bold;
+    background: -webkit-linear-gradient(top,#474d54,#2f363d);
+    background: -moz-linear-gradient(top,#474d54,#2f363d);
+    background: -ms-linear-gradient(top,#474d54,#2f363d);
+    background: -o-linear-gradient(top,#474d54,#2f363d);
+    background: linear-gradient(top,#474d54,#2f363d);
+    box-shadow: 0 0.5px 1px rgb(126, 123, 123);
+    cursor: pointer;
 }
+.refresh:active {
+    background: -webkit-linear-gradient(top,#3D4349,#2F353C);
+    background: -moz-linear-gradient(top,#3D4349,#2F353C);
+    background: -ms-linear-gradient(top,#3D4349,#2F353C);
+    background: -o-linear-gradient(top,#3D4349,#2F353C);
+    background: linear-gradient(top,#3D4349,#2F353C);
+    box-shadow: 0 2px 5px rgb(42, 42, 42) inset;
+}
+
 .content {
     width: 100%;
 }
