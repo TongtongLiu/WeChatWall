@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import json
+import time
 
 from admin_page import get_whether_review
 from phone_page.banned_names import is_name_valid
@@ -186,7 +187,7 @@ def w_get_new_messages(request):
             'user_name': message.user.name,
             'user_photo': message.user.photo,
             'content': message.content,
-            'time': message.time
+            'time': int(time.mktime(message.time.timetuple()))
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
@@ -196,4 +197,13 @@ def w_get_old_messages(request):
     if not request.POST or not 'message_id' in request.POST:
         raise Http404
     messages = select_old_messages_before_id(request.POST['message_id'], MESSAGES_NUM)
-    return HttpResponse(json.dumps({'messages': messages}), content_type='application/json')
+    return_json = {'messages': []}
+    for message in messages:
+        return_json['messages'].append({
+            'message_id': message.message_id,
+            'user_name': message.user.name,
+            'user_photo': message.user.photo,
+            'content': message.content,
+            'time': int(time.mktime(message.time.timetuple()))
+        })
+    return HttpResponse(json.dumps(return_json), content_type='application/json')
