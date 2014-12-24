@@ -48,8 +48,14 @@ $(document).ready(function() {
             data: {
                 message_id: 1
             },
-            success: function (data){
+            success: function (data) {
                 console.info(data);
+                var messages = data.messages;
+                var i;
+                for (i in messages) {
+                    var message = createsMessages(messages[i]);
+                    message.prependTo($(".content"));
+                }
             },
             error: function (data){
                 console.info(data);
@@ -69,12 +75,62 @@ $(document).ready(function() {
             },
             success: function (data){
                 console.info(data);
+                var messages = data.messages;
+                var i;
+                for(i in messages) {
+                    var message = createsMessages(messages[i]);
+                    $(".get_old").before(message);
+                }
             },
             error: function (data){
                 console.info(data);
             }
         });
     });
+
+    //创建一条信息
+    function createsMessages(message) {
+
+            var divMessage = $('<div />',{
+                text:"this is a div",
+                "class":"message"
+            });
+            var divMContent = $('<div />',{
+                text:message[i].content,
+                "class":"message_content"
+            });
+            var divMHeader = $('<div />',{
+                "class":"message_header"
+            });
+            var divMHeaderRight = $('<div />',{
+                "class":"message_header_right"
+            });
+            var divName = $('<div />',{
+                text:message[i].user_name,
+                "class":"name"
+            });
+            var divTime = $('<div />',{
+                text:message[i].time,
+                "class":"time"
+            });
+            var divPhoto = $('<div />',{
+                src:message[i].user_photo,
+                "class":"photo"
+            });
+            var divMessageId = $('<div />',{
+                text:message[i].message_id,
+                "class":"message_id"
+            });
+            divName.appendTo(divMHeaderRight);
+            divTime.appendTo(divMHeaderRight);
+            divPhoto.appendTo(divMHeader);
+            divMHeaderRight.appendTo(divMHeader);
+            divMHeader.appendTo(divMessage);
+            divMContent.appendTo(divMessage);
+            divMessageId.appendTo(divMessage);
+
+            return divMessage;
+    }
 
     $('#menu').click(function () {
         if (!menu_clicked) {
@@ -84,6 +140,21 @@ $(document).ready(function() {
         else {
             $('body').removeClass('exposed');
             menu_clicked = false;
+        }
+    });
+    //监听输入框
+    var send = $('.send');
+    send.attr("disabled","disabled");
+    send.css("color","rgba(235, 244, 235,0.5)");
+    $('#content').on('input',function(){
+        var input = $('#content').val();
+        if(input == "") {
+            send.attr("disabled","disabled");
+            send.css("color","rgba(235, 244, 235,0.5)");
+        }
+        else {
+            send.removeAttr("disabled");
+            send.css("color","rgba(235, 244, 235,1)");
         }
     });
 });
