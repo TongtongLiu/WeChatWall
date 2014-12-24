@@ -117,11 +117,14 @@ def login_check(request):
 
 
 def login_register(request):
+    # if (not request.POST or
+    #         not ('openid' in request.POST) or
+    #         not ('name' in request.POST) or
+    #         not ('photo' in request.POST or
+    #              'default_photo' in request.POST)):
     if (not request.POST or
             not ('openid' in request.POST) or
-            not ('name' in request.POST) or
-            not ('photo' in request.POST or
-                 'default_photo' in request.POST)):
+            not ('name' in request.POST)):
         raise Http404
     openid = request.POST['openid']
     if select_users_by_openid(openid):
@@ -129,11 +132,12 @@ def login_register(request):
     name = request.POST['name']
     if not check_name(name):
         return HttpResponse('InvalidName')
-    if 'default_photo' in request.POST:
-        default_photo = request['POST']
-        photo = '/static1/img/' + default_photo + '.jpg'
-    else:
-        photo = request.POST['photo']
+    # if 'default_photo' in request.POST:
+    #     default_photo = request['POST']
+    #     photo = '/static1/img/' + default_photo + '.jpg'
+    # else:
+    #     photo = request.POST['photo']
+    photo = 'http://cl.ly/image/1g322X0b0N0g/default.png'
     try:
         insert_user(openid, name, photo)
         return redirect(s_reverse_wall(openid))
