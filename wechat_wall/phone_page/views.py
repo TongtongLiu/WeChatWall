@@ -8,6 +8,8 @@ from django.template import RequestContext
 import json
 
 from admin_page import get_whether_review
+from phone_page.banned_names import is_name_valid
+from phone_page.banned_words import is_content_valid
 from phone_page.safe_reverse import *
 from wechat_wall.models import User, Message
 from weixinlib import http_get
@@ -35,6 +37,9 @@ def insert_message(user, content, time, status):
     new_message = Message.objects.create(user=user, content=content,
                                          time=time, status=status)
     new_message.save()
+    message_num = user.message_num
+    user.message_num = message_num + 1
+    user.save()
 
 
 def select_messages_by_id(message_id):
@@ -95,10 +100,17 @@ def login(request, openid):
                                   context_instance=RequestContext(request))
 
 
+def check_name(name):
+    if select_users_by_name(name):
+        return False
+    else:
+        return is_name_valid(name)
+
+
 def login_check(request):
     if not request.POST or not 'name' in request.POST:
         raise Http404
-    if not select_users_by_name(request.POST['name']):
+    if check_name(request.POST['name']):
         return HttpResponse('Valid')
     else:
         return HttpResponse('Invalid')
@@ -115,8 +127,8 @@ def login_register(request):
     photo = request.POST['photo']
     if select_users_by_openid(openid):
         return HttpResponse('ExistOpenid')
-    if select_users_by_name(name):
-        return HttpResponse('ExistName')
+    if not check_name(name):
+        return HttpResponse('InvalidName')
     try:
         insert_user(openid, name, photo)
         return redirect(s_reverse_wall(openid))
@@ -126,13 +138,14 @@ def login_register(request):
 
 
 def wall(request, openid):
-    users = select_users_by_openid(openid)
-    if not users:
-        return HttpResponse('NoUser')
-    user = users[0]
-    return render_to_response('wall.html',
-                              {'name': user.name, 'photo': user.photo},
-                              context_instance=RequestContext(request))
+    # users = select_users_by_openid(openid)
+    # if not users:
+    #     return HttpResponse('NoUser')
+    # user = users[0]
+    # return render_to_response('wall.html',
+    #                           {'name': user.name, 'photo': user.photo, 'openid': openid},
+    #                           context_instance=RequestContext(request))
+    return render_to_response('wall.html', {'openid': openid})
 
 
 def w_post_message(request):
@@ -145,6 +158,8 @@ def w_post_message(request):
         return HttpResponse('NoUser')
     user = users[0]
     content = request.POST['content']
+    if not is_content_valid(content):
+        return HttpResponse('BannedContent')
     time = datetime.datetime.now()
     status = get_whether_review()
     try:

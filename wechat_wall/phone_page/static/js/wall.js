@@ -13,7 +13,10 @@ $(document).ready(function(){
             menu_clicked = false;
         }
     });
+    function f(x) {
 
+    }
+    //获取历史消息按钮
     $('.get_old').click(function () {
         $.post("",
         {
@@ -23,5 +26,12 @@ $(document).ready(function(){
         function(data, status){
 
         });
+    });
+    //刷新按钮
+    $('.refresh').click(function () {
+        $('.refresh i').addClass('fa-spin');
+        
+
+        $('.refresh i').removeClass('fa-spin');
     });
 });
