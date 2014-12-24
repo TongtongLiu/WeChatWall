@@ -10,9 +10,13 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static "css/review.css" %}"/>
+	<link rel="stylesheet" href="{% static "lib/bs/css/bootstrap-switch.min.css" %}"/>
 {% endblock %}
 
 {% block js %}
+	<script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
+    <script src="{% static "js/review.js" %}"></script>
+	<script src="{% static "lib/bs/js/bootstrap-switch.min.js" %}"></script>
     <script>
         var toReviewMessages = [
             {% for message in to_review_message %}
@@ -36,9 +40,20 @@
 	            }{% if forloop.last %}{% else %},{% endif %}
             {% endfor %}
         ];
+        var whether_review = {{ whether_review }};
+
+		$('#reviewState').click(function(e) {
+			$.ajax({
+				url: "{% url "admin_page.views.change_review_state" %}",
+				type: 'post',
+				success: changeState
+				error: function() {
+					alert('error');
+				}
+
+			})
+		});
     </script>
-    <script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
-    <script src="{% static "js/review.js" %}"></script>
 {% endblock %}
 
 {% block username %}
@@ -54,7 +69,13 @@
 	        <div class="panel-heading clearfix">
 	        	<h3 class="pull-left">待审核状态</h3>
                 <button id="allReject" class="btn btn-danger pull-right" style="margin:12px 5px">全部拒绝</button>
-                <button id="allPass" class="btn btn-primary pull-right" style="margin:12px 5px">全部通过</button>
+                <button id="allPass" class="btn btn-success pull-right" style="margin:12px 5px">全部通过</button>
+				<div class="reviewState">
+					<p>开启审核</p>
+					<div class="switch">
+						<input type="checkbox" checked />
+					</div>
+				</div>
 	        </div>
 	        <div class="reviewingMessageTable">
 		        <table class="table table-hover">
@@ -74,7 +95,7 @@
 		            		<td class="td-name">测试一下名字</td>
 							<td class="td-content">这里其实应该是一条微信墙的状态啊哈哈哈哈哈哈哈哈哈啊哈</td>
 							<td class="td-operator">
-								<button class="btn btn-primary">通过</button>
+								<button class="btn btn-success">通过</button>
 								<button class="btn btn-danger">拒绝</button>
 							</td>
 		            	</tr>

@@ -3,12 +3,25 @@ function getTd(para) {
 }
 
 /*
+ * handle something about whether_review
+ */
+
+function changePrimaryBtn() {
+	if whether_review == 1
+		$('#reviewState').text('关闭审核');
+	else
+		$('#reviewState').text('开启审核');
+}
+
+changePrimaryBtn();
+
+/*
  * handle those waiting to be reviewed
  */
 var reviewingMsgTdMap = {
 	'name': 'name',
 	'content': 'content'
-}, buttonString = '<button class="btn btn-primary">通过</button><button class="btn btn-danger">拒绝</button>'
+}, buttonString = '<button class="btn btn-success">通过</button><button class="btn btn-danger">拒绝</button>'
 
 function clearReviewingMsg() {
     $('#tbody-messages').html('');
@@ -129,7 +142,7 @@ var options = {
                 },
 }
 
-$('#tbody-messages .btn-primary').click(function(e) {
+$('#tbody-messages .btn-success').click(function(e) {
 	var msgID = $(this).parent().parent().attr('id');
 	setReviewType('pass');
 	setMsgID(msgID);

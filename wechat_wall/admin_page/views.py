@@ -11,6 +11,7 @@ from django.template import RequestContext
 import json
 import time
 
+from admin_page import get_whether_review, set_whether_review
 from admin_page.safe_reverse import *
 from wechat_wall.models import User, Message
 
@@ -60,11 +61,12 @@ def review(request):
 
     to_review_message = get_to_review_message(3000)
     new_message_reviewed = get_new_message_reviewed(6000)
+    whether_review = get_whether_review()
     return render_to_response('review.html', {
         'to_review_message': to_review_message,
         'new_message_reviewed': new_message_reviewed,
+        'whether_review': whether_review,
     })
-
 
 def get_to_review_message(delta_time):
     now = datetime.now()
@@ -91,6 +93,16 @@ def wrap_message_dict(message):
     return_dict['name'] = message.user.name
     return_dict['avatar'] = message.user.photo
     return return_dict
+
+
+@csrf_exempt
+def change_review_state(request):
+    if not request.POST:
+        raise Http404
+
+    current_state = get_whether_review()
+    set_whether_review(1 - current_state)
+    return "success"
 
 
 @csrf_exempt
@@ -135,3 +147,11 @@ def reject_message(msg_id):
         return True
     except ObjectDoesNotExist:
         return False
+
+
+def index(request):
+    # if not request.user.is_authenticated():
+    #    return HttpResponseRedirect(s_reverse_admin_home())
+
+    return render_to_response('index.html', context_instance=RequestContext(request))
+
