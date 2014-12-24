@@ -23,15 +23,15 @@ body {
     text-shadow: .3px .3px .2px rgb(232, 232, 232);
     text-align: center;
     font-weight: bold;
-    font-size: 1em;
-    margin-top: 5%;
+    font-size: 1.2em;
+    margin-top: 7%;
 }
 
 .login {
     position: absolute;
     top: 10%;
-    left: 10%;
-    width: 80%;
+    left: 5%;
+    width: 90%;
     border: 1px solid #393939;
     box-shadow: 0 1px 0 #616a74 inset,10px 10px 20px #212528;
     background: -webkit-linear-gradient(top,#474d54,#2f363d);
@@ -42,7 +42,7 @@ body {
 }
 
 .input_line {
-    height: 1.5em;
+    height: 2em;
     border: 1px solid #202124;
     border-radius: 0.3em;
     box-shadow: 0 1px 0 #616a74 inset,0 1px 5px #212528;
@@ -50,6 +50,8 @@ body {
     margin: 0.5em;
 }
 .label {
+    margin-top: 1%;
+    margin-left: 1%;
     width: 20%;
     float: left;
 }
@@ -78,8 +80,8 @@ body {
     position: absolute;
     left: 0;
     top:0;
-    width: 23px;
-    height: 22px;
+    width: 34px;
+    height: 32px;
     opacity: 0;
 }
 #default_photo {
@@ -114,7 +116,7 @@ body {
 #choose {
     cursor: pointer;
 }
-#choose:active {
+.covering:active #choose {
     color: #CAC6C6;
 }
 
