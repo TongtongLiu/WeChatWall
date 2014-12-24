@@ -85,6 +85,7 @@ def loading(request, openid):
     # res = http_get(url)
     # rtn_json = json.loads(res)
     # openid = rtn_json['openid']
+    return redirect(s_reverse_wall(openid))
     if select_users_by_openid(openid).exists():
         return redirect(s_reverse_wall(openid))
     else:
@@ -137,15 +138,16 @@ def login_register(request):
 
 
 def wall(request, openid):
+    return render_to_response('wall.html', {'openid': openid, 'name': '管理员',
+
+                                             'photo': 'http://www.baidu.com/img/bd_logo1.png'})
     users = select_users_by_openid(openid)
     if not users:
-        return redirect(s_reverse_wall(openid))
+        return redirect(s_reverse_login(openid))
     user = users[0]
     return render_to_response('wall.html',
                               {'openid': openid, 'name': user.name, 'photo': user.photo},
                               context_instance=RequestContext(request))
-    # return render_to_response('login.html', {'openid': openid, 'name': '管理员',
-    #                                         'photo': 'http://www.baidu.com/img/bd_logo1.png'})
 
 
 @csrf_exempt
