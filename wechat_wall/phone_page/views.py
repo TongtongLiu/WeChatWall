@@ -144,7 +144,7 @@ def wall(request, openid):
     # return render_to_response('wall.html',
     #                           {'openid': openid, 'name': user.name, 'photo': user.photo},
     #                           context_instance=RequestContext(request))
-    return render_to_response('login.html', {'openid': openid, 'name': '管理员',
+    return render_to_response('wall.html', {'openid': openid, 'name': '管理员',
                                             'photo': 'http://www.baidu.com/img/bd_logo1.png'})
 
 

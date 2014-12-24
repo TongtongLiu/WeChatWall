@@ -195,7 +195,7 @@ $(document).ready(function() {
     var send = $('.send');
     send.attr("disabled","disabled");
     send.css("color","rgba(235, 244, 235,0.5)");
-    $('#content').on('input',function(){
+    $('#content').bind('input propertychange', function() {
         var input = $('#content').val();
         if(input == "") {
             send.attr("disabled","disabled");
@@ -206,4 +206,15 @@ $(document).ready(function() {
             send.css("color","rgba(235, 244, 235,1)");
         }
     });
+//    $('#content').on('input',function(){
+//        var input = $('#content').val();
+//        if(input == "") {
+//            send.attr("disabled","disabled");
+//            send.css("color","rgba(235, 244, 235,0.5)");
+//        }
+//        else {
+//            send.removeAttr("disabled");
+//            send.css("color","rgba(235, 244, 235,1)");
+//        }
+//    });
 });
