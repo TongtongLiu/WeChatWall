@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="009f42d9-f424-40a8-818d-2692f5b39a0d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wechat_wall/wechat_wall/settings.py" afterPath="$PROJECT_DIR$/wechat_wall/wechat_wall/settings.py" />
+    <list default="true" id="009f42d9-f424-40a8-818d-2692f5b39a0d" name="Default" comment="deploy">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wechat_wall/phone_page/views.py" afterPath="$PROJECT_DIR$/wechat_wall/phone_page/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WeChatWall.iws" />
@@ -26,20 +26,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wechat_wall/phone_page/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1919" max-vertical-offset="3781">
-              <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.69831544" vertical-offset="2071" max-vertical-offset="3781">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wechat_wall/wechat_wall/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44716692" vertical-offset="677" max-vertical-offset="2394">
+            <state vertical-scroll-proportion="0.0" vertical-offset="677" max-vertical-offset="2394">
               <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding />
             </state>
@@ -82,6 +82,7 @@
         <option value="$PROJECT_DIR$/uwsgi.ini" />
         <option value="$PROJECT_DIR$/weixinlib/settings.py" />
         <option value="$PROJECT_DIR$/wechat_wall/wechat_wall/settings.py" />
+        <option value="$PROJECT_DIR$/wechat_wall/phone_page/views.py" />
       </list>
     </option>
   </component>
@@ -565,7 +566,11 @@
       <created>1419446735982</created>
       <updated>1419446735982</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="deploy">
+      <created>1419449819456</created>
+      <updated>1419449819456</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -970,10 +975,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/weixinlib/weixin_urls.py">
+    <entry file="file://$PROJECT_DIR$/wechat_wall/wechat_wall/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="653">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="677" max-vertical-offset="2394">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -986,18 +991,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wechat_wall/phone_page/views.py">
+    <entry file="file://$PROJECT_DIR$/weixinlib/weixin_urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1919" max-vertical-offset="3781">
-          <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="653">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wechat_wall/wechat_wall/settings.py">
+    <entry file="file://$PROJECT_DIR$/wechat_wall/phone_page/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44716692" vertical-offset="677" max-vertical-offset="2394">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.69831544" vertical-offset="2071" max-vertical-offset="3781">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
           <folding />
         </state>
       </provider>
