@@ -40,6 +40,7 @@
         ];
         var whether_review = {{ whether_review }};
 		var changeStateUrl =  "{% url "admin_page.views.change_review_state" %}"
+		var refreshUrl =  "{% url "admin_page.views.refresh_review_list" %}"
 
     </script>
 	<script src="{% static "lib/bs/js/bootstrap-switch.min.js" %}"></script>
@@ -47,7 +48,8 @@
 {% endblock %}
 
 {% block username %}
-    <a href={% url "admin_page.views.logout" %} >登出</a>
+    <a style="float:right" href={% url "admin_page.views.logout" %} >登出</a>
+	<a style="float:right" target="_blank" href={% url "admin_page.views.index" %} >打开微信墙</a>
 {% endblock %}
 
 {% block content %}

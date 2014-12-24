@@ -66,7 +66,6 @@ function deleteElementFromBottom(){
 
 //用于添加某一个userList
 function addElementToHead(message){
-    deleteElementFromBottom();
     var ul = $('#userBox');
     createElementTemplate(ul);
     var object = $('.userList')[0];
@@ -96,7 +95,7 @@ function getLastMessage () {
 
 function getMsg_success(data) {
     if (data['result'] == 'success') {
-        addElementToHead(data['message']);
+        refresh(data['message']);
     } else {
         console.log(data);
     }

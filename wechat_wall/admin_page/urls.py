@@ -9,4 +9,5 @@ urlpatterns = patterns('',
                        url(r'^index/$', 'admin_page.views.index'),
                        url(r'^change_state/$', 'admin_page.views.change_review_state'),
                        url(r'^get_new_message/$', 'admin_page.views.get_new_message'),
+                       url(r'^refresh_list/$', 'admin_page.views.refresh_review_list'),
                        )

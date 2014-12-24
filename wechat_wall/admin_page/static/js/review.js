@@ -16,7 +16,6 @@ $("[name='checkbox']").on('switchChange.bootstrapSwitch', function(e, data) {
 				error: function() {
 					alert('error');
 				}
-
 			})
 		});
 
@@ -68,6 +67,23 @@ function initReviewingMsg() {
 }
 
 initReviewingMsg();
+
+function refresh() {
+	$.ajax({
+		url: refreshUrl,
+		type: 'POST',
+		success: refreshReviewList,
+		error: function() {
+			alert('error');
+		}
+	})
+}
+
+function refreshReviewList(data) {
+	for (var i = 0; i < data['messages'].length; i++){
+		appendReviewingMsg(data['messages'][i]);
+	}
+}
 
 /*
  * handle those have been already reviewed
@@ -150,13 +166,14 @@ function response(data) {
 		$('#'+messages_id[i]).fadeOut(600);
 		setTimeout(function(){
 			$('#'+messages_id[i]).remove();
-		}, 1000)
+		}, 1000);
 		for(var index = 0; index < toReviewMessages.length; index++) {
 			if(toReviewMessages[index]['id'] == messages_id[i]) {
 				var temp = toReviewMessages.splice(index, 1);
 				newMessagesReviewed.splice(0, 0, temp[0]);
 				newMessagesReviewed.pop();
-				addMessageToHead(temp[0]);
+				if(data['type'] == 'pass')
+					addMessageToHead(temp[0]);
 				break;
 			}
 		}
