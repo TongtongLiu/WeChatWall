@@ -1,7 +1,7 @@
 /**
  * Created by limeng on 2014/12/24.
  */
-(function (){
+$(document).ready(function(){
     var menu_clicked = false;
     $('.menu').click(function(){
         if(!menu_clicked) {
@@ -13,4 +13,15 @@
             menu_clicked = false;
         }
     });
-}());
+
+    $('.get_old').click(function () {
+        $.post("",
+        {
+            command: "cancel",
+            bind_id:"{{ bind.unique_id }}"
+        },
+        function(data, status){
+
+        });
+    });
+});

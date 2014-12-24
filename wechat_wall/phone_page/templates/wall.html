@@ -26,6 +26,7 @@
                     </div>
                     <div class="message_content">hahahahh</div>
                 </div>
+                <div class="message get_old"><p>获取历史信息</p></div>
             </div>
         </div>
         <div class="footer">
@@ -33,8 +34,9 @@
                 <div class="line"></div>
                 <div class="line"></div>
             </div>
-             <form class="input_form" action="" method="">
-                 <input class="text_content" type="text"  placeholder="XXX"/>
+             <form class="input_form" action="" method="post">
+                 {% csrf_token %}
+                 <input name="content" class="text_content" type="text"/>
                  <input class="send" type="submit" value="发送"/>
              </form>
         </div>

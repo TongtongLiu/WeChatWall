@@ -6,10 +6,12 @@
 body {
     font-family: "微软雅黑";
     background-color: rgb(226, 226, 226);
+    color: rgb(69, 69, 69);
 }
 
 .content-wrap {
     padding-top: 2.5em;
+    padding-bottom: 2.5em;
 }
 
 .header {
@@ -76,6 +78,11 @@ body {
     padding-top: 0.3em;
     clear:both;
     color: rgb(69, 69, 69);
+}
+
+.get_old {
+    text-align: center;
+    cursor: pointer;
 }
 
 .footer {
