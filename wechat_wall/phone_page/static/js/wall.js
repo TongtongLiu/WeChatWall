@@ -43,7 +43,7 @@ $(document).ready(function() {
         refresh.addClass('fa-spin');
 
         $.ajax({
-            url: get_new,
+            url: get_new_messages,
             type: "POST",
             data: {
                 message_id: 1
@@ -68,7 +68,7 @@ $(document).ready(function() {
     //获取历史消息按钮
     $('#get_old').click(function () {
         $.ajax({
-            url: get_old,
+            url: get_old_messages,
             type: "POST",
             data: {
                 message_id: 1
@@ -96,7 +96,7 @@ $(document).ready(function() {
                 "class":"message"
             });
             var divMContent = $('<div />',{
-                text:message[i].content,
+                text:message.content,
                 "class":"message_content"
             });
             var divMHeader = $('<div />',{
@@ -106,19 +106,19 @@ $(document).ready(function() {
                 "class":"message_header_right"
             });
             var divName = $('<div />',{
-                text:message[i].user_name,
+                text:message.user_name,
                 "class":"name"
             });
             var divTime = $('<div />',{
-                text:message[i].time,
+                text:message.time,
                 "class":"time"
             });
             var divPhoto = $('<div />',{
-                src:message[i].user_photo,
+                src:message.user_photo,
                 "class":"photo"
             });
             var divMessageId = $('<div />',{
-                text:message[i].message_id,
+                text:message.message_id,
                 "class":"message_id"
             });
             divName.appendTo(divMHeaderRight);
