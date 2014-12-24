@@ -1,10 +1,83 @@
 /**
  * Created by limeng on 2014/12/24.
  */
-$(document).ready(function(){
+$(document).ready(function() {
     var menu_clicked = false;
-    $('.menu').click(function(){
-        if(!menu_clicked) {
+
+    $('#message_form').submit(function (event) {
+        event.preventDefault();
+        var form = $('#message_form');
+
+        $.ajax({
+            url: form.attr('action'),
+            type: "POST",
+            data: {
+                openid: openid,
+                content: $('#content').val()
+            },
+            success: function (data){
+                switch (data) {
+                    case "Success":
+                        $('#refresh').trigger("click");
+                        break;
+
+                    case "NoUser":
+                        break;
+
+                    case "BannedContent":
+                        break;
+
+                    case "Error":
+                        break;
+                }
+            },
+            error: function (data){
+                console.info(data);
+            }
+        });
+    });
+
+    //刷新按钮
+    $('#refresh').click(function () {
+        var refresh = $('#refresh i');
+        refresh.addClass('fa-spin');
+
+        $.ajax({
+            url: get_new,
+            type: "POST",
+            data: {
+                message_id: 1
+            },
+            success: function (data){
+                console.info(data);
+            },
+            error: function (data){
+                console.info(data);
+            }
+        });
+
+        refresh.removeClass('fa-spin');
+    });
+
+    //获取历史消息按钮
+    $('#get_old').click(function () {
+        $.ajax({
+            url: get_old,
+            type: "POST",
+            data: {
+                message_id: 1
+            },
+            success: function (data){
+                console.info(data);
+            },
+            error: function (data){
+                console.info(data);
+            }
+        });
+    });
+
+    $('#menu').click(function () {
+        if (!menu_clicked) {
             $('body').addClass('exposed');
             menu_clicked = true;
         }
@@ -12,26 +85,5 @@ $(document).ready(function(){
             $('body').removeClass('exposed');
             menu_clicked = false;
         }
-    });
-    function f(x) {
-
-    }
-    //获取历史消息按钮
-    $('.get_old').click(function () {
-        $.post("",
-        {
-            command: "cancel",
-            bind_id:"{{ bind.unique_id }}"
-        },
-        function(data, status){
-
-        });
-    });
-    //刷新按钮
-    $('.refresh').click(function () {
-        $('.refresh i').addClass('fa-spin');
-        
-
-        $('.refresh i').removeClass('fa-spin');
     });
 });

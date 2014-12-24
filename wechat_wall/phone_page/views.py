@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 from admin_page import get_whether_review
@@ -47,7 +48,7 @@ def select_messages_by_id(message_id):
 
 
 def select_new_messages(max_len):
-    messages = Message.objects.filter(status=1)
+    messages = Message.objects.filter(status=0)
     messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
     return messages[0:max_len]
 
@@ -60,7 +61,7 @@ def select_new_messages_after_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__gt=message.time) |
                                              Q(time=message.time,
                                                message_id__gt=message_id),
-                                             status=1)
+                                             status=0)
     return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
     return return_messages[0:max_len]
 
@@ -73,7 +74,7 @@ def select_old_messages_before_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__lt=message.time) |
                                              Q(time=message.time,
                                                message_id__lt=message_id),
-                                             status=1)
+                                             status=0)
     return_messages.sort(reversed=True, cmp=lambda x, y: cmp(x.time, y.time))
     return return_messages[0:max_len]
 
@@ -143,11 +144,13 @@ def wall(request, openid):
     #     return HttpResponse('NoUser')
     # user = users[0]
     # return render_to_response('wall.html',
-    #                           {'name': user.name, 'photo': user.photo, 'openid': openid},
+    #                           {'openid': openid, 'name': user.name, 'photo': user.photo},
     #                           context_instance=RequestContext(request))
-    return render_to_response('wall.html', {'openid': openid})
+    return render_to_response('wall.html', {'openid': openid, 'name': '管理员',
+                                            'photo': 'http://www.baidu.com/img/bd_logo1.png'})
 
 
+@csrf_exempt
 def w_post_message(request):
     if (not request.POST or
             not 'openid' in request.POST or
@@ -170,6 +173,7 @@ def w_post_message(request):
         return HttpResponse('Error')
 
 
+@csrf_exempt
 def w_get_new_messages(request):
     if not request.POST:
         raise Http404
@@ -180,6 +184,7 @@ def w_get_new_messages(request):
     return HttpResponse(json.dumps({'messages': messages}), content_type='application/json')
 
 
+@csrf_exempt
 def w_get_old_messages(request):
     if not request.POST or not 'message_id' in request.POST:
         raise Http404

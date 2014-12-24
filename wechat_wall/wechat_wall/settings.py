@@ -61,7 +61,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'wx2_wall',
         'USER': 'root',
-        'PASSWORD': 'admin',
+        'PASSWORD': '19940121',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
