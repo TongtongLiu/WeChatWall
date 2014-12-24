@@ -183,11 +183,11 @@ ul{
 }
 
 .displayContent{
-	margin-top: 20px;
+	margin-top: 8px;
 	display: block;
 	word-break: break-all;
 	word-wrap: break-word;
-	overflow: hidden;
+	_overflow: hidden;
 	font-size: 45px;
 	height: 60px;
 	line-height: 60px;

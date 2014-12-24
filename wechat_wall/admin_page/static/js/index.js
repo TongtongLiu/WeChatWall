@@ -1,4 +1,8 @@
 var messageNumber;
+var reviewingMsgMap = {
+    'name': 'userName',
+    'content': 'displayContent'
+}
 
 function pageSuit(){
     var windowHeight = $(window).height();//浏览器高度
@@ -19,26 +23,15 @@ function pageSuit(){
     topNum=0.5*a.height()-0.5*b.height();
     b.css("margin-top",topNum);
 }
-function initial(){
-    pageSuit();
-    messageNumber = $('.userList').length;
-    $('#msgNum').html(messageNumber)
-}
-window.onload=initial;
 
 //导航栏公告切换
 var topInfo = setInterval(infoShow, 5000);
 var infoNumber = 0;
 function infoShow(){
-    a = $('#wordList').children();
-    $(a[infoNumber]).fadeOut(1000);
+    info = $('#wordList').children();
+    $(info[infoNumber]).fadeOut(1000);
     infoNumber = (infoNumber + 1) % 3;
-    $(a[infoNumber]).fadeIn(1000);
-}
-
-var reviewingMsgMap = {
-    'name': 'userName',
-    'content': 'displayContent'
+    $(info[infoNumber]).fadeIn(1000);
 }
 
 //用于寻找某个object下某个class的对象
@@ -64,6 +57,40 @@ function deleteElementFromBottom(){
     
 }
 
+//字符串字节数
+function getByteLen(str){
+    var l = str.length;
+    var n = l;
+    for(var i = 0; i < l; i++){
+        if(str.charCodeAt(i) < 0 || str.charCodeAt(i) > 255){
+            n++;
+        }
+    }
+    return n;
+}  
+
+function setFont(message){
+    var msg = message['content'];
+    var object;
+    if(getByteLen(msg) <= 24){
+    }
+    else if(msg.length <= 36){
+        object = $('#'+message['id']).find('.displayContent');
+        object.css('font-size',64);
+        object.css('line-height','44px');
+    }
+    else if(getByteLen(msg) <= 92){
+        object = $('#'+message['id']).find('.displayContent');
+        object.css('font-size',25);
+        object.css('line-height','40px');
+    }
+    else if(getByteLen(msg) <= 154){
+        object = $('#'+message['id']).find('.displayContent');
+        object.css('font-size',20);
+        object.css('line-height','30px');
+    }
+}
+
 //用于添加某一个userList
 function addElementToHead(message){
     var ul = $('#userBox');
@@ -74,6 +101,9 @@ function addElementToHead(message){
     $(object).attr('id',message['id']);
     for(key in reviewingMsgMap){
         getElementByClass(object,reviewingMsgMap[key]).html(message[key]);
+        if (key == 'content') {
+            setFont(message);
+        }
     }
     $($('.userList')[0]).slideDown(600);
 }
@@ -85,6 +115,9 @@ function refresh(message){
     $('#msgNum').html(messageNumber);
 }
 
-
-
-
+function initial(){
+    pageSuit();
+    messageNumber = $('.userList').length;
+    $('#msgNum').html(messageNumber)
+}
+window.onload=initial;
