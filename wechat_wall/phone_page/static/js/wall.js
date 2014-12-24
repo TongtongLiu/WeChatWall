@@ -13,7 +13,9 @@ $(document).ready(function(){
             menu_clicked = false;
         }
     });
+    function f(x) {
 
+    }
     $('.get_old').click(function () {
         $.post("",
         {

@@ -32,7 +32,12 @@ body {
     background: -o-linear-gradient(top,#474d54,#2f363d);
     background: linear-gradient(top,#474d54,#2f363d);
 }
+.title {
 
+}
+.refresh {
+
+}
 .content {
     width: 100%;
 }

@@ -126,14 +126,14 @@ def login_register(request):
 
 
 def wall(request, openid):
-    users = select_users_by_openid(openid)
-    if not users:
-        return HttpResponse('NoUser')
-    user = users[0]
-    return render_to_response('wall.html',
-                              {'name': user.name, 'photo': user.photo},
-                              context_instance=RequestContext(request))
-
+    # users = select_users_by_openid(openid)
+    # if not users:
+    #     return HttpResponse('NoUser')
+    # user = users[0]
+    # return render_to_response('wall.html',
+    #                           {'name': user.name, 'photo': user.photo, 'openid': openid},
+    #                           context_instance=RequestContext(request))
+    return render_to_response('wall.html', {'openid': openid})
 
 def w_post_message(request):
     if (not request.POST or
