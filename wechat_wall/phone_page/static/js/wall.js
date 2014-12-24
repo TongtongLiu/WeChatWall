@@ -161,7 +161,7 @@ $(document).ready(function() {
             text: time_str,
             "class": "time"
         });
-        var divPhoto = $('<div />',{
+        var divPhoto = $('<img />',{
             src: message.user_photo,
             "class":"photo"
         });
