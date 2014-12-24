@@ -117,9 +117,9 @@ def login_check(request):
 
 def login_register(request):
     if (not request.POST or
-            not 'openid' in request.POST or
-            not 'name' in request.POST or
-            not 'photo' in request.POST):
+            not ('openid' in request.POST) or
+            not ('name' in request.POST) or
+            not ('photo' in request.POST)):
         raise Http404
     openid = request.POST['openid']
     name = request.POST['name']
@@ -151,8 +151,8 @@ def wall(request, openid):
 @csrf_exempt
 def w_post_message(request):
     if (not request.POST or
-            not 'openid' in request.POST or
-            not 'content' in request.POST):
+            not ('openid' in request.POST) or
+            not ('content' in request.POST)):
         raise Http404
     users = select_users_by_openid(request.POST['openid'])
     if not users:
