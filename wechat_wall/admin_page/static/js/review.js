@@ -50,15 +50,24 @@ function appendReviewingMsg(msg) {
     $('#tbody-messages').append(tr);
 }
 
-function initReviewingMsg() {
+function showReviewingMsg() {
     var i, len;
     for (i = 0, len = toReviewMessages.length; i < len; ++i) {
         appendReviewingMsg(toReviewMessages[i]);
     }
 }
 
-//clearReviewingMsg();
-//initReviewingMsg();
+function initReviewingMsg() {
+    if (toReviewMessages.length > 0) {
+    	clearReviewingMsg();
+    	showReviewingMsg();
+    } else {
+    	return;
+    }
+
+}
+
+initReviewingMsg();
 
 /*
  * handle those have been already reviewed
@@ -80,7 +89,7 @@ function appendReviewedMsg(msg) {
     $('#tbody-reviewedMessages').append(tr);
 }
 
-function initReviewedMsg() {
+function showReviewedMsg() {
     var i, len;
     for (i = 0, len = newMessagesReviewed.length; i < len; ++i) {
         appendReviewedMsg(newMessagesReviewed[i]);
@@ -105,12 +114,17 @@ function addMessageToHead(msg) {
     }, 600);
 }
 
-function initReviewintMsg() {
-    if (toReviewMessages.length)
+function initReviewedMsg() {
+    if (newMessagesReviewed.length > 0) {
+    	clearReviewedMsg();
+    	showReviewedMsg();
+    } else {
+    	return;
+    }
+
 }
 
-//clearReviewedMsg();
-//initReviewedMsg();
+initReviewedMsg();
 
 /**
  * post event

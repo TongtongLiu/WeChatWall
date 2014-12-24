@@ -66,6 +66,7 @@ function deleteElementFromBottom(){
 
 //用于添加某一个userList
 function addElementToHead(message){
+    deleteElementFromBottom();
     var ul = $('#userBox');
     createElementTemplate(ul);
     var object = $('.userList')[0];
@@ -85,6 +86,50 @@ function refresh(message){
     $('#msgNum').html(messageNumber);
 }
 
+function getLastMessage () {
+    var lis = $('.userList');
+    if (lis.length == 0)
+        return ''
+    else
+        return $(lis[0]).attr('id');
+}
 
+function getMsg_success(data) {
+    if (data['result'] == 'success') {
+        addElementToHead(data['message']);
+    } else {
+        console.log(data);
+    }
+}
+
+function postToGetMessage() {
+    var lastMessageId = getLastMessage();
+    if (lastMessageId == '')
+        postData = {}
+    else
+        postData = {
+            message_id: lastMessageId
+        }
+    $.ajax({
+        url: getNewMessageUrl,
+        type: "POST",
+        data: postData,
+        success: getMsg_success,
+        error: function (data){
+                console.info(data);
+            }
+    });
+}
+
+var timer;
+function run() {
+    timer = setInterval(postToGetMessage, 3000);
+}
+
+function stop() {
+    clearInterval(timer);
+}
+
+run()
 
 

@@ -21,7 +21,7 @@ from wechat_wall.models import User, Message
 @csrf_protect
 def home(request):
     if not request.user.is_authenticated():
-        return render_to_response('login.html', context_instance=RequestContext(request))
+        return render_to_response('admin_login.html', context_instance=RequestContext(request))
     else:
         return HttpResponseRedirect(s_reverse_admin_review())
 
@@ -161,10 +161,10 @@ def index(request):
 
 @csrf_exempt
 def get_new_message(request):
-    if not request.POST:
+    if not request.is_ajax:
         raise Http404
 
-    if request.POST.get('message_id', ''):
+    if 'message_id' in request.POST:
         message = select_new_message_after_id(request.POST['message_id'])
     else:
         message = select_first_message()
@@ -172,7 +172,12 @@ def get_new_message(request):
     return_json = {}
     if message:
         return_json['result'] = 'success'
-        return_json['message'] = wrap_message_dict(message)
+        return_json['message'] = {
+            'id': message.message_id,
+            'name': message.user.name,
+            'avatar': message.user.photo,
+            'content': message.content,
+        }
     else:
         return_json['result'] = 'no message'
     return HttpResponse(json.dumps(return_json), content_type='application/json')
@@ -186,14 +191,16 @@ def select_new_message_after_id(message_id):
     messages = Message.objects.filter(time=last_message.time, message_id__gt=message_id).order_by('message_id')
     if messages.exists():
         return messages[0]
-    messages = Message.objects.filter(time__gt=last_message.time).order_by('time')
+    messages = Message.objects.filter(time__gt=last_message.time, status=1).order_by('time')
     if messages.exists():
         return messages[0]
     return None
 
 
 def select_first_message():
+    print "select"
     messages = Message.objects.filter(message_id__gt=0).order_by('time', 'message_id')
+    print messages
     if messages.exists():
         return messages[0]
     else:
