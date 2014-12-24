@@ -1,9 +1,38 @@
 /**
  * Created by limeng on 2014/12/24.
  */
+
+function getTimeString(timestamp) {
+    var time = new Date(timestamp);
+    var now = new Date();
+    var hour, minute, time_str;
+    if (now - time >= 24 * 3600 * 1000)
+        time_str = time.getMonth() + "-" + time.getDate();
+    else if (now - time >= 60 * 1000) {
+        hour = '' + time.getHours();
+        if (hour.length < 2)
+            hour = '0' + hour;
+        minute = '' + time.getMinutes();
+        if (minute.length < 2)
+            minute = '0' + minute;
+        time_str = hour + ":" + minute;
+    } else {
+        time_str = Math.ceil((now - time) / 1000) + "秒前";
+    }
+    return time_str;
+}
+
+function updateMessagesTime() {
+    $("#content-container #timestamp").each(function() {
+        var timestamp = parseInt($(this).text());
+        $(this).parent(".message_header_right").find(".time").text(getTimeString(timestamp));
+    })
+}
+
 $(document).ready(function() {
     var menu_clicked = false;
 
+    //提交消息
     $('#message_form').submit(function (event) {
         event.preventDefault();
         var form = $('#message_form');
@@ -55,12 +84,11 @@ $(document).ready(function() {
                 message_id: message_id
             },
             success: function (data) {
-                console.info(data);
+                //console.info(data);
                 var messages = data.messages;
-                var i;
-                for (i in messages) {
+                for (var i = messages.length - 1; i >= 0; i--) {
                     var message = createsMessages(messages[i]);
-                    message.prependTo($(".content"));
+                    message.prependTo($("#content-container"));
                 }
             },
             error: function (data){
@@ -68,8 +96,11 @@ $(document).ready(function() {
             }
         });
 
+        updateMessagesTime();
         refresh.removeClass('fa-spin');
     });
+
+    $('#refresh').trigger("click");
 
     //获取历史消息按钮
     $('#get_old').click(function () {
@@ -88,12 +119,11 @@ $(document).ready(function() {
                 message_id: message_id
             },
             success: function (data){
-                console.info(data);
+                //console.info(data);
                 var messages = data.messages;
-                var i;
-                for(i in messages) {
+                for (var i = 0; i < messages.length; i++) {
                     var message = createsMessages(messages[i]);
-                    $(".get_old").before(message);
+                    $("#get_old").before(message);
                 }
             },
             error: function (data){
@@ -104,45 +134,51 @@ $(document).ready(function() {
 
     //创建一条信息
     function createsMessages(message) {
+        var divMessage = $('<div />',{
+            "class": "message"
+        });
+        var divMContent = $('<div />',{
+            text: message.content,
+            "class": "message_content"
+        });
+        var divMHeader = $('<div />',{
+            "class": "message_header"
+        });
+        var divMHeaderRight = $('<div />',{
+            "class": "message_header_right"
+        });
+        var divName = $('<div />',{
+            text: message.user_name,
+            "class": "name"
+        });
+        var time_str = getTimeString(message.time * 1000);
+        var divTime = $('<div />',{
+            text: message.time * 1000,
+            "id": "timestamp",
+            "style": "display: none"
+        });
+        var divTimeStr = $('<div />',{
+            text: time_str,
+            "class": "time"
+        });
+        var divPhoto = $('<div />',{
+            src: message.user_photo,
+            "class":"photo"
+        });
+        var divMessageId = $('<div />',{
+            text: message.message_id,
+            "class":"message_id"
+        });
+        divName.appendTo(divMHeaderRight);
+        divTime.appendTo(divMHeaderRight);
+        divTimeStr.appendTo(divMHeaderRight);
+        divPhoto.appendTo(divMHeader);
+        divMHeaderRight.appendTo(divMHeader);
+        divMHeader.appendTo(divMessage);
+        divMContent.appendTo(divMessage);
+        divMessageId.appendTo(divMessage);
 
-            var divMessage = $('<div />',{
-                "class":"message"
-            });
-            var divMContent = $('<div />',{
-                text:message.content,
-                "class":"message_content"
-            });
-            var divMHeader = $('<div />',{
-                "class":"message_header"
-            });
-            var divMHeaderRight = $('<div />',{
-                "class":"message_header_right"
-            });
-            var divName = $('<div />',{
-                text:message.user_name,
-                "class":"name"
-            });
-            var divTime = $('<div />',{
-                text:message.time,
-                "class":"time"
-            });
-            var divPhoto = $('<div />',{
-                src:message.user_photo,
-                "class":"photo"
-            });
-            var divMessageId = $('<div />',{
-                text:message.message_id,
-                "class":"message_id"
-            });
-            divName.appendTo(divMHeaderRight);
-            divTime.appendTo(divMHeaderRight);
-            divPhoto.appendTo(divMHeader);
-            divMHeaderRight.appendTo(divMHeader);
-            divMHeader.appendTo(divMessage);
-            divMContent.appendTo(divMessage);
-            divMessageId.appendTo(divMessage);
-
-            return divMessage;
+        return divMessage;
     }
 
     $('#menu').click(function () {
