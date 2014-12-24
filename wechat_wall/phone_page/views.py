@@ -37,10 +37,9 @@ def insert_message(user, content, time, status):
     new_message = Message.objects.create(user=user, content=content,
                                          time=time, status=status)
     new_message.save()
-    if status == 1:
-        message_num = user.message_num
-        user.message_num = message_num + 1
-        user.save()
+    message_num = user.message_num
+    user.message_num = message_num + 1
+    user.save()
 
 
 def select_messages_by_id(message_id):
