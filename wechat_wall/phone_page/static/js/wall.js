@@ -117,12 +117,17 @@ $(document).ready(function() {
                 src:message[i].user_photo,
                 "class":"photo"
             });
+            var divMessageId = $('<div />',{
+                text:message[i].message_id,
+                "class":"message_id"
+            });
             divName.appendTo(divMHeaderRight);
             divTime.appendTo(divMHeaderRight);
             divPhoto.appendTo(divMHeader);
             divMHeaderRight.appendTo(divMHeader);
             divMHeader.appendTo(divMessage);
             divMContent.appendTo(divMessage);
+            divMessageId.appendTo(divMessage);
 
             return divMessage;
     }
