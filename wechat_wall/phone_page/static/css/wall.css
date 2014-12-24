@@ -174,14 +174,14 @@ body {
     -o-transition:transform .1s linear 0s;
 }
 .line:nth-child(1) {
-    top:0.7em;
-    left: 0.4em;
+    top:0.8em;
+    left: 0.5em;
     width: 0.8em;
     height: 0.2em;
 }
 .line:nth-child(2) {
-    top:0.4em;
-    left: 0.7em;
+    top:0.5em;
+    left: 0.8em;
     width: 0.2em;
     height: 0.8em;
 }
