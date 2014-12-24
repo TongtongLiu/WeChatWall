@@ -95,7 +95,6 @@ body {
 }
 
 .message_header_right {
-    width: 2.3em;
     height: 2.3em;
     float: left;
     padding-left: 0.5em;
@@ -111,6 +110,12 @@ body {
     padding-top: 0.3em;
     clear:both;
     color: rgb(69, 69, 69);
+    word-wrap:break-word;
+    white-space: normal;
+}
+
+.message_id {
+    display: none;
 }
 
 .get_old {

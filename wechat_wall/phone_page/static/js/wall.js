@@ -76,9 +76,10 @@ $(document).ready(function() {
         var message_id;
         if ($('#content-container .message_id').length == 0)
             message_id = 0;
-        else
+        else {
             var len = $('#content-container .message_id').length;
             message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+        }
 
         $.ajax({
             url: get_old_messages,
@@ -105,7 +106,6 @@ $(document).ready(function() {
     function createsMessages(message) {
 
             var divMessage = $('<div />',{
-                text:"this is a div",
                 "class":"message"
             });
             var divMContent = $('<div />',{
