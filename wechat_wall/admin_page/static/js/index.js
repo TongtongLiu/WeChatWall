@@ -7,11 +7,14 @@ function pageSuit(){
 }
 window.onload=pageSuit;
 
-setInterval(show, 5000);
+//导航栏公告切换
+var topInfo = setInterval(show, 5000);
 var infoNumber = 0;
-function show(){
+function infoShow(){
     a = $('#wordList').children();
     $(a[infoNumber]).fadeOut(1000);
     infoNumber = (infoNumber + 1) % 3;
     $(a[infoNumber]).fadeIn(1000);
 }
+
+
