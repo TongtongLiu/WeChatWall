@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block js %}
+    <script>
+		var getNewMessageUrl = "{% url "admin_page.views.get_new_message" %}"
+    </script>
     <script src="{% static "lib/jq/jquery-1.10.2.min.js" %}"></script>
     <script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
     <script src="{% static "js/index.js" %}"></script>
@@ -26,7 +29,7 @@
                 </div>
                 <div id="numberBox" class="left" style="background-image:url({% static "img/left_line.png" %});">
                     <ul id="numberList" class="left">
-                        <li class="themeBox" style="font-size:18px;"><em id="msgNum"></em><br>条信息</li> 
+                        <li class="themeBox" style="font-size:18px;"><em id="msgNum"></em><br>条信息</li>
                 </div>
             </div>
             <div id="qrScroll" class="right">
@@ -35,7 +38,9 @@
         </div><!--header end-->
         <div id="container" class="clearfix">
             <ul id="userBox">
-                <li class="clearfix userList" style="display:block;" id='1'>
+            <!--
+                <li class="clearfix userList" style="display:block;">
+>>>>>>> 1c99e048d72a5758f1fcabf8a040a6a0b620b8fd
                     <div class="userPhoto left">
                         <img src="{% static "img/user1.jpg" %}" class="photo right">
                     </div>
@@ -70,6 +75,7 @@
                         
                     </div>
                 </li>
+            -->
             </ul>
             
         </div>
