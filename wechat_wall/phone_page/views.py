@@ -85,7 +85,6 @@ def loading(request, openid):
     # res = http_get(url)
     # rtn_json = json.loads(res)
     # openid = rtn_json['openid']
-    return redirect(s_reverse_wall(openid))
     if select_users_by_openid(openid).exists():
         return redirect(s_reverse_wall(openid))
     else:
@@ -107,6 +106,7 @@ def check_name(name):
         return is_name_valid(name)
 
 
+@csrf_exempt
 def login_check(request):
     if not request.POST or not ('name' in request.POST):
         raise Http404
@@ -120,15 +120,20 @@ def login_register(request):
     if (not request.POST or
             not ('openid' in request.POST) or
             not ('name' in request.POST) or
-            not ('photo' in request.POST)):
+            not ('photo' in request.POST or
+                 'default_photo' in request.POST)):
         raise Http404
     openid = request.POST['openid']
-    name = request.POST['name']
-    photo = request.POST['photo']
     if select_users_by_openid(openid):
         return HttpResponse('ExistOpenid')
+    name = request.POST['name']
     if not check_name(name):
         return HttpResponse('InvalidName')
+    if 'default_photo' in request.POST:
+        default_photo = request['POST']
+        photo = '/static1/img/' + default_photo + '.jpg'
+    else:
+        photo = request.POST['photo']
     try:
         insert_user(openid, name, photo)
         return redirect(s_reverse_wall(openid))
@@ -138,9 +143,8 @@ def login_register(request):
 
 
 def wall(request, openid):
-    return render_to_response('wall.html', {'openid': openid, 'name': '管理员',
-
-                                             'photo': 'http://www.baidu.com/img/bd_logo1.png'})
+    #return render_to_response('wall.html', {'openid': openid, 'name': '管理员',
+    #s                                         'photo': 'http://www.baidu.com/img/bd_logo1.png'})
     users = select_users_by_openid(openid)
     if not users:
         return redirect(s_reverse_login(openid))
