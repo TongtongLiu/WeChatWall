@@ -1,4 +1,5 @@
 .idea
+wechat_wall/wechat_wall/settings.py
 *.pyc
 *.pyo
 *_backup
