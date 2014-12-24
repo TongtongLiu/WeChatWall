@@ -126,7 +126,7 @@ def review_message(request):
             return_json['result'] = 'error'
             break
         return_json['msg_id'] += (msg_id + ',')
-    if not return_json.has_key('result'):
+    if not ('result' in return_json):
         return_json['result'] = 'success'
     return_json['msg_id'] = return_json['msg_id'][:-1] + ''
     return HttpResponse(json.dumps(return_json), content_type='application/json')
@@ -158,3 +158,43 @@ def index(request):
 
     return render_to_response('index.html', context_instance=RequestContext(request))
 
+
+@csrf_exempt
+def get_new_message(request):
+    if not request.POST:
+        raise Http404
+
+    if request.POST.get('message_id', ''):
+        message = select_new_message_after_id(request.POST['message_id'])
+    else:
+        message = select_first_message()
+
+    return_json = {}
+    if message:
+        return_json['result'] = 'success'
+        return_json['message'] = wrap_message_dict(message)
+    else:
+        return_json['result'] = 'no message'
+    return HttpResponse(json.dumps(return_json), content_type='application/json')
+
+
+def select_new_message_after_id(message_id):
+    try:
+        last_message = Message.objects.get(message_id=message_id)
+    except ObjectDoesNotExist:
+        return None
+    messages = Message.objects.filter(time=last_message.time, message_id__gt=message_id).order_by('message_id')
+    if messages.exists():
+        return messages[0]
+    messages = Message.objects.filter(time__gt=last_message.time).order_by('time')
+    if messages.exists():
+        return messages[0]
+    return None
+
+
+def select_first_message():
+    messages = Message.objects.filter(message_id__gt=0).order_by('time', 'message_id')
+    if messages.exists():
+        return messages[0]
+    else:
+        return None

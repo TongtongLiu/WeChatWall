@@ -57,8 +57,8 @@ function initReviewingMsg() {
     }
 }
 
-clearReviewingMsg();
-initReviewingMsg();
+//clearReviewingMsg();
+//initReviewingMsg();
 
 /*
  * handle those have been already reviewed
@@ -105,8 +105,12 @@ function addMessageToHead(msg) {
     }, 600);
 }
 
-clearReviewedMsg();
-initReviewedMsg();
+function initReviewintMsg() {
+    if (toReviewMessages.length)
+}
+
+//clearReviewedMsg();
+//initReviewedMsg();
 
 /**
  * post event
