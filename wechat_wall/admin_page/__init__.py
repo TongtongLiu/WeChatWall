@@ -1,4 +1,4 @@
-WHETHER_REVIEW = 1
+WHETHER_REVIEW = 0
 # 1: need to be reviewed
 # 0: don't need
 

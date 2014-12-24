@@ -49,7 +49,7 @@ def select_messages_by_id(message_id):
 
 
 def select_new_messages(max_len):
-    messages = Message.objects.filter(status=0).order_by('-time')
+    messages = Message.objects.filter(status=1).order_by('-time')
     return messages[:max_len]
 
 
@@ -61,7 +61,7 @@ def select_new_messages_after_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__gt=message.time) |
                                              Q(time=message.time,
                                                message_id__gt=message_id),
-                                             status=0).order_by('-time')
+                                             status=1).order_by('-time')
     return return_messages[:max_len]
 
 
@@ -73,7 +73,7 @@ def select_old_messages_before_id(message_id, max_len):
     return_messages = Message.objects.filter(Q(time__lt=message.time) |
                                              Q(time=message.time,
                                                message_id__lt=message_id),
-                                             status=0).order_by('-time')
+                                             status=1).order_by('-time')
     return return_messages[:max_len]
 
 ######################## Date Operation End ###############################
@@ -162,7 +162,10 @@ def w_post_message(request):
     if not is_content_valid(content):
         return HttpResponse('BannedContent')
     time = datetime.datetime.now()
-    status = get_whether_review()
+    if get_whether_review() == 1:
+        status = 0
+    else:
+        status = 1
     try:
         insert_message(user, content, time, status)
         return HttpResponse('Success')
