@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.11.1.min.js' %}"></script>
     {% block css %}
     {% endblock %}
     <title>微信墙</title>
@@ -15,19 +14,34 @@
         <div class="header">
            <h3 class="title">我是野生活动名</h3>
         </div>
-        <div class="content">
-            <div class="a_message">
-                <div class="photo"><img src="#"/></div>
-                <div class="name">123</div>
-                <div class="message">hahahahh</div>
+        <div class="content-wrap">
+            <div class="content">
+                <div class="message">
+                    <div class="message_header">
+                        <div class="photo"><img src="#"/></div>
+                        <div class="message_header_right">
+                            <div class="name">123</div>
+                            <div class="time">12:12</div>
+                        </div>
+                    </div>
+                    <div class="message_content">hahahahh</div>
+                </div>
+                <div class="message get_old"><p>获取历史信息</p></div>
             </div>
         </div>
         <div class="footer">
-            <form action="" method="">
-                <input class="text_content" type="text"  placeholder="XXX"/>
-                <input type="submit" value="发送"/>
-            </form>
+            <div class="menu">
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+             <form class="input_form" action="" method="post">
+                 {% csrf_token %}
+                 <input name="content" class="text_content" type="text"/>
+                 <input class="send" type="submit" value="发送"/>
+             </form>
         </div>
     </div>
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.11.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
 </body>
 </html>
