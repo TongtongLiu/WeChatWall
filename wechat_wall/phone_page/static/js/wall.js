@@ -86,4 +86,19 @@ $(document).ready(function() {
             menu_clicked = false;
         }
     });
+    //监听输入框
+    var send = $('.send');
+    send.attr("disabled","disabled");
+    send.css("color","rgba(235, 244, 235,0.5)");
+    $('.text_content').on('input',function(){
+        var input = $('.text_content').val();
+        if(input == "") {
+            send.attr("disabled","disabled");
+            send.css("color","rgba(235, 244, 235,0.5)");
+        }
+        else {
+            send.removeAttr("disabled");
+            send.css("color","rgba(235, 244, 235,1)");
+        }
+    });
 });

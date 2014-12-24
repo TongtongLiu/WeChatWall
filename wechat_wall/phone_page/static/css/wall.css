@@ -43,7 +43,7 @@ body {
     position: absolute;
     height: 60%;
     width: 15%;
-    right: 8%;
+    right: 3%;
     top: 20%;
     border: 1px solid #202124;
     border-radius: 0.3em;
@@ -211,7 +211,7 @@ form .input_form{
     width: 15%;
     border: 1px solid rgb(11, 150, 13);
     border-radius: 0.3em;
-    color: rgb(216, 224, 216);
+    color: rgb(235, 244, 235);
     font-weight: bold;
     background: -webkit-linear-gradient(top, #49BE3B, #179622);
     background: -moz-linear-gradient(top,#474d54,#2f363d);
