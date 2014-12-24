@@ -186,7 +186,7 @@ def w_get_new_messages(request):
             'user_name': message.user.name,
             'user_photo': message.user.photo,
             'content': message.content,
-            'time': message.content
+            'time': message.time
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
