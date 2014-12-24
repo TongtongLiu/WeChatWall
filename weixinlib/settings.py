@@ -1,2 +1,7 @@
 #-*- coding:utf-8 -*-
 
+WEIXIN_TOKEN = 'F8ZFW1Cyzr5z6nNoJ5uZhA8iXEbe1hvX'
+
+WEIXIN_APPID = 'wxee3650a4c4fc6718'
+
+WEIXIN_SECRET = '692211561b14daae68a8cee4310db019'
