@@ -114,4 +114,7 @@ def reject_message(id):
     Message.objects.filter(message_id=id).update(status=-1)
 
 def index(request):
+    #if not request.user.is_authenticated():
+    #    return HttpResponseRedirect(s_reverse_admin_home())
+        
     return render_to_response('index.html', context_instance=RequestContext(request))
