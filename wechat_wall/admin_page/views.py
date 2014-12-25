@@ -62,6 +62,7 @@ def review(request):
     to_review_messages = get_to_review_message(3000)
     new_message_reviewed = get_new_message_reviewed(6000)
     whether_review = get_whether_review()
+    print "review page !!!!"
     print whether_review
     return render_to_response('review.html', {
         'to_review_message': to_review_messages,
@@ -103,6 +104,7 @@ def change_review_state(request):
         raise Http404
 
     current_state = get_whether_review()
+    print current_state
     set_whether_review(1 - current_state)
     return HttpResponse(json.dumps({}), content_type='application/json')
 
@@ -188,7 +190,7 @@ def get_new_message(request):
     if 'message_id' in request.POST:
         message = select_new_message_after_id(request.POST['message_id'])
     else:
-        message = select_first_message_before_time(100000)
+        message = select_first_message_before_time(1000)
 
     return_json = {}
     if message:

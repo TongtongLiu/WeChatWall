@@ -76,7 +76,7 @@ function setFont(message){
     }
     else if(msg.length <= 36){
         object = $('#'+message['id']).find('.displayContent');
-        object.css('font-size',64);
+        object.css('font-size',34);
         object.css('line-height','44px');
     }
     else if(getByteLen(msg) <= 92){

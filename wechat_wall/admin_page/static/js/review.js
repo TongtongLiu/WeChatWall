@@ -1,6 +1,11 @@
 function getTd(para) {
     return $('<td class="td-' + para + '"></td>');
 }
+$('#refresh').click(function(){
+    clearReviewingMsg();
+    refresh();
+    setTimeout(bindClickEvent, 1000);
+});
 
 /*
  * handle something about whether_review
@@ -83,6 +88,7 @@ function refreshReviewList(data) {
 	for (var i = 0; i < data['messages'].length; i++){
 		appendReviewingMsg(data['messages'][i]);
 	}
+    toReviewMessages = data['messages'];
 }
 
 /*
@@ -161,6 +167,7 @@ function response(data) {
 	} else {
 		showResult('审核发生错误...');
 	}
+    
 	var messages_id = data['msg_id'].split(',');
 	for(var i = 0; i < messages_id.length; i++) {
 		$('#'+messages_id[i]).fadeOut(600);
@@ -190,21 +197,23 @@ var options = {
                 },
 }
 
-$('#tbody-messages .btn-success').click(function(e) {
-	var msgID = $(this).parent().parent().attr('id');
-	setReviewType('pass');
-	setMsgID(msgID);
-	$('#postForm').ajaxSubmit(options);
-	return false;
-});
+function bindClickEvent(){
+	$('#tbody-messages .btn-success').click(function(e) {
+		var msgID = $(this).parent().parent().attr('id');
+		setReviewType('pass');
+		setMsgID(msgID);
+		$('#postForm').ajaxSubmit(options);
+		return false;
+	});
 
-$('#tbody-messages .btn-danger').click(function(e) {
-	var msgID = $(this).parent().parent().attr('id');
-	setReviewType('reject');
-	setMsgID(msgID);
-	$('#postForm').ajaxSubmit(options);
-	return false;
-});
+	$('#tbody-messages .btn-danger').click(function(e) {
+		var msgID = $(this).parent().parent().attr('id');
+		setReviewType('reject');
+		setMsgID(msgID);
+		$('#postForm').ajaxSubmit(options);
+		return false;
+	});
+}
 
 $('#allPass').click(function(e) {
 	var msgID = getAllMsgID;
@@ -221,6 +230,8 @@ $('#allReject').click(function(e) {
 	$('#postForm').ajaxSubmit(options);
 	return false;
 });
+
+bindClickEvent();
 
 function getAllMsgID() {
 	var msgID = '';
