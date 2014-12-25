@@ -3,28 +3,22 @@
 {% load staticfiles %}
 <head lang="zh-CN">
     <meta charset="UTF-8">
-    {% block viewport %}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    {% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
-    {% block css %}
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-        <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
-    {% endblock %}
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
 
-    {% block js %}
-        <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
-        <script type="text/javascript">
-        var openid = "{{ openid }}";
-        var name = "{{ name }}";
-        var photo = "{{ photo }}";
-        var get_new_messages = "{% url 'phone_page.views.w_get_new_messages' %}";
-        var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
-        </script>
-    {% endblock %}
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
+    <script type="text/javascript">
+    var openid = "{{ openid }}";
+    var name = "{{ name }}";
+    var photo = "{{ photo }}";
+    var get_new_messages = "{% url 'phone_page.views.w_get_new_messages' %}";
+    var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
+    </script>
 
-    <title>{% block title %}我要上墙{% endblock %}</title>
+    <title>我要上墙</title>
 </head>
 
 <body>
@@ -58,15 +52,23 @@
         </div>
 
         <div class="footer">
-            <div id="menu" class="menu">
-                <div class="line"></div>
-                <div class="line"></div>
+            <div class="f_left">
+                <div class="menu-wrap">
+                    <div id="menu" class="menu">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
             </div>
             <form id="message_form" class="input_form" action="{% url 'phone_page.views.w_post_message' %}" method="post">
                 {% csrf_token %}
                 <input id="openid" name="openid" class="text_content" type="text" value="{{ openid }}" style="display: none">
-                <input id="content" name="content" class="text_content" type="text">
-                <input class="send" type="submit" value="发送">
+                <div class="f_middle">
+                    <input id="content" name="content" class="text_content" type="text">
+                </div>
+                <div class="f_right">
+                    <input class="send" type="submit" value="发送">
+                </div>
             </form>
         </div>
     </div>
