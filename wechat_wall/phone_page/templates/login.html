@@ -3,25 +3,57 @@
 {% load staticfiles %}
 <head lang="zh-CN">
     <meta charset="UTF-8">
-    {% block viewport %}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    {% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
-    {% block css %}
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-        <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
-    {% endblock %}
-<title>{% block title %}我要上墙{% endblock %}</title>
+    <link href="{% static 'lib/fa/css/font-awesome.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/login.css'%}" rel="stylesheet" type="text/css" />
+<title>登录</title>
+
+    <script>var openid = "{{ openid }}"</script>
 </head>
 <body>
     <div class="wrap">
+        <div class="header">
+            登录微信墙
+        </div>
         <div class="login">
-            <div class="name">
-                <label></label>
-                <input>
+            <form id="login_form" action="{% url 'phone_page.views.login_register' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input_line">
+                    <label class="label">昵称:</label>
+                    <input id="input_name" name="name" type="text">
+                </div>
+                <div class="input_line">
+                    <label class="label">头像:</label>
+                    <input id="default_photo" name="default_photo" type="text">
+                    <input id="input_info" readonly="readonly" type="text" value="未选择">
+                    <div class="covering">
+                        <i class="fa fa-picture-o fa-2x" id="choose"></i>
+                        <input id="input_photo" name="photo" type="file">
+                    </div>
+                </div>
+                <input class="submit" type="submit" value="确定">
+            </form>
+        </div>
+        <div class="photo_choose">
+            <div class="example_info">
+                <p class="example_header">选择预设头像</p>
             </div>
-            <div class="photo"></div>
+            <div class="examples">
+                <div class="twentyFive"><div class="example 1"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example 2"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example 3"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example 4"><img src="#" class="example_img"/></div></div>
+            </div>
+            <div class="examples">
+                <div class="twentyFive"><div class="example 5"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example 6"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example 7"><img src="#" class="example_img"/></div></div>
+                <div class="twentyFive"><div class="example 8"><img src="#" class="example_img"/></div></div>
+            </div>
         </div>
     </div>
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
 </body>
 </html>

@@ -14,16 +14,16 @@ body {
 }
 
 .content-wrap {
-    padding-top: 2.5em;
-    padding-bottom: 2.5em;
+    padding-top: 3.5em;
+    padding-bottom: 3.5em;
 }
 
 .header {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 2.5em;
-    line-height: 2.5em;
+    height: 3.5em;
+    line-height: 3.5em;
     text-align: center;
     color: #EAEAEA;
     text-shadow: 0 1px 0 #525962;
@@ -127,8 +127,8 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 2.5em;
-    line-height: 2.5em;
+    height: 3.5em;
+    line-height: 3.5em;
     background: -webkit-linear-gradient(top, #dcdcdc, #c1c1c1);
     background: -moz-linear-gradient(top,#474d54,#2f363d);
     background: -ms-linear-gradient(top,#474d54,#2f363d);
@@ -139,9 +139,9 @@ body {
 }
 .menu {
     float: left;
-    width: 1.6em;
-    height: 1.6em;
-    margin: 0.5em 0.2em 0.5em 0.4em;
+    width: 1.8em;
+    height: 1.8em;
+    margin: 1em 0.1em 0.5em 0.2em;
     border-radius: 0.8em;
     border: 0.5px solid #939494;
     box-shadow: 0 1px 2px rgb(126, 123, 123);
@@ -174,14 +174,14 @@ body {
     -o-transition:transform .1s linear 0s;
 }
 .line:nth-child(1) {
-    top:0.7em;
-    left: 0.4em;
+    top:0.8em;
+    left: 0.5em;
     width: 0.8em;
     height: 0.2em;
 }
 .line:nth-child(2) {
-    top:0.4em;
-    left: 0.7em;
+    top:0.5em;
+    left: 0.8em;
     width: 0.2em;
     height: 0.8em;
 }
@@ -202,7 +202,7 @@ form .input_form{
     float: left;
 }
 .text_content {
-    height: 1.9em;
+    height: 2.5em;
     width: 68%;
     margin: 0px 0.2em 0px 0.2em;
     padding-left: 0.3em;
@@ -212,7 +212,7 @@ form .input_form{
 }
 
 .send {
-    height: 2.1em;
+    height: 2.5em;
     width: 15%;
     border: 1px solid rgb(11, 150, 13);
     border-radius: 0.3em;

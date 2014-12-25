@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns('',
-                       url(r'^loading*$', 'phone_page.views.loading'),
+                       url(r'^loading/(?P<openid>\S+)$', 'phone_page.views.loading'),
                        url(r'^login/check/$', 'phone_page.views.login_check'),
                        url(r'^login/register/$', 'phone_page.views.login_register'),
                        url(r'^login/(?P<openid>\S+)$', 'phone_page.views.login'),
