@@ -188,7 +188,7 @@ def get_new_message(request):
     if 'message_id' in request.POST:
         message = select_new_message_after_id(request.POST['message_id'])
     else:
-        message = select_first_message_before_time(100000)
+        message = select_first_message_before_time(5)
 
     return_json = {}
     if message:
