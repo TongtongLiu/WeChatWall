@@ -23,53 +23,47 @@
 
 <body>
     <div class="wrap">
-        <div class="header">
-            <h3 class="title">
-                活动名称
-                <button id="refresh" class="refresh">
-                    <i class="fa fa-refresh"></i>
-                </button>
-            </h3>
-        </div>
-
         <div class="content-wrap">
             <div id="content-container" class="content">
-{#                <div class="message">#}
-{#                    <div class="message_header">#}
-{#                        <div class="photo"><img src="#"/></div>#}
-{#                        <div class="message_header_right">#}
-{#                            <div class="name">null</div>#}
-{#                            <div class="time">null</div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="message_content">null</div>#}
-{#                    <div class="message_id" style="display: none">null</div>#}
-{#                </div>#}
-                <div id="get_old" class="message get_old">
-                    <p>More</p>
+                <div class="message">
+                    <div class="message-left">
+                        <div class="message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="message-right">
+                        <div class="message-name">null</div>
+                        <div class="dialog">
+                            <span class="triangle"></span>
+                            <div class="message-content">null</div>
+                        </div>
+                    </div>
+                    <div class="message-id" style="display: none">null</div>
+                    <div style="clear: both"></div>
                 </div>
             </div>
         </div>
-
         <div class="footer">
-            <div class="f_left">
-                <div class="menu-wrap">
-                    <div id="menu" class="menu">
-                        <div class="line"></div>
-                        <div class="line"></div>
+            <div  class="footer-wrap">
+                <div class="f_left">
+                    <div class="menu-wrap">
+                        <div id="menu" class="menu">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
                     </div>
                 </div>
+                <form id="message_form" class="input_form" action="{% url 'phone_page.views.w_post_message' %}" method="post">
+                    {% csrf_token %}
+                    <input id="openid" name="openid" class="text_content" type="text" value="{{ openid }}" style="display: none">
+                    <div class="f_middle">
+                        <div class="text-content" contenteditable="true"></div>
+                        <textarea id="content" name="content" style="display: none" ></textarea>
+                    </div>
+                    <div class="f_right">
+                        <input class="send" type="submit" value="发送">
+                    </div>
+                </form>
+                <div style="clear: both"></div>
             </div>
-            <form id="message_form" class="input_form" action="{% url 'phone_page.views.w_post_message' %}" method="post">
-                {% csrf_token %}
-                <input id="openid" name="openid" class="text_content" type="text" value="{{ openid }}" style="display: none">
-                <div class="f_middle">
-                    <input id="content" name="content" class="text_content" type="text">
-                </div>
-                <div class="f_right">
-                    <input class="send" type="submit" value="发送">
-                </div>
-            </form>
         </div>
     </div>
 </body>

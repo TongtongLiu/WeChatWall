@@ -9,7 +9,7 @@ html {
 	-ms-text-size-adjust: 100%
 }
 
-a, a:focus, input, input:focus, button, button:focus {
+a, a:focus, input, input:focus, button, button:focus, textarea, textarea:focus {
     outline:none;
 }
 
@@ -20,56 +20,7 @@ body {
 }
 
 .content-wrap {
-    padding-top: 3.5em;
     padding-bottom: 3.5em;
-}
-
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 3.5em;
-    line-height: 3.5em;
-    text-align: center;
-    color: #EAEAEA;
-    text-shadow: 0 1px 0 #525962;
-    font-weight: bold;
-    border: 1px solid #202124;
-    box-shadow: 0 1px 0 #616a74 inset,0 1px 5px #212528;
-    background: -webkit-linear-gradient(top,#474d54,#2f363d);
-    background: -moz-linear-gradient(top,#474d54,#2f363d);
-    background: -ms-linear-gradient(top,#474d54,#2f363d);
-    background: -o-linear-gradient(top,#474d54,#2f363d);
-    background: linear-gradient(top,#474d54,#2f363d);
-}
-.title {
-    position: relative;
-}
-.refresh {
-    position: absolute;
-    height: 60%;
-    width: 15%;
-    right: 3%;
-    top: 20%;
-    border: 1px solid #202124;
-    border-radius: 0.3em;
-    color: #EAEAEA;
-    font-weight: bold;
-    background: -webkit-linear-gradient(top,#474d54,#2f363d);
-    background: -moz-linear-gradient(top,#474d54,#2f363d);
-    background: -ms-linear-gradient(top,#474d54,#2f363d);
-    background: -o-linear-gradient(top,#474d54,#2f363d);
-    background: linear-gradient(top,#474d54,#2f363d);
-    box-shadow: 0 0.5px 1px rgb(126, 123, 123);
-    cursor: pointer;
-}
-.refresh:active {
-    background: -webkit-linear-gradient(top,#3D4349,#2F353C);
-    background: -moz-linear-gradient(top,#3D4349,#2F353C);
-    background: -ms-linear-gradient(top,#3D4349,#2F353C);
-    background: -o-linear-gradient(top,#3D4349,#2F353C);
-    background: linear-gradient(top,#3D4349,#2F353C);
-    box-shadow: 0 2px 5px rgb(42, 42, 42) inset;
 }
 
 .content {
@@ -77,9 +28,61 @@ body {
 }
 
 .message {
-    margin: 0.5em;
+    padding: 0.5em 0 0.5em 0.5em;
+}
+
+.message-left {
+    float: left;
+    width: 15%;
+    text-align: center;
+    margin-top: 0.5em;
+}
+.message-right {
+    float: left;
+    width: 80%;
+}
+
+.message-photo {
+    width: 2.4em;
+    height: 2.4em;
+    overflow: hidden;
+    border: 1px solid #969393;
+    border-radius: 1.2em;
+    box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
+}
+.message-photo img {
+    width: 2.4em;
+    height: 2.4em;
+}
+
+.message-name {
+    margin-left: 1em;
+    color: rgb(69, 69, 69);
+}
+.dialog {
+    position: relative;
+}
+.triangle {
+    position:absolute;
+    top:35%;
+    margin-top:-8px;
+    display:block;
+    width:0;
+    height:0;
+    overflow:hidden;
+    line-height:0;
+    font-size:0;
+    border-bottom:8px solid rgb(226, 226, 226);
+    border-top:8px solid rgb(226, 226, 226);
+    border-left:none;
+    border-right:8px solid #F2F2F2;
+}
+
+.message-content {
+    margin: 0 0.5em;
     padding: 0.5em;
     border-radius: 0.3em;
+    word-wrap:break-word;
     box-shadow: 0 1px 0 #F6F6F6 inset,0 0.5px 1px #808080;
     background: -webkit-linear-gradient(top,#F2F2F2,#F7F7F7);
     background: -moz-linear-gradient(top,#F2F2F2,#F7F7F7);
@@ -87,53 +90,16 @@ body {
     background: -o-linear-gradient(top,#F2F2F2,#F7F7F7);
     background: linear-gradient(top,#F2F2F2,#F7F7F7);
 }
-.message_header {
 
-}
-.photo {
-    width: 2.3em;
-    height: 2.3em;
-    float: left;
-}
-.photo img {
-    width: 2.3em;
-    height: 2.3em;
-}
-
-.message_header_right {
-    height: 2.3em;
-    float: left;
-    padding-left: 0.5em;
-}
-.time {
-    font-size: 0.3em;
-    color: rgb(166, 165, 165);
-}
-.name {
-    color: rgb(69, 69, 69);
-}
-.message_content {
-    padding-top: 0.3em;
-    clear:both;
-    color: rgb(69, 69, 69);
-    word-wrap:break-word;
-    white-space: normal;
-}
-
-.message_id {
+.message-id {
     display: none;
-}
-
-.get_old {
-    text-align: center;
-    cursor: pointer;
+    clear: both;
 }
 
 .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 10%;
     background: -webkit-linear-gradient(top, #dcdcdc, #c1c1c1);
     background: -moz-linear-gradient(top,#474d54,#2f363d);
     background: -ms-linear-gradient(top,#474d54,#2f363d);
@@ -143,10 +109,13 @@ body {
     box-shadow: 0 -0.3px 1px rgb(126, 123, 123);
 }
 
-.f_left {
+.footer-wrap {
     position: relative;
+}
+
+.f_left {
     float: left;
-    height: 100%;
+    height: 3em;
     width: 12%;
 }
 form.input_form {
@@ -155,24 +124,21 @@ form.input_form {
     width: 88%;
 }
 .f_middle {
-    position: relative;
     float: left;
-    height: 100%;
     width: 80%;
 }
 .f_right {
-    position: relative;
     float: left;
-    height: 100%;
+    height: 3em;
     width: 20%;
 }
 
 .menu-wrap {
     position: absolute;
-    top: 50%;
-    margin-top: -1em;
-    left: 50%;
+    bottom: 0;
+    left: 6%;
     margin-left: -1em;
+    margin-bottom: 0.5em;
 }
 
 .menu {
@@ -234,23 +200,27 @@ form.input_form {
     -o-transition:transform .1s linear 0s;
 }
 
-.text_content {
-    position: absolute;
-    top: 15%;
-    left: 2%;
-    height: 70%;
+.text-content {
     width: 90%;
-    padding-left: 0.3em;
+    min-height: 1em;
+    max-height: 4em;
+    outline: 0;
+    padding: 0.5em 5%;
+    margin: 0.3em 0;
     border: 1px solid rgb(186, 178, 178);
     border-radius: 0.3em;
     box-shadow: 0 1px 3px #737B84 inset;
+    background: #ffffff;
+    overflow-y: auto;
 }
 
 .send {
     position: absolute;
-    top: 15%;
-    height: 70%;
-    width: 90%;
+    font-size: inherit;
+    height: 2em;
+    bottom: 0.5em;
+    right: 2%;
+    width: 14%;
     border: 1px solid rgb(11, 150, 13);
     border-radius: 0.3em;
     color: rgb(235, 244, 235);
