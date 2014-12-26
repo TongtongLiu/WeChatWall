@@ -23,8 +23,37 @@
 
 <body>
     <div class="wrap">
+        <div class="mask"></div>
         <div class="content-wrap">
             <div id="content-container" class="content">
+                <div class="message">
+                    <div class="message-left">
+                        <div class="message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="message-right">
+                        <div class="message-name">null</div>
+                        <div class="dialog">
+                            <span class="triangle"></span>
+                            <div class="message-content">(#‵′)凸</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="self-message">
+                    <div class="self-message-right">
+                        <div class="self-message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="self-message-left">
+                        <div class="self-message-name"></div>
+                        <div class="self-dialog">
+                            <span class="self-triangle"></span>
+                            <div class="self-message-content">哈哈哈哈哈哈哈哈</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
                 <div class="message">
                     <div class="message-left">
                         <div class="message-photo"><img src="#"/></div>
@@ -36,12 +65,119 @@
                             <div class="message-content">null</div>
                         </div>
                     </div>
-                    <div class="message-id" style="display: none">null</div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="self-message">
+                    <div class="self-message-right">
+                        <div class="self-message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="self-message-left">
+                        <div class="self-message-name"></div>
+                        <div class="self-dialog">
+                            <span class="self-triangle"></span>
+                            <div class="self-message-content">Σ( ° △ °|||)︴</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="message">
+                    <div class="message-left">
+                        <div class="message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="message-right">
+                        <div class="message-name">null</div>
+                        <div class="dialog">
+                            <span class="triangle"></span>
+                            <div class="message-content">null</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="self-message">
+                    <div class="self-message-right">
+                        <div class="self-message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="self-message-left">
+                        <div class="self-message-name"></div>
+                        <div class="self-dialog">
+                            <span class="self-triangle"></span>
+                            <div class="self-message-content">null</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="message">
+                    <div class="message-left">
+                        <div class="message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="message-right">
+                        <div class="message-name">null</div>
+                        <div class="dialog">
+                            <span class="triangle"></span>
+                            <div class="message-content">null</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="self-message">
+                    <div class="self-message-right">
+                        <div class="self-message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="self-message-left">
+                        <div class="self-message-name"></div>
+                        <div class="self-dialog">
+                            <span class="self-triangle"></span>
+                            <div class="self-message-content">（づ￣3￣）づ╭❤～</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="message">
+                    <div class="message-left">
+                        <div class="message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="message-right">
+                        <div class="message-name">null</div>
+                        <div class="dialog">
+                            <span class="triangle"></span>
+                            <div class="message-content">╰(*°▽°*)╯</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
+                    <div style="clear: both"></div>
+                </div>
+                <div class="self-message">
+                    <div class="self-message-right">
+                        <div class="self-message-photo"><img src="#"/></div>
+                    </div>
+                    <div class="self-message-left">
+                        <div class="self-message-name"></div>
+                        <div class="self-dialog">
+                            <span class="self-triangle"></span>
+                            <div class="self-message-content">(๑ŐдŐ)b</div>
+                        </div>
+                    </div>
+                    <div class="message-id">null</div>
                     <div style="clear: both"></div>
                 </div>
             </div>
         </div>
+
         <div class="footer">
+            <div class="footer-mask"></div>
+            <div class="menuItems">
+                <div class="item-wrap">
+                    <div class="menuItem"></div>
+                    <div class="menuItem"></div>
+                    <div class="menuItem"></div>
+                </div>
+            </div>
             <div  class="footer-wrap">
                 <div class="f_left">
                     <div class="menu-wrap">
@@ -55,7 +191,7 @@
                     {% csrf_token %}
                     <input id="openid" name="openid" class="text_content" type="text" value="{{ openid }}" style="display: none">
                     <div class="f_middle">
-                        <div class="text-content" contenteditable="true"></div>
+                        <div id="div-content" class="text-content" contenteditable="true"></div>
                         <textarea id="content" name="content" style="display: none" ></textarea>
                     </div>
                     <div class="f_right">
