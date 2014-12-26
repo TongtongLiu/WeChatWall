@@ -166,5 +166,5 @@ function stop() {
     clearInterval(timer);
 }
 
-run()
+//run()
 
