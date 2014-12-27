@@ -19,6 +19,7 @@ body {
     color: rgb(69, 69, 69);
 }
 
+/*遮罩效果*/
 .mask {
     position: absolute;
 	top: 0;
@@ -42,6 +43,7 @@ body {
 	transform: translate3d(0,0,0);
 }
 
+/*底部的遮罩*/
 .footer-mask {
     position: absolute;
 	top: 0;
@@ -64,6 +66,55 @@ body {
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
+
+/*通知栏*/
+.notice {
+    z-index: 5;
+    position: fixed;
+    width: 100%;
+    height: 2em;
+    line-height: 2em;
+    color: #8a6d3b;
+    background: #fcf8e3;
+    border-bottom: 1px solid #faebcc;
+}
+.notice-wrap {
+    height: 2em;
+    width: 80%;
+    margin: 0 10%;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+.notice-content {
+    position: absolute;
+}
+.notice span.delete {
+    position: absolute;
+    top: 0;
+    right: 1em;
+    font-weight: bolder;
+    opacity: .3;
+    cursor: pointer;
+}
+.notice span.delete:active,  .notice span.delete:hover{
+    opacity: 1;
+}
+
+/*信息提示框*/
+.prompt {
+    position: fixed;
+    bottom: 4em;
+    left: 40%;
+    padding: 0.5em;
+    background: #46BC3A;
+    color: white;
+    border-radius: 0.3em;
+    box-shadow: 0 1px 0 #F6F6F6 inset,1px 1px 2px #B7B7B7;
+}
+
+
+/*主内容*/
 .content-wrap {
     padding-bottom: 3.5em;
 }
@@ -88,6 +139,8 @@ body {
 }
 
 .message-photo {
+    float: right;
+    margin-right: 0.3em;
     width: 2.4em;
     height: 2.4em;
     overflow: hidden;
@@ -154,9 +207,9 @@ body {
 }
 
 .self-message-photo {
+    margin-left: 0.3em;
     width: 2.4em;
     height: 2.4em;
-    float: right;
     overflow: hidden;
     border: 1px solid #969393;
     border-radius: 1.2em;
@@ -525,4 +578,8 @@ form.input_form {
   -webkit-animation-duration: 387.5ms;
   -webkit-animation-iteration-count: 1;
   -webkit-animation-fill-mode: forwards;
+}
+
+.item {
+    margin: 5px;;
 }
