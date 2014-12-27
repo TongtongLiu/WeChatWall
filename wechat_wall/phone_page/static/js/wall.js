@@ -151,7 +151,6 @@
             move(time);
         }, 3000);
     }
-    createNoticeBar("adskfjkasd;lfjdsklafjdsa;lfjd;aslfljfadsl;k");
 
 
     //创建提示框
