@@ -59,7 +59,7 @@
 
     <script src="{% static "js/index.js" %}"></script>
     <script src="{% static "js/websocket_config.js" %}"></script>
-    <script src="{% static "js/websocket.js" %}"></script>
+    <script src="{% static "js/bigScreenWebsocket.js.js" %}"></script>
 {% endblock %}
 
 
@@ -85,11 +85,17 @@
                 <div id="qrImg"><img src="{% static "img/qrCode.png" %}" style="height:100%;width:100%;"></div>
             </div>
         </div><!--header end-->
+
+        <div id="footer" style="display:none;">
+            <div id="scrollArea">
+                <div id="scrollContent">我是滚动内容！</div>
+            </div> 
+        </div>
+
         <div id="container" class="clearfix">
             <ul id="userBox">
             <!--
                 <li class="clearfix userList" style="display:block;">
->>>>>>> 1c99e048d72a5758f1fcabf8a040a6a0b620b8fd
                     <div class="userPhoto left">
                         <img src="{% static "img/user1.jpg" %}" class="photo right">
                     </div>

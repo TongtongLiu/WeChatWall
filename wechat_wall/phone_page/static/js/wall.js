@@ -65,14 +65,42 @@ $(document).ready(function() {
 //            }
 //        });
 //    });
+
+    //websocket
+    var start = function() {
+        socket = new io.Socket(websocket_host, websocket_options);
+        socket.connect();
+        socket.on('connect', connected);
+        socket.on('message', messaged);
+    };
+
+    start();
+
+    var messaged = function(data) {
+        console.log(data);
+        if (data.result == 'Success') {
+            if (data.type == 'user_message') {
+                var message = createsMessages(data);
+                message.appendTo('#content-container');
+            } else if (data.type == 'admin_message') {
+
+            }
+        }
+    };
+
+
     //发送消息
     $('.send').click(function() {
-        var content = $('#div-content').html();
+        var content = $('#div-content').text();
+        message = {
+            type: 'user_message',
+            content: content,
+            openid: openid
+        }
+        socket.send(openid);
         $('#div-content').html("");
         send.attr("disabled","disabled");
         send.css("color","rgba(235, 244, 235,0.5)");
-        var message = createsMessages(content);
-        message.appendTo($('#content-container'));
         //滚动到页面底部
         var height = $(document).height();
         $('body').animate({scrollTop: height}, 800);

@@ -1,4 +1,5 @@
 var messageNumber;
+var scrollTime;
 var reviewingMsgMap = {
     'name': 'userName',
     'content': 'displayContent'
@@ -51,10 +52,10 @@ function deleteElementFromBottom(){
         object = list[2];
         $(object).slideUp(600);
         setTimeout(function(){
-            $(object).remove();    
+            $(object).remove();
         }, 600);
     }
-    
+
 }
 
 //字符串字节数
@@ -67,7 +68,7 @@ function getByteLen(str){
         }
     }
     return n;
-}  
+}
 
 function setFont(message){
     var msg = message['content'];
@@ -108,6 +109,29 @@ function addElementToHead(message){
     $($('.userList')[0]).slideDown(600);
 }
 
+function addAdminMessage(message){
+    var marquee = $('#scrollContent');
+    var scrollArea = $('#footer');
+    marquee.html(message);
+    marquee.css('left',scrollArea.width());
+    $('#footer').slideDown(500);
+    scrollTime = setInterval("scrollMarquee()",20);
+    setTimeout(function(){
+        $('#footer').slideUp(500);
+        setTimeout(function(){clearInterval(scrollTime)}, 500);
+    }, 5000)
+}
+
+function scrollMarquee(){
+    var marquee = $('#scrollContent');
+    var scrollArea = $('#scrollArea');
+    var speed = 2;
+    if(parseInt(marquee.css('left')) > (-1)*marquee.width()+speed)
+        marquee.css('left',parseInt(marquee.css('left'))-speed);
+    else
+        marquee.css('left',parseInt(scrollArea.width())+speed);
+}
+
 function refresh(message){
     deleteElementFromBottom();
     addElementToHead(message);
@@ -117,8 +141,8 @@ function refresh(message){
 
 function initial(){
     pageSuit();
-    messageNumber = $('.userList').length;
-    $('#msgNum').html(messageNumber)
+    var messageNumber = $('.userList').length;
+    $('#msgNum').html(messageNumber);
 }
 window.onload=initial;
 
