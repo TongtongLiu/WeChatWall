@@ -31,33 +31,112 @@
 
 $(document).ready(function() {
     var send = $('.send');
-//    //提交消息
-//    $('#message_form').submit(function (event) {
-//        event.preventDefault();
-//        var form = $('#message_form');
+    //提交消息
+    $('#message_form').submit(function (event) {
+        event.preventDefault();
+        var form = $('#message_form');
+        var content = $('#div-content').html();
+        $('#div-content').html("");
+        send.attr("disabled","disabled");
+        send.css("color","rgba(235, 244, 235,0.5)");
+
+        $.ajax({
+            url: form.attr('action'),
+            type: "POST",
+            data: {
+                openid: openid,
+                content: content
+            },
+            success: function (data){
+                switch (data) {
+                    case "Success":
+                        alert("hah");
+                        break;
+
+                    case "NoUser":
+                        break;
+
+                    case "BannedContent":
+                        break;
+
+                    case "Error":
+                        break;
+                }
+            },
+            error: function (data){
+                console.info(data);
+            }
+        });
+    });
+    //发送消息
+//    $('.send').click(function() {
+//        var content = $('#div-content').html();
+//        $('#div-content').html("");
+//        send.attr("disabled","disabled");
+//        send.css("color","rgba(235, 244, 235,0.5)");
+//        var message = createsSelfMessages(content);
+//        message.appendTo($('#content-container'));
+//        //滚动到页面底部
+//        var height = $(document).height();
+//        $('body').animate({scrollTop: height}, 800);
+//    });
+//    //刷新按钮
+//    $('#refresh').click(function () {
+//        var refresh = $('#refresh i');
+//        refresh.addClass('fa-spin');
+//        var message_id;
+//        if ($('#content-container .message_id').length == 0)
+//            message_id = 0;
+//        else
+//            message_id = parseInt($('#content-container .message_id')[0].innerHTML);
 //
 //        $.ajax({
-//            url: form.attr('action'),
+//            url: get_new_messages,
 //            type: "POST",
 //            data: {
-//                openid: openid,
-//                content: $('#content').val()
+//                message_id: message_id
+//            },
+//            success: function (data) {
+//                //console.info(data);
+//                var messages = data.messages;
+//                for (var i = messages.length - 1; i >= 0; i--) {
+//                    var message = createsMessages(messages[i]);
+//                    message.prependTo($("#content-container"));
+//                }
+//            },
+//            error: function (data){
+//                console.info(data);
+//            }
+//        });
+//
+//        updateMessagesTime();
+//        refresh.removeClass('fa-spin');
+//    });
+//
+//    $('#refresh').trigger("click");
+//
+//    //获取历史消息按钮
+//    $('#get_old').click(function () {
+//        var message_id;
+//        if ($('#content-container .message_id').length == 0)
+//            message_id = 0;
+//        else {
+//            var len = $('#content-container .message_id').length;
+//            message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+//        }
+//
+//        $.ajax({
+//            url: get_old_messages,
+//            type: "POST",
+//            data: {
+//                message_id: message_id
 //            },
 //            success: function (data){
-//                switch (data) {
-//                    case "Success":
-//                        $('#content').val("");
-//                        $('#refresh').trigger("click");
-//                        break;
-//
-//                    case "NoUser":
-//                        break;
-//
-//                    case "BannedContent":
-//                        break;
-//
-//                    case "Error":
-//                        break;
+//                //console.info(data);
+//                var messages = data.messages;
+//                for (var i = 0; i < messages.length; i++) {
+//                    var message = createsMessages(messages[i]);
+//                    $("#get_old").before(message);
 //                }
 //            },
 //            error: function (data){
@@ -65,94 +144,18 @@ $(document).ready(function() {
 //            }
 //        });
 //    });
-    //发送消息
-    $('.send').click(function() {
-        var content = $('#div-content').html();
-        $('#div-content').html("");
-        send.attr("disabled","disabled");
-        send.css("color","rgba(235, 244, 235,0.5)");
-        var message = createsMessages(content);
-        message.appendTo($('#content-container'));
-        //滚动到页面底部
-        var height = $(document).height();
-        $('body').animate({scrollTop: height}, 800);
-    });
-    //刷新按钮
-    $('#refresh').click(function () {
-        var refresh = $('#refresh i');
-        refresh.addClass('fa-spin');
-        var message_id;
-        if ($('#content-container .message_id').length == 0)
-            message_id = 0;
-        else
-            message_id = parseInt($('#content-container .message_id')[0].innerHTML);
-
-        $.ajax({
-            url: get_new_messages,
-            type: "POST",
-            data: {
-                message_id: message_id
-            },
-            success: function (data) {
-                //console.info(data);
-                var messages = data.messages;
-                for (var i = messages.length - 1; i >= 0; i--) {
-                    var message = createsMessages(messages[i]);
-                    message.prependTo($("#content-container"));
-                }
-            },
-            error: function (data){
-                console.info(data);
-            }
-        });
-
-        updateMessagesTime();
-        refresh.removeClass('fa-spin');
-    });
-
-    $('#refresh').trigger("click");
-
-    //获取历史消息按钮
-    $('#get_old').click(function () {
-        var message_id;
-        if ($('#content-container .message_id').length == 0)
-            message_id = 0;
-        else {
-            var len = $('#content-container .message_id').length;
-            message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
-        }
-
-        $.ajax({
-            url: get_old_messages,
-            type: "POST",
-            data: {
-                message_id: message_id
-            },
-            success: function (data){
-                //console.info(data);
-                var messages = data.messages;
-                for (var i = 0; i < messages.length; i++) {
-                    var message = createsMessages(messages[i]);
-                    $("#get_old").before(message);
-                }
-            },
-            error: function (data){
-                console.info(data);
-            }
-        });
-    });
 
     //创建一条信息
-    function createsMessages(content) {
+    function createsMessages(message) {
         var divMessage = $('<div class="message"></div>');
         var divMessageLeft = $('<div class="message-left"></div>');
-        var divPhoto = $('<div class="message-photo"><img src="#"/></div>');
+        var divPhoto = $('<div class="message-photo"><img src='+message.avatar+'"/></div>');
         var divMessageRight = $('<div class="message-right"></div>');
-        var divMessageName = $('<div class="message-name">null</div>');
+        var divMessageName = $('<div class="message-name">'+message.name+'</div>');
         var divDialog = $('<div class="dialog"></div>');
         var divTriangle = $('<span class="triangle"></span>');
-        var divContent = $('<div class="message-content">'+content +'</div>');
-        var divId = $('<div class="message-id"></div>');
+        var divContent = $('<div class="message-content">'+message.content +'</div>');
+        var divId = $('<div class="message-id">'+message.id+'</div>');
         var divClear = $('<div style="clear: both"></div>');
 
         divMessageLeft.append(divPhoto);
@@ -173,7 +176,7 @@ $(document).ready(function() {
         var divMessageRight = $('<div class="self-message-right"></div>');
         var divPhoto = $('<div class="self-message-photo"><img src="#"/></div>');
         var divMessageLeft = $('<div class="self-message-left"></div>');
-        var divMessageName = $('<div class="self-message-name">null</div>');
+        var divMessageName = $('<div class="self-message-name"></div>');
         var divDialog = $('<div class="self-dialog"></div>');
         var divTriangle = $('<span class="self-triangle"></span>');
         var divContent = $('<div class="self-message-content">'+content +'</div>');
@@ -246,4 +249,43 @@ $(document).ready(function() {
 //            send.css("color","rgba(235, 244, 235,1)");
 //        }
 //    });
+
+    //创建通知框
+    function createNoticeBar(content){
+        var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content">通知：'+content+'</p></div><span class="delete">×</span></div>');
+        $('.wrap').prepend(notice);
+        $('.content-wrap').css("padding-top", "2em");
+        $('.notice span.delete').click(function(){
+            $('.content-wrap').css("padding-top", "0");
+            $('.notice').remove();
+        });
+    }
+    createNoticeBar("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssss");
+    //通知栏滚动
+    setTimeout(function(){
+        var div = $('.notice-wrap');
+        var p = $('.notice-content');
+        var width = p.width();
+        var dWidth = div.width();
+        var speed = 3000;//越大越慢
+        var time = width/100*speed;
+        function move(t) {
+            p.animate({ left: -width }, time, "linear", function () {
+                p.css("left", dWidth);
+                t=((width+dWidth)/100)*speed;
+                move(t);
+            });
+        }
+        move(time);
+    }, 3000);
+
+    //创建提示框
+    function createPrompt() {
+        var prompt = $('<div class="prompt">已发送</div>');
+        $('.wrap').append(prompt);
+        prompt.animate({ opacity: 0 }, 3000, "linear", function () {
+            prompt.remove();
+        });
+    }
+    createPrompt();
 });
