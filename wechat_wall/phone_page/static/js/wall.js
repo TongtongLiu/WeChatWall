@@ -32,27 +32,27 @@
 $(document).ready(function() {
     var send = $('.send');
 
-    //websocket
-    var start = function() {
-        socket = new io.Socket(websocket_host, websocket_options);
-        socket.connect();
-        socket.on('connect', connected);
-        socket.on('message', messaged);
-    };
-
-    start();
-
-    var messaged = function(data) {
-        console.log(data);
-        if (data.result == 'Success') {
-            if (data.type == 'user_message') {
-                var message = createsMessages(data);
-                message.appendTo('#content-container');
-            } else if (data.type == 'admin_message') {
-
-            }
-        }
-    };
+//    //websocket
+//    var start = function() {
+//        socket = new io.Socket(websocket_host, websocket_options);
+//        socket.connect();
+//        socket.on('connect', connected);
+//        socket.on('message', messaged);
+//    };
+//
+//    start();
+//
+//    var messaged = function(data) {
+//        console.log(data);
+//        if (data.result == 'Success') {
+//            if (data.type == 'user_message') {
+//                var message = createsMessages(data);
+//                message.appendTo('#content-container');
+//            } else if (data.type == 'admin_message') {
+//
+//            }
+//        }
+//    };
 
 
     //发送消息
@@ -311,7 +311,8 @@ $(document).ready(function() {
             $('.notice').remove();
         });
     }
-    createNoticeBar("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssss");
+    //createNoticeBar("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssss");
+
     //通知栏滚动
     setTimeout(function(){
         var div = $('.notice-wrap');
@@ -338,5 +339,22 @@ $(document).ready(function() {
             prompt.remove();
         });
     }
-    createPrompt();
+    //createPrompt();
+
+    //上拉刷新
+    window.loadheight = $('#refresh').height();
+    window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
+    window.visible = $("#refresh").animate("marginTop", "0px");
+    $("#refresh").css("marginTop", "-" + loadheight + "px");
+    $(window).scroll(function (event) {
+        var st = $(window).scrollTop();
+        if (st <= 0) {
+            $("#refresh").animate({
+                "marginTop": "0px"
+            }, 200);
+            $("#refresh").delay(500).slideUp(200, function () {
+                //window.location.reload()
+            })
+        }
+    });
 });
