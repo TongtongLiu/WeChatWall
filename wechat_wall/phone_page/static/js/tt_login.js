@@ -64,7 +64,7 @@ function submitButton() {
         data: {
             openid: openid,
             name: $('#name-input').val(),
-            photo: $('#photo-show').attr('src')
+            photo: $('#photo-input').val()
         },
         success: function(data) {
             switch (data) {
