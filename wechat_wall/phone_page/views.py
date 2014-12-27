@@ -142,13 +142,14 @@ def login_register(request):
 
 
 def wall(request, openid):
-    users = select_users_by_openid(openid)
-    if not users:
-        return redirect(s_reverse_login(openid))
-    user = users[0]
-    return render_to_response('wall.html',
-                               {'openid': openid, 'name': user.name, 'photo': user.photo},
-                               context_instance=RequestContext(request))
+    # users = select_users_by_openid(openid)
+    # if not users:
+    #     return redirect(s_reverse_login(openid))
+    # user = users[0]
+    # return render_to_response('wall.html',
+    #                            {'openid': openid, 'name': user.name, 'photo': user.photo},
+    #                            context_instance=RequestContext(request))
+    return render_to_response('wall.html')
 
 @csrf_exempt
 def w_post_message(request):

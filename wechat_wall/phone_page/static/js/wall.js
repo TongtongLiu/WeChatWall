@@ -20,132 +20,8 @@
         sendBtn.css("color","rgba(235, 244, 235,0.5)");
         //滚动到页面底部
         var height = $(document).height();
-        $('body').animate({scrollTop: height}, 800);
+        $('body').animate({scrollTop: height}, 1000);
     });
-    /*
-    //刷新按钮
-    $('#refresh').click(function () {
-        var refresh = $('#refresh i');
-        refresh.addClass('fa-spin');
-        var message_id;
-        if ($('#content-container .message_id').length == 0)
-            message_id = 0;
-        else
-            message_id = parseInt($('#content-container .message_id')[0].innerHTML);
-    //提交消息
-    $('#message_form').submit(function (event) {
-        event.preventDefault();
-        var form = $('#message_form');
-        var content = $('#div-content').html();
-        $('#div-content').html("");
-        send.attr("disabled","disabled");
-        send.css("color","rgba(235, 244, 235,0.5)");
-
-        $.ajax({
-            url: form.attr('action'),
-            type: "POST",
-            data: {
-                openid: openid,
-                content: content
-            },
-            success: function (data){
-                switch (data) {
-                    case "Success":
-                        alert("hah");
-                        break;
-
-                    case "NoUser":
-                        break;
-
-                    case "BannedContent":
-                        break;
-
-                    case "Error":
-                        break;
-                }
-            },
-            error: function (data){
-                console.info(data);
-            }
-        });
-    });
-*/
-    //发送消息
-//    $('.send').click(function() {
-//        var content = $('#div-content').html();
-//        $('#div-content').html("");
-//        send.attr("disabled","disabled");
-//        send.css("color","rgba(235, 244, 235,0.5)");
-//        var message = createsSelfMessages(content);
-//        message.appendTo($('#content-container'));
-//        //滚动到页面底部
-//        var height = $(document).height();
-//        $('body').animate({scrollTop: height}, 800);
-//    });
-//    //刷新按钮
-//    $('#refresh').click(function () {
-//        var refresh = $('#refresh i');
-//        refresh.addClass('fa-spin');
-//        var message_id;
-//        if ($('#content-container .message_id').length == 0)
-//            message_id = 0;
-//        else
-//            message_id = parseInt($('#content-container .message_id')[0].innerHTML);
-//
-//        $.ajax({
-//            url: get_new_messages,
-//            type: "POST",
-//            data: {
-//                message_id: message_id
-//            },
-//            success: function (data) {
-//                //console.info(data);
-//                var messages = data.messages;
-//                for (var i = messages.length - 1; i >= 0; i--) {
-//                    var message = createsMessages(messages[i]);
-//                    message.prependTo($("#content-container"));
-//                }
-//            },
-//            error: function (data){
-//                console.info(data);
-//            }
-//        });
-//
-//        updateMessagesTime();
-//        refresh.removeClass('fa-spin');
-//    });
-//
-//    $('#refresh').trigger("click");
-//
-//    //获取历史消息按钮
-//    $('#get_old').click(function () {
-//        var message_id;
-//        if ($('#content-container .message_id').length == 0)
-//            message_id = 0;
-//        else {
-//            var len = $('#content-container .message_id').length;
-//            message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
-//        }
-//
-//        $.ajax({
-//            url: get_old_messages,
-//            type: "POST",
-//            data: {
-//                message_id: message_id
-//            },
-//            success: function (data){
-//                //console.info(data);
-//                var messages = data.messages;
-//                for (var i = 0; i < messages.length; i++) {
-//                    var message = createsMessages(messages[i]);
-//                    $("#get_old").before(message);
-//                }
-//            },
-//            error: function (data){
-//                console.info(data);
-//            }
-//        });
-//    });
 
     //创建一条信息
     function createsMessages(message) {
@@ -213,7 +89,24 @@
         $('.mask').css({"height":docHeight, "width":docWidth});
     });
     //菜单项按钮处理
-
+    $('.snow').click(function(){
+        if($('.snow').hasClass("start")) {
+            $('.snow').removeClass("start");
+            $.fn.snowStop();
+        }
+        else {
+            $('.snow').addClass("start");
+            var addTop = $(window).scrollTop();
+            $.fn.snow({minSize: 10, maxSize: 26, interval: 500, color: "#ffffff"},addTop);
+        }
+        $('#menu').click();
+    });
+    $('.bug').click(function(){
+        var addTop = $(window).scrollTop();
+        keywordRain("<i class='fa fa-bug' style='color:#333'></i>",{},addTop);
+        $('#menu').click();
+        setTimeout(function(){createDialog("warning","好多BUG Σ( ° △ °|||)︴");},3000);
+    });
 
     //监听输入框
     sendBtn.attr("disabled","disabled");
@@ -229,27 +122,18 @@
             sendBtn.css("color","rgba(235, 244, 235,1)");
         }
     });
-//    $('#content').on('input',function(){
-//        var input = $('#content').val();
-//        if(input == "") {
-//            send.attr("disabled","disabled");
-//            send.css("color","rgba(235, 244, 235,0.5)");
-//        }
-//        else {
-//            send.removeAttr("disabled");
-//            send.css("color","rgba(235, 244, 235,1)");
-//        }
-//    });
+
 
     //创建通知框
     function createNoticeBar(content){
-        var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content">通知：'+content+'</p></div><span class="delete">×</span></div>');
-        $('.wrap').prepend(notice);
+        var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content">'+content+'</p></div><span class="delete">×</span></div>');
+        $('.content-wrap').before(notice);
         $('.content-wrap').css("padding-top", "2em");
         $('.notice span.delete').click(function(){
             $('.content-wrap').css("padding-top", "0");
             $('.notice').remove();
         });
+        //通知栏滚动
         setTimeout(function(){
             var div = $('.notice-wrap');
             var p = $('.notice-content');
@@ -267,10 +151,8 @@
             move(time);
         }, 3000);
     }
-    //createNoticeBar("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssss");
+    createNoticeBar("adskfjkasd;lfjdsklafjdsa;lfjd;aslfljfadsl;k");
 
-    //通知栏滚动
-    
 
     //创建提示框
     // type:提示框(prompt)、警告框(warning)、消息框(alert)
@@ -283,7 +165,6 @@
             dialog.remove();
         });
     }
-    //createDialog("alert", "hahsagdasfasdfsadfasdfasdfa");
 
 
     //上拉刷新
@@ -301,19 +182,54 @@
                 "marginTop": "-" + loadheight + "px"
             }, 200);
             //刷新响应处理函数
+            getOldMessage();
         }
     });
+    //获取历史消息函数
+    function getOldMessage() {
+        var message_id;
+        if ($('#content-container .message_id').length == 0)
+            message_id = 0;
+        else {
+            var len = $('#content-container .message_id').length;
+            message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+        }
 
+        $.ajax({
+            url: get_old_messages,
+            type: "POST",
+            data: {
+                message_id: message_id
+            },
+            success: function (data){
+                //console.info(data);
+                var messages = data.messages;
+                for (var i = 0; i < messages.length; i++) {
+                     if (messages[i].name == name)
+                        var message = createsSelfMessages(messages[i]);
+                    else
+                        var message = createsMessages(messages[i]);
+                    message.prependTo('#content-container');
+                }
+            },
+            error: function (data){
+                console.info(data);
+            }
+        });
+    }
 
 //websocket
 var messaged = function(data) {
     console.log(data);
     if (data.result == 'Success') {
         if (data.type == 'user_message') {
-            if (data.name == name)
+            if (data.name == name) {
                 var message = createsSelfMessages(data);
-            else
+                keywordDetect(message.content);
+            }
+            else {
                 var message = createsMessages(data);
+            }
             message.appendTo('#content-container');
 
             var docHeight = $(document).height();
