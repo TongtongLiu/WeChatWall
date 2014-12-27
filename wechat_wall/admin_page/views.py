@@ -11,7 +11,6 @@ from django.template import RequestContext
 import json
 import time
 
-from admin_page import get_whether_review, set_whether_review
 from admin_page.safe_reverse import *
 from wechat_wall.models import User, Message
 
@@ -82,7 +81,7 @@ def get_to_review_message(delta_time):
 def get_new_message_reviewed(delta_time):
     now = datetime.now()
     new_message_time = now - timedelta(minutes=delta_time)
-    new_message_reviewed_models = Message.objects.filter(status=1, time__gt=new_message_time).order_by('-time')[0:9]
+    new_message_reviewed_models = Message.objects.filter(status=1, time__gt=new_message_time).order_by('-time')[0:7]
     new_message_reviewed_list = []
     for message in new_message_reviewed_models:
         new_message_reviewed_list += [wrap_message_dict(message)]
@@ -94,6 +93,24 @@ def wrap_message_dict(message):
     return_dict['name'] = message.user.name
     return_dict['avatar'] = message.user.photo
     return return_dict
+
+
+def get_whether_review():
+    try:
+        admin = get_admin()
+    except ObjectDoesNotExist:
+        return 0
+    whether_review = admin.openid
+    return int(whether_review)
+
+
+def set_whether_review(state):
+    try:
+        admin = get_admin()
+    except ObjectDoesNotExist:
+        return 0
+    admin.openid = state
+    admin.save()
 
 
 @csrf_exempt

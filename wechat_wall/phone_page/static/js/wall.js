@@ -31,7 +31,7 @@
 
 $(document).ready(function() {
     var send = $('.send');
-
+    var socket;
     //websocket
     var start = function() {
         socket = new io.Socket(websocket_host, websocket_options);
@@ -49,10 +49,14 @@ $(document).ready(function() {
                 var message = createsMessages(data);
                 message.appendTo('#content-container');
             } else if (data.type == 'admin_message') {
-
+                createNoticeBar(data.content);
             }
         }
     };
+
+    var connected = function() {
+        socket.subscribe('wall');
+    }
 
 
     //发送消息

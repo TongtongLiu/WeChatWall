@@ -123,7 +123,7 @@ function showReviewedMsg() {
 
 function addMessageToHead(msg) {
 	var reviewedMessages = $('#tbody-reviewedMessages tr');
-	if(reviewedMessages.length >= 10) {
+	if(reviewedMessages.length >= 8) {
 		$('#tbody-reviewedMessages tr:last-child').fadeOut(600);
 		setTimeout(function(){
 			$('#tbody-reviewedMessages tr:last-child').remove();
@@ -206,7 +206,7 @@ function messaged(data) {
 					var temp = toReviewMessages.splice(index, 1);
 					newMessagesReviewed.splice(0, 0, temp[0]);
 					newMessagesReviewed.pop();
-					if(data['adciton'] == 'pass')
+					if(data['action'] == 'pass')
 						addMessageToHead(temp[0]);
 					break;
 				}
@@ -222,7 +222,7 @@ function messaged(data) {
 
 var options = {
     dataType: 'json',
-    success: response,
+    success: messaged,
     error: function(XMLHttpRequest, textStatus, errorThrown) {
                     alert(XMLHttpRequest.status);
                     alert(XMLHttpRequest.readyState);
@@ -304,19 +304,29 @@ $('#modifySystemMessage').click(function(e){
 	var disabled = $('.form-control').attr('disabled');
 	if (disabled == 'disabled') {
 		$('.form-control').attr('disabled', false);
-		$('#modifySystemMessage').val('确定');
+		$('#modifySystemMessage').val('发送');
+		data = {};
+		data['type'] = 'admin_message';
+		data['content'] = $('.form-control').val();
+		socket.send(data);
 	} else {
 		$('.form-control').attr('disabled', true);
-		$('#modifySystemMessage').val('确定');
+		$('#modifySystemMessage').val('修改');
 	}
 });
 
 /*
  * websocket
  */
+var connected = function() {
+	socket.subscribe('wall');
+}
+
+var socket;
 var start = function() {
         socket = new io.Socket(websocket_host, websocket_options);
         socket.connect();
+        socket.on('connect', connected);
         socket.on('message', messaged);
     };
 
