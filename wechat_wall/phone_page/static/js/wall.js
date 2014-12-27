@@ -325,14 +325,13 @@ $(document).ready(function() {
     function createDialog(type, content) {
         var dialog = $('<div />').addClass("info-dialog").html(content);
         dialog.addClass(type);
-        var marginLeft = -dialog.width()/2;
-        dialog.css("margin-left", marginLeft);
         $('.wrap').append(dialog);
-//        dialog.animate({ opacity: 0 }, 3000, "linear", function () {
-//            dialog.remove();
-//        });
+        dialog.css("margin-left", -(dialog.width())/2);
+        dialog.animate({ opacity: 0 }, 3000, "linear", function () {
+            dialog.remove();
+        });
     }
-    createDialog("prompt", "hahsagdasfasdfsadfasdfasdfa");
+    //createDialog("alert", "hahsagdasfasdfsadfasdfasdfa");
 
 
     //上拉刷新
