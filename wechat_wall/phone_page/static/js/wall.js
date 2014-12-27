@@ -257,23 +257,12 @@ $(document).ready(function() {
         if (!$('html').hasClass('clickedMenu')) {
             $('html').addClass('clickedMenu');
         }
-        var docHeight = $(document).height();
+        var docHeight = $(document).height()-$('.refresh').height();
         var docWidth = $(document).width();
         $('.mask').css({"height":docHeight, "width":docWidth});
-//        (function ($) {
-//            $.fn.snow = function (options) {
-//                var $flake = $('<div id="flake" />').css({'position': 'absolute', 'top': '-50px'}).html('&#10052;'), documentHeight = $(document).height(), documentWidth = $(document).width(), defaults = {minSize: 10, maxSize: 20, newOn: 500, flakeColor: "#FFFFFF"}, options = $.extend({}, defaults, options);
-//                var interval = setInterval(function () {
-//                    var startPositionLeft = Math.random() * documentWidth - 100, startOpacity = 0.5 + Math.random(), sizeFlake = options.minSize + Math.random() * options.maxSize, endPositionTop = documentHeight - 40, endPositionLeft = startPositionLeft - 100 + Math.random() * 200, durationFall = documentHeight * 10 + Math.random() * 5000;
-//                    $flake.clone().appendTo('body').css({left: startPositionLeft, opacity: startOpacity, 'font-size': sizeFlake, color: options.flakeColor}).animate({top: endPositionTop, left: endPositionLeft, opacity: 0.2}, durationFall, 'linear', function () {
-//                        $(this).remove()
-//                    });
-//                }, options.newOn);
-//            };
-//        })(jQuery);
-//        $.fn.snow({ minSize: 5, maxSize: 50, newOn: 1000, flakeColor: '#FFF' });
     });
     //菜单项按钮处理
+
 
     //监听输入框
     send.attr("disabled","disabled");
@@ -332,29 +321,35 @@ $(document).ready(function() {
     }, 3000);
 
     //创建提示框
-    function createPrompt() {
-        var prompt = $('<div class="prompt">已发送</div>');
-        $('.wrap').append(prompt);
-        prompt.animate({ opacity: 0 }, 3000, "linear", function () {
-            prompt.remove();
-        });
+    // type:提示框(prompt)、警告框(warning)、消息框(alert)
+    function createDialog(type, content) {
+        var dialog = $('<div />').addClass("info-dialog").html(content);
+        dialog.addClass(type);
+        var marginLeft = -dialog.width()/2;
+        dialog.css("margin-left", marginLeft);
+        $('.wrap').append(dialog);
+//        dialog.animate({ opacity: 0 }, 3000, "linear", function () {
+//            dialog.remove();
+//        });
     }
-    //createPrompt();
+    createDialog("prompt", "hahsagdasfasdfsadfasdfasdfa");
+
 
     //上拉刷新
     window.loadheight = $('#refresh').height();
     window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
     window.visible = $("#refresh").animate("marginTop", "0px");
     $("#refresh").css("marginTop", "-" + loadheight + "px");
-    $(window).scroll(function (event) {
+    $(window).scroll(function () {
         var st = $(window).scrollTop();
         if (st <= 0) {
             $("#refresh").animate({
                 "marginTop": "0px"
             }, 200);
-            $("#refresh").delay(500).slideUp(200, function () {
-                //window.location.reload()
-            })
+            $("#refresh").delay(500).animate({
+                "marginTop": "-" + loadheight + "px"
+            }, 200);
+            //刷新响应处理函数
         }
     });
 });
