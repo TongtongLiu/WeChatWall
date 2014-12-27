@@ -224,7 +224,7 @@ var messaged = function(data) {
         if (data.type == 'user_message') {
             if (data.name == name) {
                 var message = createsSelfMessages(data);
-                keywordDetect(message.content);
+                keywordDetect(data.content);
             }
             else {
                 var message = createsMessages(data);
