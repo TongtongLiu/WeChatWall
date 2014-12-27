@@ -15,8 +15,16 @@ a, a:focus, input, input:focus, button, button:focus, textarea, textarea:focus {
 
 body {
     font-family: "微软雅黑";
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(234, 233, 233);
     color: rgb(69, 69, 69);
+}
+/*刷新*/
+.refresh {
+    width: 100%;
+    text-align: center;
+    background: #dcdcdc;
+    border-bottom: 1px solid #D5CFCF;
+    box-shadow: 0 1px 6px rgb(111, 107, 107)inset, 0 1px 2px rgb(209, 209, 209);
 }
 
 /*遮罩效果*/
@@ -156,6 +164,7 @@ body {
 .message-name {
     margin-left: 1em;
     font-size: 0.8em;
+    opacity: 0;
 }
 .dialog {
     position: relative;

@@ -1,5 +1,7 @@
 var messageNumber;
 var scrollTime;
+var refreshTime;
+var messageArray = new Array();
 var reviewingMsgMap = {
     'name': 'userName',
     'content': 'displayContent'
@@ -119,7 +121,7 @@ function addAdminMessage(message){
     setTimeout(function(){
         $('#footer').slideUp(500);
         setTimeout(function(){clearInterval(scrollTime)}, 500);
-    }, 5000)
+    }, 60000)
 }
 
 function scrollMarquee(){
@@ -132,17 +134,21 @@ function scrollMarquee(){
         marquee.css('left',parseInt(scrollArea.width())+speed);
 }
 
-function refresh(message){
-    deleteElementFromBottom();
-    addElementToHead(message);
-    messageNumber++;
-    $('#msgNum').html(messageNumber);
+function refresh(){
+    if(messageArray.length != 0){
+        var message = messageArray.shift();
+        deleteElementFromBottom();
+        addElementToHead(message);
+        messageNumber++;
+        $('#msgNum').html(messageNumber);
+    }
 }
 
 function initial(){
     pageSuit();
     var messageNumber = $('.userList').length;
     $('#msgNum').html(messageNumber);
+    messageRefresh();
 }
 window.onload=initial;
 
@@ -192,3 +198,33 @@ function stop() {
 
 //run()
 
+var messaged = function(data) {
+    console.log(data);
+    if (data.result == 'Success') {
+        if (data.type == 'user_message') {
+            messageArray.push(data);
+            //refresh(data);
+        } else if (data.type == 'admin_message') {
+            addAdminMessage(data.content)
+        }
+    }
+};
+
+var connected = function() {
+    socket.subscribe('wall');
+}
+
+var socket;
+var start = function() {
+    socket = new io.Socket(websocket_host, websocket_options);
+    socket.connect();
+    socket.on('connect', connected);
+    socket.on('message', messaged);
+};
+
+start();
+
+
+var messageRefresh = function() {
+    refreshTime = setInterval(refresh, 800);
+};

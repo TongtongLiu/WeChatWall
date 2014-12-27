@@ -2,62 +2,9 @@
  * Created by limeng on 2014/12/24.
  */
 
-//function getTimeString(timestamp) {
-//    var time = new Date(timestamp);
-//    var now = new Date();
-//    var hour, minute, time_str;
-//    if (now - time >= 24 * 3600 * 1000)
-//        time_str = time.getMonth() + "-" + time.getDate();
-//    else if (now - time >= 60 * 1000) {
-//        hour = '' + time.getHours();
-//        if (hour.length < 2)
-//            hour = '0' + hour;
-//        minute = '' + time.getMinutes();
-//        if (minute.length < 2)
-//            minute = '0' + minute;
-//        time_str = hour + ":" + minute;
-//    } else {
-//        time_str = Math.ceil((now - time) / 1000) + "秒前";
-//    }
-//    return time_str;
-//}
-//
-//function updateMessagesTime() {
-//    $("#content-container #timestamp").each(function() {
-//        var timestamp = parseInt($(this).text());
-//        $(this).parent(".message_header_right").find(".time").text(getTimeString(timestamp));
-//    })
-//}
 
-$(document).ready(function() {
-    var send = $('.send');
-    var socket;
-    //websocket
-    var start = function() {
-        socket = new io.Socket(websocket_host, websocket_options);
-        socket.connect();
-        socket.on('connect', connected);
-        socket.on('message', messaged);
-    };
 
-    start();
-
-    var messaged = function(data) {
-        console.log(data);
-        if (data.result == 'Success') {
-            if (data.type == 'user_message') {
-                var message = createsMessages(data);
-                message.appendTo('#content-container');
-            } else if (data.type == 'admin_message') {
-                createNoticeBar(data.content);
-            }
-        }
-    };
-
-    var connected = function() {
-        socket.subscribe('wall');
-    }
-
+    var sendBtn = $('.send');
 
     //发送消息
     $('.send').click(function() {
@@ -67,10 +14,10 @@ $(document).ready(function() {
             content: content,
             openid: openid
         }
-        socket.send(openid);
+        socket.send(message);
         $('#div-content').html("");
-        send.attr("disabled","disabled");
-        send.css("color","rgba(235, 244, 235,0.5)");
+        sendBtn.attr("disabled","disabled");
+        sendBtn.css("color","rgba(235, 244, 235,0.5)");
         //滚动到页面底部
         var height = $(document).height();
         $('body').animate({scrollTop: height}, 800);
@@ -226,16 +173,16 @@ $(document).ready(function() {
         return divMessage;
     }
     //创建一条自身发送的信息
-    function createsSelfMessages(content) {
+    function createsSelfMessages(message) {
         var divMessage = $('<div class="self-message"></div>');
         var divMessageRight = $('<div class="self-message-right"></div>');
-        var divPhoto = $('<div class="self-message-photo"><img src="#"/></div>');
+        var divPhoto = $('<div class="self-message-photo"><img src='+message.avatar+'/></div>');
         var divMessageLeft = $('<div class="self-message-left"></div>');
-        var divMessageName = $('<div class="self-message-name"></div>');
+        var divMessageName = $('<div class="self-message-name">'+message.name+'</div>');
         var divDialog = $('<div class="self-dialog"></div>');
         var divTriangle = $('<span class="self-triangle"></span>');
-        var divContent = $('<div class="self-message-content">'+content +'</div>');
-        var divId = $('<div class="message-id"></div>');
+        var divContent = $('<div class="self-message-content">'+message.content +'</div>');
+        var divId = $('<div class="message-id">'+message.id+'</div>');
         var divClear = $('<div style="clear: both"></div>');
 
         divMessageRight.append(divPhoto);
@@ -280,17 +227,17 @@ $(document).ready(function() {
     //菜单项按钮处理
 
     //监听输入框
-    send.attr("disabled","disabled");
-    send.css("color","rgba(235, 244, 235,0.5)");
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
     $('#div-content').bind('input propertychange', function() {
         var input = $('#div-content').html();
         if(input == "") {
-            send.attr("disabled","disabled");
-            send.css("color","rgba(235, 244, 235,0.5)");
+            sendBtn.attr("disabled","disabled");
+            sendBtn.css("color","rgba(235, 244, 235,0.5)");
         }
         else {
-            send.removeAttr("disabled");
-            send.css("color","rgba(235, 244, 235,1)");
+            sendBtn.removeAttr("disabled");
+            sendBtn.css("color","rgba(235, 244, 235,1)");
         }
     });
 //    $('#content').on('input',function(){
@@ -314,25 +261,27 @@ $(document).ready(function() {
             $('.content-wrap').css("padding-top", "0");
             $('.notice').remove();
         });
+        setTimeout(function(){
+            var div = $('.notice-wrap');
+            var p = $('.notice-content');
+            var width = p.width();
+            var dWidth = div.width();
+            var speed = 3000;//越大越慢
+            var time = width/100*speed;
+            function move(t) {
+                p.animate({ left: -width }, time, "linear", function () {
+                    p.css("left", dWidth);
+                    t=((width+dWidth)/100)*speed;
+                    move(t);
+                });
+            }
+            move(time);
+        }, 3000);
     }
-    createNoticeBar("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssss");
+    //createNoticeBar("hahaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssss");
+
     //通知栏滚动
-    setTimeout(function(){
-        var div = $('.notice-wrap');
-        var p = $('.notice-content');
-        var width = p.width();
-        var dWidth = div.width();
-        var speed = 3000;//越大越慢
-        var time = width/100*speed;
-        function move(t) {
-            p.animate({ left: -width }, time, "linear", function () {
-                p.css("left", dWidth);
-                t=((width+dWidth)/100)*speed;
-                move(t);
-            });
-        }
-        move(time);
-    }, 3000);
+    
 
     //创建提示框
     function createPrompt() {
@@ -342,5 +291,58 @@ $(document).ready(function() {
             prompt.remove();
         });
     }
-    createPrompt();
-});
+    //createPrompt();
+
+    //上拉刷新
+    window.loadheight = $('#refresh').height();
+    window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
+    window.visible = $("#refresh").animate("marginTop", "0px");
+    $("#refresh").css("marginTop", "-" + loadheight + "px");
+    $(window).scroll(function (event) {
+        var st = $(window).scrollTop();
+        if (st <= 0) {
+            $("#refresh").animate({
+                "marginTop": "0px"
+            }, 200);
+            $("#refresh").delay(500).slideUp(200, function () {
+                //window.location.reload()
+            })
+        }
+    });
+
+
+//websocket
+var messaged = function(data) {
+    console.log(data);
+    if (data.result == 'Success') {
+        if (data.type == 'user_message') {
+            if (data.name == name)
+                var message = createsSelfMessages(data);
+            else
+                var message = createsMessages(data);
+            message.appendTo('#content-container');
+
+            var docHeight = $(document).height();
+            var scrollTop = $('body').scrollTop();
+            var winHeight = $(window).height();
+            if (scrollTop >= docHeight - winHeight)
+                $('body').animate({scrollTop: height}, 800);
+        } else if (data.type == 'admin_message') {
+            createNoticeBar(data.content);
+        }
+    }
+};
+
+var connected = function() {
+    socket.subscribe('wall');
+}
+
+var socket;
+var start = function() {
+    socket = new io.Socket(websocket_host, websocket_options);
+    socket.on('connect', connected)
+    socket.on('message', messaged);
+    socket.connect();
+};
+
+start();

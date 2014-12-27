@@ -11,6 +11,11 @@ $(function() {
 		}
     };
 
+    var connected = function() {
+    	socket.subscribe('wall');
+    }
+
+    var socket;
 	var start = function() {
         socket = new io.Socket(websocket_host, websocket_options);
         socket.connect();

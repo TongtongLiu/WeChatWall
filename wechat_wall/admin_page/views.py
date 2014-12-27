@@ -95,6 +95,10 @@ def wrap_message_dict(message):
     return return_dict
 
 
+def get_admin():
+    return User.objects.get(name="root")
+
+
 def get_whether_review():
     try:
         admin = get_admin()
@@ -108,7 +112,7 @@ def set_whether_review(state):
     try:
         admin = get_admin()
     except ObjectDoesNotExist:
-        return 0
+        return
     admin.openid = state
     admin.save()
 

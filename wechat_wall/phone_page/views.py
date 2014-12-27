@@ -11,7 +11,7 @@ import os
 import random
 import time
 
-from admin_page import get_whether_review
+from admin_page.views import get_whether_review
 from phone_page.banned_names import is_name_valid
 from phone_page.banned_words import is_content_valid
 from phone_page.safe_reverse import *
@@ -142,16 +142,13 @@ def login_register(request):
 
 
 def wall(request, openid):
-    #return render_to_response('wall.html', {'openid': openid, 'name': '管理员',
-    #s                                         'photo': 'http://www.baidu.com/img/bd_logo1.png'})
-    # users = select_users_by_openid(openid)
-    # if not users:
-    #     return redirect(s_reverse_login(openid))
-    # user = users[0]
-    # return render_to_response('wall.html',
-    #                           {'openid': openid, 'name': user.name, 'photo': user.photo},
-    #                           context_instance=RequestContext(request))
-    return render_to_response('wall.html')
+    users = select_users_by_openid(openid)
+    if not users:
+        return redirect(s_reverse_login(openid))
+    user = users[0]
+    return render_to_response('wall.html',
+                               {'openid': openid, 'name': user.name, 'photo': user.photo},
+                               context_instance=RequestContext(request))
 
 @csrf_exempt
 def w_post_message(request):

@@ -45,7 +45,7 @@ function clearReviewingMsg() {
 }
 
 function appendReviewingMsg(msg) {
-    var tr = $('<tr id="' + msg['id'] + '"></tr>'), key;
+    var tr = $('<tr style="display:none" id="' + msg['id'] + '"></tr>'), key;
     getTd('avatar').html('<img class="img-avatar" src="' + msg['avatar'] + '" />').appendTo(tr);
     for (key in reviewingMsgTdMap) {
         getTd(key).html(msg[key]).appendTo(tr);
@@ -54,6 +54,7 @@ function appendReviewingMsg(msg) {
     tr.find('.btn-success').click(passClick);
     tr.find('.btn-danger').click(rejectClick);
     $('#tbody-messages').append(tr);
+    tr.fadeIn(600);
 }
 
 function showReviewingMsg() {
@@ -198,9 +199,6 @@ function messaged(data) {
 		var messages_id = data['msg_id'].split(',');
 		for (var i = 0; i < messages_id.length; i++) {
 			$('#'+messages_id[i]).fadeOut(600);
-			setTimeout(function(){
-				$('#'+messages_id[i]).remove();
-			}, 1000);
 			for (var index = 0; index < toReviewMessages.length; index++) {
 				if (toReviewMessages[index]['id'] == messages_id[i]) {
 					var temp = toReviewMessages.splice(index, 1);
@@ -212,22 +210,15 @@ function messaged(data) {
 				}
 			}
 		}
+		setTimeout(function(){
+			$('#tbody-messages tr:hidden').remove();
+		}, 600);
 	} else if (data['type'] == 'user_message') {
-        appendReviewedMsg(data);
+		appendReviewingMsg(data);
         delete data.type
         delete data.result
         toReviewMessages.push(data);
 	}
-}
-
-var options = {
-    dataType: 'json',
-    success: messaged,
-    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
-                },
 }
 
 function bindClickEvent(){
@@ -304,14 +295,14 @@ $('#modifySystemMessage').click(function(e){
 	var disabled = $('.form-control').attr('disabled');
 	if (disabled == 'disabled') {
 		$('.form-control').attr('disabled', false);
-		$('#modifySystemMessage').val('发送');
+		$('#modifySystemMessage').text('发送');
+	} else {
+		$('.form-control').attr('disabled', true);
+		$('#modifySystemMessage').text('修改');
 		data = {};
 		data['type'] = 'admin_message';
 		data['content'] = $('.form-control').val();
 		socket.send(data);
-	} else {
-		$('.form-control').attr('disabled', true);
-		$('#modifySystemMessage').val('修改');
 	}
 });
 
@@ -319,7 +310,7 @@ $('#modifySystemMessage').click(function(e){
  * websocket
  */
 var connected = function() {
-	socket.subscribe('wall');
+	socket.subscribe('admin');
 }
 
 var socket;
