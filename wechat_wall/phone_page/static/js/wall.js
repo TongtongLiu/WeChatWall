@@ -240,6 +240,9 @@ var messaged = function(data) {
             createNoticeBar(data.content);
         }
     }
+    if (data.result == 'BannedContent') {
+        
+    }
 };
 
 var connected = function() {
