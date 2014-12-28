@@ -24,9 +24,6 @@
         <script type="text/javascript" src="{% static 'js/exif.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/processImg.min.js' %}"></script>
         <script type="text/javascript">
-            var openid = "{{ openid }}"
-            var submitURL = "{% url 'phone_page.views.login_register' %}";
-            var photo_src = "photo_default/" + {{ photo_num }} ".jpg";
         </script>
     {% endblock %}
 
@@ -38,12 +35,16 @@
 <body>
 <div class="container">
     <div class="loginPanel">
+        <form id="login-form" action="{% url 'phone_page.views.login_register' %}" method="post"
+              enctype="multipart/form-data" onsubmit="return false;">
+        {% csrf_token %}
         <!-- 头像上传 -->
         <div class="row row-photo">
             <div class="col-xs-12">
                 <div class="photo-input" id="photo-input">
                     <img src="{{ photo_path }}" id="photo-show">
-                    <input type="file" id="photo-file" name="photo" value="">
+                    <input type="file" id="photo-file" name="photo-file">
+                    <input type="text" id="photo-base64" name="photo-base64" val="{{ photo_path }}">
                 </div>
             </div>
         </div>
@@ -55,9 +56,9 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-user"></span>
                     </span>
-                    <input type="text" class="form-control" id="name-input" name="name" maxlength="21"
-                           placeholder="请输入昵称" onblur="checkName('{% url 'phone_page.views.login_check' %}');"
-                           onkeyup="handleChange();">
+                    <input type="text" class="form-control" id="name-input" name="name" maxlength="20"
+                           placeholder="请输入昵称" onkeyup="handleChange();"
+                           onblur="checkName('{% url 'phone_page.views.login_check' %}');">
                 </div>
             </div>
         </div>
@@ -79,15 +80,17 @@
                 </a>
             </div>
         </div>
+        <input type="hidden" id="openid-input" name="openid" value="{{ openid }}">
+        </form>
     </div>
 
-    <div class="copyright">
+    <div class="loginFooter">
         <!-- 版权声明 -->
         <div class="row">
             <div class="col-xs-12">
-                <footer>
+                <footer class="copyright">
                     {% block copyright %}
-                        倾力打造 &copy; 2014-2015
+                        软件学院倾力打造 &copy; 2014-2015
                     {% endblock %}
                 </footer>
             </div>

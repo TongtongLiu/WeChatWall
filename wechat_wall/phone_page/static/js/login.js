@@ -53,25 +53,34 @@ function enableButton() {
 
 function disableButton() {
     var button = $('#submit-button');
-    button.unbind("click", submitButton);
     button.addClass("disable-button");
+    button.unbind("click", submitButton);
+}
+
+function enableInput() {
+    $('#name-input').removeAttr('readonly');
+    $('#photo-file').removeAttr('readonly');
+}
+
+function disableInput() {
+    $('#name-input').attr('readonly', 'readonly');
+    $('#photo-file').attr('readonly', 'readonly');
 }
 
 function submitButton() {
+    disableInput();
+    disableButton();
+
     $.ajax({
-        url: submitURL,
+        url: $('#login-form').attr('action'),
         type: "POST",
         data: {
-            openid: openid,
+            openid: $('#openid-input').val(),
             name: $('#name-input').val(),
-            photo: $('#photo-show').attr('src')
+            photo: $('#photo-base64').val()
         },
         success: function(data) {
             switch (data) {
-                case "ExistOpenid":
-                    showError("您已经注册过啦");
-                    break;
-
                 case "InvalidName":
                     showError("昵称被抢注啦");
                     break;
@@ -88,16 +97,22 @@ function submitButton() {
             console.info(data);
         }
     });
+
+    enableInput();
+    enableButton();
 }
 
 $(document).ready(function() {
-    $('#photo-input').click(function() {
-        $('#photo-file').trigger('click');
+    $('#photo-show').click(function() {
+        $('#photo-file').click();
     });
 
-    compressImg('photo-file', 'photo-show', 80, function(src){
+    var width_px = $('#photo-input').css("width");
+    var width_num = parseInt(width_px.substring(0, width_px.length - 2));
+    compressImg('photo-file', 'photo-show', width_num, function(src) {
         //此处为回调函数，当图片压缩完成并成功显示后执行
         //可得到图片数据值src
-        console.log(src);
+        //console.log(src);
+        $('#photo-base64').val(src);
     });
-})
+});
