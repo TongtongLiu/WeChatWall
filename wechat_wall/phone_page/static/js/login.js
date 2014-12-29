@@ -107,6 +107,12 @@ $(document).ready(function() {
         $('#photo-file').click();
     });
 
+    if ($('#name-input').val() == "") {
+        disableButton();
+    } else {
+        enableButton();
+    }
+
     var width_px = $('#photo-input').css("width");
     var width_num = parseInt(width_px.substring(0, width_px.length - 2));
     compressImg('photo-file', 'photo-show', width_num, function(src) {
