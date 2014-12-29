@@ -195,12 +195,13 @@ $(window).scroll(function () {
     if (st < 0) {
         $("#refresh").animate({
             "marginTop": "0px"
-        }, 200);
+        }, 500);
         $("#refresh").delay(500).animate({
             "marginTop": "-" + loadheight + "px"
-        }, 200);
+        }, 500);
         //刷新响应处理函数
-        getOldMessages();
+        if (st == -loadheight)
+            getOldMessages();
     }
 });
 
