@@ -27,7 +27,7 @@
 
 	    inputFile.addEventListener("change", function () {
             if(!/image\/\w+/.test(this.files[0].type)){
-                $('#name-error').text("不是图片怎么做头像");
+                $('#name-error').text("不是图片怎么做头像╮(╯_╰)╭");
                 $('.row-error').slideDown("fast");
                 return false;
             }

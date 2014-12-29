@@ -16,7 +16,7 @@ function checkName(url) {
                     break;
 
                 case "Invalid":
-                    showError("昵称被抢注啦");
+                    showError("昵称被抢注啦~~(>_<)~~");
                     break;
             }
         },
@@ -86,11 +86,11 @@ function submitButton() {
         success: function(data) {
             switch (data) {
                 case "InvalidName":
-                    showError("昵称被抢注啦");
+                    showError("昵称被抢注啦~~(>_<)~~");
                     break;
 
                 case "Error":
-                    showError("出现了奇怪的错误T^T");
+                    showError("出现了奇怪的错误o(╯□╰)o");
                     break;
 
                 default:
