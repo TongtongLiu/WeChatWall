@@ -2,5 +2,6 @@
 *.pyc
 *.pyo
 *_backup
+wechat_wall/phone_page/static/photo_upload/*.png
 wechat_wall/admin_page/static/js/websocket_config.js
 wechat_wall/phone_page/static/js/websocket_config.js

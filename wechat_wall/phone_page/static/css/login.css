@@ -46,6 +46,11 @@ html, body {
     opacity: 0;
 }
 
+#photo-input input#photo-base64 {
+    height: 0;
+    opacity: 0;
+}
+
 #name-error {
     display: block;
     position: relative;
@@ -77,10 +82,10 @@ html, body {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
-#submit-button:active {
+
+#submit-button.clicked-button {
     background: rgba(80, 205, 100, 0.85);
 }
-
 #submit-button.disable-button {
     background: rgba(80, 205, 100, 0.85);
     color: rgba(130, 230, 142, 1);
