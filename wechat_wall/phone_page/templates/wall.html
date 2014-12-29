@@ -483,11 +483,11 @@
         var originalMessages = [
             {% for message in origin_messages %}
 	            {
-	            	'id': {{ message.message_id }},
+	            	'message_id': {{ message.message_id }},
 	            	'content': '{{ message.content|escapejs }}',
 	            	'time': new Date('{{ message.time|date:"r" }}'),
-	            	'name': '{{ message.name|escapejs }}',
-	            	'avatar': '{{ message.photo|escapejs }}'
+	            	'user_name': '{{ message.user_name|escapejs }}',
+	            	'user_photo': '{{ message.user_photo|escapejs }}'
 	            }{% if forloop.last %}{% else %},{% endif %}
             {% endfor %}
         ];

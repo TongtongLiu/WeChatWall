@@ -254,6 +254,9 @@ function getNewMessages() {
         },
         success: function(data) {
             var messages = data.messages;
+            var docHeight = $(document).height();
+            var scrollTop = $('body').scrollTop();
+            var winHeight = $(window).height();
             for (var i = messages.length - 1; i >= 0; i--) {
                  if (messages[i].user_name == name) {
                      var message = createsSelfMessages(messages[i]);
@@ -261,13 +264,9 @@ function getNewMessages() {
                  } else
                      var message = createsMessages(messages[i]);
                  message.appendTo('#content-container');
-
-                 var docHeight = $(document).height();
-                 var scrollTop = $('body').scrollTop();
-                 var winHeight = $(window).height();
-                 if (scrollTop >= docHeight - winHeight)
-                     $('body').animate({scrollTop: $(document).height()}, 800);
             }
+            if (scrollTop >= docHeight - winHeight - 50)
+                     $('body').animate({scrollTop: $(document).height()}, 800);
         },
         error: function (data){
             console.info(data);
