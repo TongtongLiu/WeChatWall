@@ -43,7 +43,11 @@
 		var refreshUrl =  "{% url "admin_page.views.refresh_review_list" %}"
 
     </script>
+
+	<script src="{% static "lib/socket/socket.io.js" %}"></script>
+	<script src="{% static "js/socket_subscribe.js" %}"></script>
 	<script src="{% static "lib/bs/js/bootstrap-switch.min.js" %}"></script>
+	<script src="{% static "js/websocket_config.js" %}"></script>
     <script src="{% static "js/review.js" %}"></script>
 {% endblock %}
 
@@ -82,38 +86,55 @@
 		            </tr>
 		            </thead>
 		            <tbody id="tbody-messages">
+		            	<!--
 						<tr>
 							<td></td>
 							<td></td>
 							<td>暂无待审核消息</td>
 							<td></td>
 						</tr>
+						-->
 		            </tbody>
 		        </table>
 	   		</div>
 	    </div>
     </div>
 
-    <div id="reviewedMessages">
-    	<div class="panel panel-default">
-    		<div class="panel-heading clearfix">
-    			<h3 class="pull-left">最新上墙消息</h3>
-    		</div>
-	    	<table class="table table-hover">
-	    		<thead>
-		            <tr>
-		                <th>用户</th>
-		                <th>内容</th>
-		            </tr>
-		            </thead>
-		            <tbody id="tbody-reviewedMessages">
-		            	<tr id="123">
-		            		<td class="noMsg">暂无最新消息</td>
-		            	</tr>
-		            </tbody>
-	    	</table>
-    	</div>
-    </div>
+    <div id="rightBar" style="float:right">
+	    <div id="reviewedMessages">
+	    	<div class="panel panel-default">
+	    		<div class="panel-heading clearfix">
+	    			<h3 class="pull-left">最新上墙消息</h3>
+	    		</div>
+		    	<table class="table table-hover">
+		    		<thead>
+			            <tr>
+			                <th>用户</th>
+			                <th>内容</th>
+			            </tr>
+			            </thead>
+			            <tbody id="tbody-reviewedMessages">
+			            	<!--
+			            	<tr>
+			            		<td class="noMsg">暂无最新消息</td>
+			            	</tr>
+			            	-->
+			            </tbody>
+		    	</table>
+	    	</div>
+	    </div>
+
+	    <div id="systemMessageBlock">
+	    	<div class="panel panel-default">
+		        <div class="panel-heading clearfix">
+		        	<h3 class="pull-left">系统消息</h3>
+	                <button id="modifySystemMessage" class="btn btn-default pull-right" style="margin:12px 5px">修改</button>
+		        </div>
+		        <div>
+			    	<textarea disabled="disabled" class="form-control" rows="3"></textarea>
+		   		</div>
+		    </div>
+	</div>
     <form id="postForm" action="{% url "admin_page.views.review_message" %}" method="post" style="display:none;" role="form">
     	<input id="review-type" type="text" name="type" style="display:none" />
     	<input id="review-msgID" type="text" name="id" style="display:none" />

@@ -6,7 +6,8 @@ from django.db import models
 class User(models.Model):
     openid = models.CharField(max_length=255, blank=True)
     name = models.CharField(max_length=255)
-    photo = models.CharField(max_length=255, blank=True)
+    photo = models.CharField(max_length=1023, blank=True)
+    #photo = models.ImageField(upload_to='%Y/%m/%d', blank=True)
     message_num = models.IntegerField(default=0)
 
 

@@ -3,3 +3,5 @@ wechat_wall/wechat_wall/settings.py
 *.pyc
 *.pyo
 *_backup
+wechat_wall/admin_page/static/js/websocket_config.js
+wechat_wall/phone_page/static/js/websocket_config.js

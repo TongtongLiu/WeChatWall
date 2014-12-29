@@ -2,106 +2,190 @@
  * Created by limeng on 2014/12/24.
  */
 
-function getTimeString(timestamp) {
-    var time = new Date(timestamp);
-    var now = new Date();
-    var hour, minute, time_str;
-    if (now - time >= 24 * 3600 * 1000)
-        time_str = time.getMonth() + "-" + time.getDate();
-    else if (now - time >= 60 * 1000) {
-        hour = '' + time.getHours();
-        if (hour.length < 2)
-            hour = '0' + hour;
-        minute = '' + time.getMinutes();
-        if (minute.length < 2)
-            minute = '0' + minute;
-        time_str = hour + ":" + minute;
-    } else {
-        time_str = Math.ceil((now - time) / 1000) + "秒前";
+
+
+    var sendBtn = $('.send');
+
+    //发送消息
+    $('.send').click(function() {
+        var content = $('#div-content').text();
+        message = {
+            type: 'user_message',
+            content: content,
+            openid: openid
+        }
+        socket.send(message);
+        $('#div-content').html("");
+        sendBtn.attr("disabled","disabled");
+        sendBtn.css("color","rgba(235, 244, 235,0.5)");
+        //滚动到页面底部
+        var height = $(document).height();
+        $('body').animate({scrollTop: height}, 1000);
+    });
+
+    //创建一条信息
+    function createsMessages(message) {
+        var divMessage = $('<div class="message"></div>');
+        var divMessageLeft = $('<div class="message-left"></div>');
+        var divPhoto = $('<div class="message-photo"><img src='+message.avatar+'"/></div>');
+        var divMessageRight = $('<div class="message-right"></div>');
+        var divMessageName = $('<div class="message-name">'+message.name+'</div>');
+        var divDialog = $('<div class="dialog"></div>');
+        var divTriangle = $('<span class="triangle"></span>');
+        var divContent = $('<div class="message-content">'+message.content +'</div>');
+        var divId = $('<div class="message-id">'+message.id+'</div>');
+        var divClear = $('<div style="clear: both"></div>');
+
+        divMessageLeft.append(divPhoto);
+        divMessageRight.append(divMessageName);
+        divDialog.append(divTriangle);
+        divDialog.append(divContent);
+        divMessageRight.append(divDialog);
+        divMessage.append(divMessageLeft);
+        divMessage.append(divMessageRight);
+        divMessage.append(divId);
+        divMessage.append(divClear);
+
+        return divMessage;
     }
-    return time_str;
-}
+    //创建一条自身发送的信息
+    function createsSelfMessages(message) {
+        var divMessage = $('<div class="self-message"></div>');
+        var divMessageRight = $('<div class="self-message-right"></div>');
+        var divPhoto = $('<div class="self-message-photo"><img src='+message.avatar+'/></div>');
+        var divMessageLeft = $('<div class="self-message-left"></div>');
+        var divMessageName = $('<div class="self-message-name">'+message.name+'</div>');
+        var divDialog = $('<div class="self-dialog"></div>');
+        var divTriangle = $('<span class="self-triangle"></span>');
+        var divContent = $('<div class="self-message-content">'+message.content +'</div>');
+        var divId = $('<div class="message-id">'+message.id+'</div>');
+        var divClear = $('<div style="clear: both"></div>');
 
-function updateMessagesTime() {
-    $("#content-container #timestamp").each(function() {
-        var timestamp = parseInt($(this).text());
-        $(this).parent(".message_header_right").find(".time").text(getTimeString(timestamp));
-    })
-}
+        divMessageRight.append(divPhoto);
+        divMessageLeft.append(divMessageName);
+        divDialog.append(divTriangle);
+        divDialog.append(divContent);
+        divMessageLeft.append(divDialog);
+        divMessage.append(divMessageRight);
+        divMessage.append(divMessageLeft);
+        divMessage.append(divId);
+        divMessage.append(divClear);
 
-$(document).ready(function() {
-    //提交消息
-    $('#message_form').submit(function (event) {
-        event.preventDefault();
-        var form = $('#message_form');
+        return divMessage;
+    }
 
-        $.ajax({
-            url: form.attr('action'),
-            type: "POST",
-            data: {
-                openid: openid,
-                content: $('#content').val()
-            },
-            success: function (data){
-                switch (data) {
-                    case "Success":
-                        $('#content').val("");
-                        $('#refresh').trigger("click");
-                        break;
-
-                    case "NoUser":
-                        break;
-
-                    case "BannedContent":
-                        break;
-
-                    case "Error":
-                        break;
-                }
-            },
-            error: function (data){
-                console.info(data);
-            }
-        });
+    //页面遮罩处理
+    $('.mask, .footer-mask').click(function () {
+        $('#menu').click();
+    });
+    //打开菜单(加号)按钮处理
+    $('#menu').click(function () {
+        $('body').toggleClass('exposed');
+        if (!$('html').hasClass('clickedMenu')) {
+            $('html').addClass('clickedMenu');
+        }
+        var docHeight = $(document).height()-$('.refresh').height();
+        var docWidth = $(document).width();
+        $('.mask').css({"height":docHeight, "width":docWidth});
+    });
+    //菜单项按钮处理
+    $('.snow').click(function(){
+        if($('.snow').hasClass("start")) {
+            $('.snow').removeClass("start");
+            $.fn.snowStop();
+        }
+        else {
+            $('.snow').addClass("start");
+            var addTop = $(window).scrollTop();
+            $.fn.snow({minSize: 10, maxSize: 26, interval: 500, color: "#ffffff"},addTop);
+        }
+        $('#menu').click();
+    });
+    $('.bug').click(function(){
+        var addTop = $(window).scrollTop();
+        keywordRain("<i class='fa fa-bug' style='color:#333'></i>",{},addTop);
+        $('#menu').click();
+        setTimeout(function(){createDialog("warning","好多BUG Σ( ° △ °|||)︴");},3000);
     });
 
-    //刷新按钮
-    $('#refresh').click(function () {
-        var refresh = $('#refresh i');
-        refresh.addClass('fa-spin');
-        var message_id;
-        if ($('#content-container .message_id').length == 0)
-            message_id = 0;
-        else
-            message_id = parseInt($('#content-container .message_id')[0].innerHTML);
-
-        $.ajax({
-            url: get_new_messages,
-            type: "POST",
-            data: {
-                message_id: message_id
-            },
-            success: function (data) {
-                //console.info(data);
-                var messages = data.messages;
-                for (var i = messages.length - 1; i >= 0; i--) {
-                    var message = createsMessages(messages[i]);
-                    message.prependTo($("#content-container"));
-                }
-            },
-            error: function (data){
-                console.info(data);
-            }
-        });
-
-        updateMessagesTime();
-        refresh.removeClass('fa-spin');
+    //监听输入框
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    $('#div-content').bind('input propertychange', function() {
+        var input = $('#div-content').html();
+        if(input == "") {
+            sendBtn.attr("disabled","disabled");
+            sendBtn.css("color","rgba(235, 244, 235,0.5)");
+        }
+        else {
+            sendBtn.removeAttr("disabled");
+            sendBtn.css("color","rgba(235, 244, 235,1)");
+        }
     });
 
-    $('#refresh').trigger("click");
 
-    //获取历史消息按钮
-    $('#get_old').click(function () {
+    //创建通知框
+    function createNoticeBar(content){
+        var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content">'+content+'</p></div><span class="delete">×</span></div>');
+        $('.content-wrap').before(notice);
+        $('.content-wrap').css("padding-top", "2em");
+        $('.notice span.delete').click(function(){
+            $('.content-wrap').css("padding-top", "0");
+            $('.notice').remove();
+        });
+        //通知栏滚动
+        setTimeout(function(){
+            var div = $('.notice-wrap');
+            var p = $('.notice-content');
+            var width = p.width();
+            var dWidth = div.width();
+            var speed = 3000;//越大越慢
+            var time = width/100*speed;
+            function move(t) {
+                p.animate({ left: -width }, time, "linear", function () {
+                    p.css("left", dWidth);
+                    t=((width+dWidth)/100)*speed;
+                    move(t);
+                });
+            }
+            move(time);
+        }, 3000);
+    }
+
+
+    //创建提示框
+    // type:提示框(prompt)、警告框(warning)、消息框(alert)
+    function createDialog(type, content) {
+        var dialog = $('<div />').addClass("info-dialog").html(content);
+        dialog.addClass(type);
+        $('.wrap').append(dialog);
+        dialog.css("margin-left", -(dialog.width())/2);
+        dialog.animate({ opacity: 0 }, 3000, "linear", function () {
+            dialog.remove();
+        });
+    }
+
+
+    //上拉刷新
+    window.loadheight = $('#refresh').height();
+    window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
+    window.visible = $("#refresh").animate("marginTop", "0px");
+    $("#refresh").css("marginTop", "-" + loadheight + "px");
+    $(window).scroll(function () {
+        var st = $(window).scrollTop();
+        if (st <= 0) {
+            $("#refresh").animate({
+                "marginTop": "0px"
+            }, 200);
+            $("#refresh").delay(500).animate({
+                "marginTop": "-" + loadheight + "px"
+            }, 200);
+            //刷新响应处理函数
+            getOldMessage();
+        }
+    });
+    //获取历史消息函数
+    function getOldMessage() {
         var message_id;
         if ($('#content-container .message_id').length == 0)
             message_id = 0;
@@ -120,94 +204,57 @@ $(document).ready(function() {
                 //console.info(data);
                 var messages = data.messages;
                 for (var i = 0; i < messages.length; i++) {
-                    var message = createsMessages(messages[i]);
-                    $("#get_old").before(message);
+                     if (messages[i].name == name)
+                        var message = createsSelfMessages(messages[i]);
+                    else
+                        var message = createsMessages(messages[i]);
+                    message.prependTo('#content-container');
                 }
             },
             error: function (data){
                 console.info(data);
             }
         });
-    });
-
-    //创建一条信息
-    function createsMessages(message) {
-        var divMessage = $('<div />',{
-            "class": "message"
-        });
-        var divMContent = $('<div />',{
-            text: message.content,
-            "class": "message_content"
-        });
-        var divMHeader = $('<div />',{
-            "class": "message_header"
-        });
-        var divMHeaderRight = $('<div />',{
-            "class": "message_header_right"
-        });
-        var divName = $('<div />',{
-            text: message.user_name,
-            "class": "name"
-        });
-        var time_str = getTimeString(message.time * 1000);
-        var divTime = $('<div />',{
-            text: message.time * 1000,
-            "id": "timestamp",
-            "style": "display: none"
-        });
-        var divTimeStr = $('<div />',{
-            text: time_str,
-            "class": "time"
-        });
-        var divPhoto = $('<img />',{
-            src: message.user_photo,
-            "class":"photo"
-        });
-        var divMessageId = $('<div />',{
-            text: message.message_id,
-            "class":"message_id"
-        });
-        divName.appendTo(divMHeaderRight);
-        divTime.appendTo(divMHeaderRight);
-        divTimeStr.appendTo(divMHeaderRight);
-        divPhoto.appendTo(divMHeader);
-        divMHeaderRight.appendTo(divMHeader);
-        divMHeader.appendTo(divMessage);
-        divMContent.appendTo(divMessage);
-        divMessageId.appendTo(divMessage);
-
-        return divMessage;
     }
 
-    $('#menu').click(function () {
-        $('body').toggleClass('exposed');
-        (function($){$.fn.snow=function(options){var $flake=$('<div id="flake" />').css({'position':'absolute','top':'-50px'}).html('&#10052;'),documentHeight=$(document).height(),documentWidth=$(document).width(),defaults={minSize:10,maxSize:20,newOn:500,flakeColor:"#FFFFFF"},options=$.extend({},defaults,options);var interval=setInterval(function(){var startPositionLeft=Math.random()*documentWidth-100,startOpacity=0.5+Math.random(),sizeFlake=options.minSize+Math.random()*options.maxSize,endPositionTop=documentHeight-40,endPositionLeft=startPositionLeft-100+Math.random()*200,durationFall=documentHeight*10+Math.random()*5000;$flake.clone().appendTo('body').css({left:startPositionLeft,opacity:startOpacity,'font-size':sizeFlake,color:options.flakeColor}).animate({top:endPositionTop,left:endPositionLeft,opacity:0.2},durationFall,'linear',function(){$(this).remove()});},options.newOn);};})(jQuery);
-        $.fn.snow({ minSize: 5, maxSize: 50, newOn: 1000, flakeColor: '#FFF' });
-    });
-    //监听输入框
-    var send = $('.send');
-    send.attr("disabled","disabled");
-    send.css("color","rgba(235, 244, 235,0.5)");
-    $('#content').bind('input propertychange', function() {
-        var input = $('#content').val();
-        if(input == "") {
-            send.attr("disabled","disabled");
-            send.css("color","rgba(235, 244, 235,0.5)");
+//websocket
+var messaged = function(data) {
+    console.log(data);
+    if (data.result == 'Success') {
+        if (data.type == 'user_message') {
+            if (data.name == name) {
+                var message = createsSelfMessages(data);
+                keywordDetect(data.content);
+            }
+            else {
+                var message = createsMessages(data);
+            }
+            message.appendTo('#content-container');
+
+            var docHeight = $(document).height();
+            var scrollTop = $('body').scrollTop();
+            var winHeight = $(window).height();
+            if (scrollTop >= docHeight - winHeight)
+                $('body').animate({scrollTop: height}, 800);
+        } else if (data.type == 'admin_message') {
+            createNoticeBar(data.content);
         }
-        else {
-            send.removeAttr("disabled");
-            send.css("color","rgba(235, 244, 235,1)");
-        }
-    });
-//    $('#content').on('input',function(){
-//        var input = $('#content').val();
-//        if(input == "") {
-//            send.attr("disabled","disabled");
-//            send.css("color","rgba(235, 244, 235,0.5)");
-//        }
-//        else {
-//            send.removeAttr("disabled");
-//            send.css("color","rgba(235, 244, 235,1)");
-//        }
-//    });
-});
+    }
+    if (data.result == 'BannedContent') {
+        
+    }
+};
+
+var connected = function() {
+    socket.subscribe('wall');
+}
+
+var socket;
+var start = function() {
+    socket = new io.Socket(websocket_host, websocket_options);
+    socket.on('connect', connected)
+    socket.on('message', messaged);
+    socket.connect();
+};
+
+start();

@@ -10,6 +10,9 @@
     </script>
     <script src="{% static "lib/jq/jquery-1.10.2.min.js" %}"></script>
     <script src="{% static "lib/jq/form/jquery.form.min.js" %}"></script>
+    <script src="{% static "lib/socket/socket.io.js" %}"></script>
+    <script src="{% static "js/socket_subscribe.js" %}"></script>
+    <script src="{% static "js/websocket_config.js" %}"></script>
     <script src="{% static "js/index.js" %}"></script>
 {% endblock %}
 
@@ -36,11 +39,17 @@
                 <div id="qrImg"><img src="{% static "img/qrCode.png" %}" style="height:100%;width:100%;"></div>
             </div>
         </div><!--header end-->
+
+        <div id="footer" style="display:none;">
+            <div id="scrollArea">
+                <div id="scrollContent">我是滚动内容！</div>
+            </div> 
+        </div>
+
         <div id="container" class="clearfix">
             <ul id="userBox">
             <!--
                 <li class="clearfix userList" style="display:block;">
->>>>>>> 1c99e048d72a5758f1fcabf8a040a6a0b620b8fd
                     <div class="userPhoto left">
                         <img src="{% static "img/user1.jpg" %}" class="photo right">
                     </div>
@@ -49,7 +58,7 @@
                             <a class="userName">赵小馨</a>
                             <span class="displayContent">我来墙里玩玩一会就走~</span>
                         </p>
-                        
+
                     </div>
                 </li>
                 <li class="clearfix userList" style="display:block;" id='2'>
@@ -60,7 +69,7 @@
                         <p class="c-word">
                             <a class="userName">王小晗</a>
                             <span class="displayContent">别闹，跟我回家~</span>
-                        </p>  
+                        </p>
                     </div>
                 </li>
                 <li class="clearfix userList" style="display:block;" id='3'>
@@ -72,14 +81,14 @@
                             <a class="userName">李小盟++刘小彤</a>
                             <span class="displayContent">带我们一起走！</span>
                         </p>
-                        
+
                     </div>
                 </li>
             -->
             </ul>
-            
+
         </div>
-    </div> 
+    </div>
 </body>
 
 

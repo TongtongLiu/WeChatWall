@@ -1,10 +1,10 @@
 function getTd(para) {
     return $('<td class="td-' + para + '"></td>');
 }
+
 $('#refresh').click(function(){
     clearReviewingMsg();
     refresh();
-    setTimeout(bindClickEvent, 1000);
 });
 
 /*
@@ -45,13 +45,16 @@ function clearReviewingMsg() {
 }
 
 function appendReviewingMsg(msg) {
-    var tr = $('<tr id="' + msg['id'] + '"></tr>'), key;
+    var tr = $('<tr style="display:none" id="' + msg['id'] + '"></tr>'), key;
     getTd('avatar').html('<img class="img-avatar" src="' + msg['avatar'] + '" />').appendTo(tr);
     for (key in reviewingMsgTdMap) {
         getTd(key).html(msg[key]).appendTo(tr);
     }
     getTd('operator').html(buttonString).appendTo(tr);
+    tr.find('.btn-success').click(passClick);
+    tr.find('.btn-danger').click(rejectClick);
     $('#tbody-messages').append(tr);
+    tr.fadeIn(600);
 }
 
 function showReviewingMsg() {
@@ -105,6 +108,7 @@ function clearReviewedMsg() {
 
 function appendReviewedMsg(msg) {
 	var tr = $('<tr id="' + msg['id'] + '"></tr>'), key;
+    msg['content'] = shortenString(msg['content']);
     for (key in reviewedMsgTdMap) {
         getTd(key).html(msg[key]).appendTo(tr);
     }
@@ -120,13 +124,14 @@ function showReviewedMsg() {
 
 function addMessageToHead(msg) {
 	var reviewedMessages = $('#tbody-reviewedMessages tr');
-	if(reviewedMessages.length >= 10) {
+	if(reviewedMessages.length >= 8) {
 		$('#tbody-reviewedMessages tr:last-child').fadeOut(600);
 		setTimeout(function(){
 			$('#tbody-reviewedMessages tr:last-child').remove();
 		}, 1000);
 	}
 	var tr = $('<tr style="display:none;" id="' + msg['id'] + '"></tr>'), key;
+    msg['content'] = shortenString(msg['content']);
     for (key in reviewedMsgTdMap) {
         getTd(key).html(msg[key]).appendTo(tr);
     }
@@ -146,10 +151,31 @@ function initReviewedMsg() {
 
 }
 
+function shortenString(str){
+    var l = str.length;
+    var returnStr = ''
+    var count = 0, point = false;
+    for(var i = 0; i < l; i++){
+    	if (count >= 20) {
+    		point = true;
+        	break;
+        }
+        if(str.charCodeAt(i) < 0 || str.charCodeAt(i) > 255){
+            count += 2;
+        } else {
+        	count++;
+        }
+        returnStr += str.charAt(i);
+    }
+    if (point)
+    	returnStr += '...';
+    return returnStr;
+}
+
 initReviewedMsg();
 
 /**
- * post event
+ * send message event
  */
 var timer;
 function showResult(result) {
@@ -161,77 +187,86 @@ function showResult(result) {
 	}, 3700);
 }
 
-function response(data) {
-	if(data['result'] == 'success') {
-		showResult('审核消息成功');
-	} else {
-		showResult('审核发生错误...');
-	}
-    
-	var messages_id = data['msg_id'].split(',');
-	for(var i = 0; i < messages_id.length; i++) {
-		$('#'+messages_id[i]).fadeOut(600);
-		setTimeout(function(){
-			$('#'+messages_id[i]).remove();
-		}, 1000);
-		for(var index = 0; index < toReviewMessages.length; index++) {
-			if(toReviewMessages[index]['id'] == messages_id[i]) {
-				var temp = toReviewMessages.splice(index, 1);
-				newMessagesReviewed.splice(0, 0, temp[0]);
-				newMessagesReviewed.pop();
-				if(data['type'] == 'pass')
-					addMessageToHead(temp[0]);
-				break;
+function messaged(data) {
+	if (data['type'] == 'review_message') {
+		if (data['result'] == 'success') {
+			showResult('审核消息成功');
+		} else {
+			showResult('审核发生错误...');
+			return;
+		}
+
+		var messages_id = data['msg_id'].split(',');
+		for (var i = 0; i < messages_id.length; i++) {
+			$('#'+messages_id[i]).fadeOut(600);
+			for (var index = 0; index < toReviewMessages.length; index++) {
+				if (toReviewMessages[index]['id'] == messages_id[i]) {
+					var temp = toReviewMessages.splice(index, 1);
+					newMessagesReviewed.splice(0, 0, temp[0]);
+					newMessagesReviewed.pop();
+					if(data['action'] == 'pass')
+						addMessageToHead(temp[0]);
+					break;
+				}
 			}
 		}
+		setTimeout(function(){
+			$('#tbody-messages tr:hidden').remove();
+		}, 600);
+	} else if (data['type'] == 'user_message') {
+		appendReviewingMsg(data);
+        delete data.type
+        delete data.result
+        toReviewMessages.push(data);
 	}
-}
-
-var options = {
-    dataType: 'json',
-    success: response,
-    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
-                },
 }
 
 function bindClickEvent(){
-	$('#tbody-messages .btn-success').click(function(e) {
-		var msgID = $(this).parent().parent().attr('id');
-		setReviewType('pass');
-		setMsgID(msgID);
-		$('#postForm').ajaxSubmit(options);
-		return false;
-	});
+	$('#tbody-messages .btn-success').click(passClick);
+	$('#tbody-messages .btn-danger').click(rejectClick);
+}
 
-	$('#tbody-messages .btn-danger').click(function(e) {
-		var msgID = $(this).parent().parent().attr('id');
-		setReviewType('reject');
-		setMsgID(msgID);
-		$('#postForm').ajaxSubmit(options);
-		return false;
-	});
+function passClick(e) {
+	var msgID = $(this).parent().parent().attr('id');
+	data = {};
+	data['type'] = 'review_message';
+	data['action'] = 'pass';
+	data['message_id'] = msgID;
+	socket.send(data);
+	return false;
+}
+
+function rejectClick(e) {
+	var msgID = $(this).parent().parent().attr('id');
+	data = {};
+	data['type'] = 'review_message';
+	data['action'] = 'reject';
+	data['message_id'] = msgID;
+	socket.send(data);
+	return false;
 }
 
 $('#allPass').click(function(e) {
-	var msgID = getAllMsgID;
-	setReviewType('pass');
-	setMsgID(msgID);
-	$('#postForm').ajaxSubmit(options);
+	var msgID = getAllMsgID();
+	data = {};
+	data['type'] = 'review_message';
+	data['action'] = 'pass';
+	data['message_id'] = msgID;
+	socket.send(data);
 	return false;
 });
 
 $('#allReject').click(function(e) {
-	var msgID = getAllMsgID;
-	setReviewType('reject');
-	setMsgID(msgID);
-	$('#postForm').ajaxSubmit(options);
+	var msgID = getAllMsgID();
+	data = {};
+	data['type'] = 'review_message';
+	data['action'] = 'reject';
+	data['message_id'] = msgID;
+	socket.send(data);
 	return false;
 });
 
-bindClickEvent();
+//bindClickEvent();
 
 function getAllMsgID() {
 	var msgID = '';
@@ -252,3 +287,38 @@ function setReviewType(type) {
 function setMsgID(IDs) {
 	$('#review-msgID').val(IDs);
 }
+
+/*
+ * system message
+ */
+$('#modifySystemMessage').click(function(e){
+	var disabled = $('.form-control').attr('disabled');
+	if (disabled == 'disabled') {
+		$('.form-control').attr('disabled', false);
+		$('#modifySystemMessage').text('发送');
+	} else {
+		$('.form-control').attr('disabled', true);
+		$('#modifySystemMessage').text('修改');
+		data = {};
+		data['type'] = 'admin_message';
+		data['content'] = $('.form-control').val();
+		socket.send(data);
+	}
+});
+
+/*
+ * websocket
+ */
+var connected = function() {
+	socket.subscribe('admin');
+}
+
+var socket;
+var start = function() {
+        socket = new io.Socket(websocket_host, websocket_options);
+        socket.connect();
+        socket.on('connect', connected);
+        socket.on('message', messaged);
+    };
+
+start();
