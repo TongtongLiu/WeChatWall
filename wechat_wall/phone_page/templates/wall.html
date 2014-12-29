@@ -317,7 +317,7 @@
                         </div>
                     </div>
                 </div>
-                <form id="message_form" class="input_form" action="{% url 'phone_page.views.w_post_message' %}" method="post">
+                <form id="message_form" class="input_form" action="{% url 'phone_page.views.w_post_message' %}" method="post" onsubmit="return false;">
                     {% csrf_token %}
                     <input id="openid" name="openid" class="text_content" type="text" value="{{ openid }}" style="display: none">
                     <div class="f_middle">
@@ -342,9 +342,11 @@
         var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
     </script>
     <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
+<!--
     <script src="{% static "lib/socket/socket.io.js" %}"></script>
     <script src="{% static "js/socket_subscribe.js" %}"></script>
     <script type="text/javascript" src="{% static 'js/websocket_config.js' %}"></script>
+-->
     <script type="text/javascript" src="{% static 'js/EasterEggs.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/iPhoneInput.js' %}"></script>

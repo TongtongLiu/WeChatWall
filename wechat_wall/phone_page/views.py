@@ -177,18 +177,12 @@ def w_post_message(request):
             not ('openid' in request.POST) or
             not ('content' in request.POST)):
         raise Http404
-    users = select_users_by_openid(request.POST['openid'])
-    if not users:
-        return HttpResponse('NoUser')
-    user = users[0]
+    user = select_users_by_openid(request.POST['openid'])[0]
     content = request.POST['content']
     if not is_content_valid(content):
         return HttpResponse('BannedContent')
     time = datetime.datetime.now()
-    if get_whether_review() == 1:
-        status = 0
-    else:
-        status = 1
+    status = 1 - get_whether_review()
     try:
         insert_message(user, content, time, status)
         return HttpResponse('Success')
