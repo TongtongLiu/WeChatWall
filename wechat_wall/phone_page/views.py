@@ -1,5 +1,6 @@
 #-*- coding:utf-8 -*-
 
+import base64
 import datetime
 from django.db.models import Q
 from django.http import Http404, HttpResponse
@@ -7,7 +8,6 @@ from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 import json
-import os
 import random
 import time
 
@@ -16,11 +16,12 @@ from phone_page.banned_names import is_name_valid
 from phone_page.banned_words import is_content_valid
 from phone_page.safe_reverse import *
 from wechat_wall.models import User, Message
+from wechat_wall.settings import PHOTO_DEFAULT_URL, PHOTO_UPLOAD_ROOT
 
 MESSAGES_NUM = 20
 DEFAULT_PHOTO_NUM = 3
 
-######################## Date Operation Begin ###############################
+######################## Data Operation Begin ###############################
 
 
 def insert_user(openid, name, photo):
@@ -34,6 +35,13 @@ def select_users_by_openid(openid):
 
 def select_users_by_name(name):
     return User.objects.filter(name=name)
+
+
+def update_user_by_openid(openid, name, photo):
+    user = select_users_by_openid(openid)[0]
+    user.name = name
+    user.photo = photo
+    user.save()
 
 
 def insert_message(user, content, time, status):
@@ -77,7 +85,7 @@ def select_old_messages_before_id(message_id, max_len):
                                              status=1).order_by('-time')
     return return_messages[:max_len]
 
-######################## Date Operation End ###############################
+######################## Data Operation End ###############################
 
 
 def loading(request, openid):
@@ -85,10 +93,6 @@ def loading(request, openid):
         return redirect(s_reverse_wall(openid))
     else:
         return redirect(s_reverse_login(openid))
-
-
-def get_default_photo_path(photo_num):
-    return '/static1/photo_default/' + str(photo_num) + '.jpg'
 
 
 def login(request, openid):
@@ -127,18 +131,33 @@ def login_register(request):
             not ('photo' in request.POST)):
         raise Http404
     openid = request.POST['openid']
-    if select_users_by_openid(openid):
-        return HttpResponse('ExistOpenid')
     name = request.POST['name']
-    #if not check_name(name):
-    #    return HttpResponse('InvalidName')
-    photo = request.POST['photo']
+    if not check_name(name):
+        return HttpResponse('InvalidName')
+    photo_base64 = request.POST['photo']
+    if not photo_base64.startswith('data:image/jpeg;base64,'):
+        # default photo
+        photo_path = photo_base64
+    else:
+        # base64 decode
+        photo_data = base64.b64decode(photo_base64[len('data:image/jpeg;base64,'):])
+        photo_path = PHOTO_UPLOAD_ROOT + openid + '.png'
+        photo_file = open(photo_path, 'wb')
+        photo_file.write(photo_data)
+        photo_file.close()
     try:
-        insert_user(openid, name, photo)
+        if select_users_by_openid(openid):
+            update_user_by_openid(openid, name, photo_path)
+        else:
+            insert_user(openid, name, photo_path)
         return HttpResponse(s_reverse_wall(openid))
     except Exception as e:
         print 'Error occured!!!!!!' + str(e)
         return HttpResponse('Error')
+
+
+def get_default_photo_path(photo_num):
+    return PHOTO_DEFAULT_URL + str(photo_num) + '.png'
 
 
 def wall(request, openid):
