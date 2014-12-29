@@ -84,10 +84,10 @@ html, body {
 }
 
 #submit-button.clicked-button {
-    background: rgba(80, 205, 100, 0.85);
+    background: rgba(80, 205, 100, 0.6);
 }
 #submit-button.disable-button {
-    background: rgba(80, 205, 100, 0.85);
+    background: rgba(80, 205, 100, 0.6);
     color: rgba(130, 230, 142, 1);
 }
 
