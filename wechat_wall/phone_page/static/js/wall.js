@@ -47,13 +47,13 @@ $('.send').click(function() {
 function createsMessages(message) {
     var divMessage = $('<div class="message"></div>');
     var divMessageLeft = $('<div class="message-left"></div>');
-    var divPhoto = $('<div class="message-photo"><img src='+message.user_photo+'"/></div>');
+    var divPhoto = $('<div class="message-photo"><img src="'+message.user_photo+'"/></div>');
     var divMessageRight = $('<div class="message-right"></div>');
     var divMessageName = $('<div class="message-name">'+message.user_name+'</div>');
     var divDialog = $('<div class="dialog"></div>');
     var divTriangle = $('<span class="triangle"></span>');
     var divContent = $('<div class="message-content">'+message.content +'</div>');
-    var divId = $('<div class="message-id">'+message.id+'</div>');
+    var divId = $('<div class="message-id">'+message.message_id+'</div>');
     var divClear = $('<div style="clear: both"></div>');
 
     divMessageLeft.append(divPhoto);
@@ -73,13 +73,13 @@ function createsMessages(message) {
 function createsSelfMessages(message) {
     var divMessage = $('<div class="self-message"></div>');
     var divMessageRight = $('<div class="self-message-right"></div>');
-    var divPhoto = $('<div class="self-message-photo"><img src='+message.avatar+'/></div>');
+    var divPhoto = $('<div class="self-message-photo"><img src="'+message.user_photo+'/></div>');
     var divMessageLeft = $('<div class="self-message-left"></div>');
-    var divMessageName = $('<div class="self-message-name">'+message.name+'</div>');
+    var divMessageName = $('<div class="self-message-name">'+message.user_name+'</div>');
     var divDialog = $('<div class="self-dialog"></div>');
     var divTriangle = $('<span class="self-triangle"></span>');
     var divContent = $('<div class="self-message-content">'+message.content +'</div>');
-    var divId = $('<div class="message-id">'+message.id+'</div>');
+    var divId = $('<div class="message-id">'+message.message_id+'</div>');
     var divClear = $('<div style="clear: both"></div>');
 
     divMessageRight.append(divPhoto);
