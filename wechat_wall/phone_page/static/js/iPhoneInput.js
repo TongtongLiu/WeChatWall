@@ -17,30 +17,15 @@ $(document).ready(function() {
     if (browser.versions.iPhone) {
         $("#div-content").focus(function(){
             //无虚拟键盘时输入框到浏览器窗口顶端的距离
-            var footer = $(".footer");
-            var docHeight = $(document).height() - $('.refresh').height();
-            var scrollTop = $(window).scrollTop();
-            var footerHeight = $(footer).height();
-            var startScrollY = $(footer).scrollTop();
-            setTimeout(function () {
-                var interval = $(footer).offset().top - scrollTop;
-                var inputTopPos = $(footer).offset().top + footerHeight;
-                var inputPos = (inputTopPos + interval > docHeight) ? (docHeight - inputTopPos) : (docHeight - inputTopPos - interval);
-                $(footer).removeClass("footer-position");
-                $(footer).css({'position': 'absolute', 'bottom': inputPos});
-
-                //滚动事件
-                $(window).bind('scroll.iPhone', function () {
-                    var offset = $(footer).scrollTop() - startScrollY;
-                    var afterScrollPos = inputPos - offset;
-
-                    $(footer).css({'position': 'absolute', 'bottom': afterScrollPos});
-                });
-            }, 100);
+            $('.refresh').css("display","none");
+            $('.mask').css("display","none");
+            $('.content-wrap').css("display","none");
         }).blur(function(){
-            $(".footer").addClass("footer-position");
-            $(".footer").css({'position':'fixed', 'bottom': 0});
-            $(window).unbind('scroll.iPhone');
+            $('.refresh').css("display","block");
+            $('.mask').css("display","block");
+            $('.content-wrap').css("display","block");
+            var height = $(document).height()-$(window).height();
+            $('body').animate({scrollTop: height}, 1000);
         });
     }
 });
