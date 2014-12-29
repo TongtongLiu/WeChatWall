@@ -47,6 +47,7 @@ function cleanError() {
 
 function enableButton() {
     var button = $('#submit-button');
+    button.unbind("click", submitButton);
     button.bind("click", submitButton);
     button.removeClass("disable-button");
 }
