@@ -216,8 +216,9 @@ body {
     height: 2.4em;
     overflow: hidden;
     border: 1px solid #969393;
-    border-radius: 1.2em;
-    box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
+    border-radius: 0.2em;
+    _border-radius: 1.2em;
+    _box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
 }
 .self-message-photo img {
     width: 2.4em;
