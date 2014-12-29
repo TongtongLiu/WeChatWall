@@ -16,7 +16,7 @@ from phone_page.banned_names import is_name_valid
 from phone_page.banned_words import is_content_valid
 from phone_page.safe_reverse import *
 from wechat_wall.models import User, Message
-from wechat_wall.settings import PHOTO_DEFAULT_URL, PHOTO_DEFAULT_ROOT, PHOTO_UPLOAD_ROOT
+from wechat_wall.settings import PHOTO_DEFAULT_URL, PHOTO_UPLOAD_URL, PHOTO_UPLOAD_ROOT
 
 MESSAGES_NUM = 20
 DEFAULT_PHOTO_NUM = 2
@@ -137,7 +137,8 @@ def login_register(request):
     photo_base64 = request.POST['photo']
     if not photo_base64.startswith('data:image/jpeg;base64,'):
         # default photo
-        photo_path = PHOTO_DEFAULT_ROOT + photo_base64[photo_base64.rfind('/')+1:]
+        # photo_path = PHOTO_DEFAULT_ROOT + photo_base64[photo_base64.rfind('/')+1:]
+        photo_path = photo_base64
     else:
         # base64 decode
         photo_data = base64.b64decode(photo_base64[len('data:image/jpeg;base64,'):])
@@ -145,6 +146,7 @@ def login_register(request):
         photo_file = open(photo_path, 'wb')
         photo_file.write(photo_data)
         photo_file.close()
+        photo_path = PHOTO_UPLOAD_URL + photo_path[photo_path.rfind('/')+1:]
     try:
         if select_users_by_openid(openid):
             update_user_by_openid(openid, name, photo_path)
