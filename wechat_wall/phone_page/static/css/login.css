@@ -83,7 +83,7 @@ html, body {
     -webkit-border-radius: 4px;
 }
 
-#submit-button.clicked-button {
+#submit-button:hover {
     background: rgba(80, 205, 100, 0.6);
 }
 #submit-button.disable-button {
