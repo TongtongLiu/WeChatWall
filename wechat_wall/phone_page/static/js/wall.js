@@ -21,11 +21,11 @@ $('.send').click(function() {
         success: function(data) {
             switch (data) {
                 case "BannedContent":
-                    alert("小主不要乱说话喔o(╯□╰)o");
+                    createDialog("prompt", "小主不要乱说话喔o(╯□╰)o");
                     break;
 
                 case "Error":
-                    alert("出现了奇怪的错误~~(>_<)~~");
+                    createDialog("warning", "出现了奇怪的错误~~(>_<)~~");
                     break;
 
                 case "Success":
@@ -47,9 +47,9 @@ $('.send').click(function() {
 function createsMessages(message) {
     var divMessage = $('<div class="message"></div>');
     var divMessageLeft = $('<div class="message-left"></div>');
-    var divPhoto = $('<div class="message-photo"><img src='+message.avatar+'"/></div>');
+    var divPhoto = $('<div class="message-photo"><img src='+message.user_photo+'"/></div>');
     var divMessageRight = $('<div class="message-right"></div>');
-    var divMessageName = $('<div class="message-name">'+message.name+'</div>');
+    var divMessageName = $('<div class="message-name">'+message.user_name+'</div>');
     var divDialog = $('<div class="dialog"></div>');
     var divTriangle = $('<span class="triangle"></span>');
     var divContent = $('<div class="message-content">'+message.content +'</div>');
@@ -200,31 +200,29 @@ $(window).scroll(function () {
             "marginTop": "-" + loadheight + "px"
         }, 200);
         //刷新响应处理函数
-        getOldMessage();
+        getOldMessages();
     }
 });
 
-//获取历史消息函数
-function getOldMessage() {
+// 获取历史消息函数
+function getOldMessages() {
     var message_id;
     if ($('#content-container .message_id').length == 0)
         message_id = 0;
     else {
-        var len = $('#content-container .message_id').length;
-        message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+        message_id = parseInt($('#content-container .message_id')[0].innerHTML);
     }
 
     $.ajax({
         url: get_old_messages,
-        type: "POST",
+        type: "GET",
         data: {
             message_id: message_id
         },
-        success: function (data){
-            //console.info(data);
+        success: function(data) {
             var messages = data.messages;
             for (var i = 0; i < messages.length; i++) {
-                 if (messages[i].name == name)
+                 if (messages[i].user_name == name)
                     var message = createsSelfMessages(messages[i]);
                 else
                     var message = createsMessages(messages[i]);
@@ -237,44 +235,93 @@ function getOldMessage() {
     });
 }
 
-//websocket
-var messaged = function(data) {
-    console.log(data);
-    if (data.result == 'Success') {
-        if (data.type == 'user_message') {
-            if (data.name == name) {
-                var message = createsSelfMessages(data);
-                keywordDetect(data.content);
-            }
-            else {
-                var message = createsMessages(data);
-            }
-            message.appendTo('#content-container');
+// 获取最新消息函数
+function getNewMessages() {
+    var message_id;
+    if ($('#content-container .message_id').length == 0)
+        message_id = 0;
+    else {
+        var len = $('#content-container .message_id').length;
+        message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+    }
 
-            var docHeight = $(document).height();
-            var scrollTop = $('body').scrollTop();
-            var winHeight = $(window).height();
-            if (scrollTop >= docHeight - winHeight)
-                $('body').animate({scrollTop: height}, 800);
-        } else if (data.type == 'admin_message') {
-            createNoticeBar(data.content);
+    $.ajax({
+        url: get_new_messages,
+        type: "GET",
+        data: {
+            message_id: message_id
+        },
+        success: function(data) {
+            var messages = data.messages;
+            for (var i = messages.length - 1; i >= 0; i--) {
+                 if (messages[i].user_name == name) {
+                     var message = createsSelfMessages(messages[i]);
+                     keywordDetect(data.content);
+                 } else
+                     var message = createsMessages(messages[i]);
+                 message.appendTo('#content-container');
+
+                 var docHeight = $(document).height();
+                 var scrollTop = $('body').scrollTop();
+                 var winHeight = $(window).height();
+                 if (scrollTop >= docHeight - winHeight)
+                     $('body').animate({scrollTop: $(document).height()}, 800);
+            }
+        },
+        error: function (data){
+            console.info(data);
         }
-    }
-    if (data.result == 'BannedContent') {
-        
-    }
-};
+    });
 
-var connected = function() {
-    socket.subscribe('wall');
+    refresh();
 }
 
-var socket;
-var start = function() {
-    socket = new io.Socket(websocket_host, websocket_options);
-    socket.on('connect', connected)
-    socket.on('message', messaged);
-    socket.connect();
-};
+// 轮询
+function refresh() {
+    setTimeout(getNewMessages, 2000 + Math.random() * 2000);
+}
 
-start();
+refresh();
+
+
+////websocket
+//var messaged = function(data) {
+//     console.log(data);
+//     if (data.result == 'Success') {
+//         if (data.type == 'user_message') {
+//             if (data.name == name) {
+//                 var message = createsSelfMessages(data);
+//                 keywordDetect(data.content);
+//             }
+//             else {
+//                 var message = createsMessages(data);
+//             }
+//             message.appendTo('#content-container');
+//
+//             var docHeight = $(document).height();
+//             var scrollTop = $('body').scrollTop();
+//             var winHeight = $(window).height();
+//             if (scrollTop >= docHeight - winHeight)
+//                 $('body').animate({scrollTop: height}, 800);
+//         } else if (data.type == 'admin_message') {
+//             createNoticeBar(data.content);
+//         }
+//     }
+//     if (data.result == 'BannedContent') {
+//
+//     }
+//};
+
+// var connected = function() {
+//     socket.subscribe('wall');
+// }
+
+// var socket;
+// var start = function() {
+//     socket = new io.Socket(websocket_host, websocket_options);
+//     socket.on('connect', connected)
+//     socket.on('message', messaged);
+//     socket.connect();
+// };
+
+// start();

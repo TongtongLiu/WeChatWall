@@ -58,8 +58,7 @@ def select_messages_by_id(message_id):
 
 
 def select_new_messages(max_len):
-    messages = Message.objects.filter(status=1).order_by('-time')
-    return messages[:max_len]
+    return Message.objects.filter(status=1).order_by('-time')[:max_len]
 
 
 def select_new_messages_after_id(message_id, max_len):
@@ -67,11 +66,10 @@ def select_new_messages_after_id(message_id, max_len):
     if not messages:
         return select_new_messages(max_len)
     message = messages[0]
-    return_messages = Message.objects.filter(Q(time__gt=message.time) |
-                                             Q(time=message.time,
-                                               message_id__gt=message_id),
-                                             status=1).order_by('-time')
-    return return_messages[:max_len]
+    return Message.objects.filter(Q(time__gt=message.time) |
+                                  Q(time=message.time,
+                                    message_id__gt=message_id),
+                                  status=1).order_by('-time')[:max_len]
 
 
 def select_old_messages_before_id(message_id, max_len):
@@ -79,11 +77,10 @@ def select_old_messages_before_id(message_id, max_len):
     if not messages:
         return select_new_messages(max_len)
     message = messages[0]
-    return_messages = Message.objects.filter(Q(time__lt=message.time) |
-                                             Q(time=message.time,
-                                               message_id__lt=message_id),
-                                             status=1).order_by('-time')
-    return return_messages[:max_len]
+    return Message.objects.filter(Q(time__lt=message.time) |
+                                  Q(time=message.time,
+                                    message_id__lt=message_id),
+                                  status=1).order_by('-time')[:max_len]
 
 ######################## Data Operation End ###############################
 
@@ -203,16 +200,16 @@ def w_get_new_messages(request):
             'user_name': message.user.name,
             'user_photo': message.user.photo,
             'content': message.content,
-            'time': int(time.mktime(message.time.timetuple()))
+            # 'time': int(time.mktime(message.time.timetuple()))
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
 
 @csrf_exempt
 def w_get_old_messages(request):
-    if not request.POST or not ('message_id' in request.POST):
+    if not request.GET or not ('message_id' in request.GET):
         raise Http404
-    messages = select_old_messages_before_id(request.POST['message_id'], MESSAGES_NUM)
+    messages = select_old_messages_before_id(request.GET['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
     for message in messages:
         return_json['messages'].append({
@@ -220,7 +217,7 @@ def w_get_old_messages(request):
             'user_name': message.user.name,
             'user_photo': message.user.photo,
             'content': message.content,
-            'time': int(time.mktime(message.time.timetuple()))
+            # 'time': int(time.mktime(message.time.timetuple()))
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
