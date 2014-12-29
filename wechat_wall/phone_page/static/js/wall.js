@@ -73,7 +73,7 @@ function createsMessages(message) {
 function createsSelfMessages(message) {
     var divMessage = $('<div class="self-message"></div>');
     var divMessageRight = $('<div class="self-message-right"></div>');
-    var divPhoto = $('<div class="self-message-photo"><img src="'+message.user_photo+'/></div>');
+    var divPhoto = $('<div class="self-message-photo"><img src="'+message.user_photo+'"/></div>');
     var divMessageLeft = $('<div class="self-message-left"></div>');
     var divMessageName = $('<div class="self-message-name">'+message.user_name+'</div>');
     var divDialog = $('<div class="self-dialog"></div>');
