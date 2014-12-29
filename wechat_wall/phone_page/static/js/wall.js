@@ -257,7 +257,7 @@ function getNewMessages() {
             for (var i = messages.length - 1; i >= 0; i--) {
                  if (messages[i].user_name == name) {
                      var message = createsSelfMessages(messages[i]);
-                     keywordDetect(data.content);
+                     keywordDetect(messages[i].content);
                  } else
                      var message = createsMessages(messages[i]);
                  message.appendTo('#content-container');
