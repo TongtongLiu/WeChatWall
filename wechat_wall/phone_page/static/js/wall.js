@@ -190,15 +190,16 @@ window.loadheight = $('#refresh').height();
 window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
 window.visible = $("#refresh").animate("marginTop", "0px");
 $("#refresh").css("marginTop", "-" + loadheight + "px");
-$(window).scroll(function () {
+$(window).scroll(function (event) {
+    event.preventDefault();
     var st = $(window).scrollTop();
-    if (st <= 0) {
+    if (st < 0) {
         $("#refresh").animate({
             "marginTop": "0px"
-        }, 200);
+        }, 500);
         $("#refresh").delay(500).animate({
             "marginTop": "-" + loadheight + "px"
-        }, 200);
+        }, 500);
         //刷新响应处理函数
         getOldMessages();
     }
@@ -256,7 +257,7 @@ function getNewMessages() {
             for (var i = messages.length - 1; i >= 0; i--) {
                  if (messages[i].user_name == name) {
                      var message = createsSelfMessages(messages[i]);
-                     keywordDetect(data.content);
+                     keywordDetect(messages[i].content);
                  } else
                      var message = createsMessages(messages[i]);
                  message.appendTo('#content-container');

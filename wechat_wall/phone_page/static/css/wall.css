@@ -29,9 +29,10 @@ body {
     height: 2.5em;
     line-height: 2.5em;
     text-align: center;
-    background: #dcdcdc;
-    border-bottom: 1px solid #D5CFCF;
-    box-shadow: 0 1px 6px rgb(111, 107, 107)inset, 0 1px 2px rgb(209, 209, 209);
+    background: rgb(234, 233, 233);
+    _background: #dcdcdc;
+    _border-bottom: 1px solid #D5CFCF;
+    _box-shadow: 0 1px 6px rgb(111, 107, 107)inset, 0 1px 2px rgb(209, 209, 209);
 }
 
 /*遮罩效果*/
@@ -147,8 +148,9 @@ body {
     height: 2.4em;
     overflow: hidden;
     border: 1px solid #969393;
-    border-radius: 1.2em;
-    box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
+    border-radius: 0.2em;
+    _border-radius: 1.2em;
+    _box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
 }
 .message-photo img {
     width: 2.4em;
@@ -214,8 +216,9 @@ body {
     height: 2.4em;
     overflow: hidden;
     border: 1px solid #969393;
-    border-radius: 1.2em;
-    box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
+    border-radius: 0.2em;
+    _border-radius: 1.2em;
+    _box-shadow: 0 1px 0 #F6F6F6 inset,0.3px 0.3px 1px #717171;
 }
 .self-message-photo img {
     width: 2.4em;
