@@ -190,9 +190,9 @@ def w_post_message(request):
 
 @csrf_exempt
 def w_get_new_messages(request):
-    if not request.POST or not ('message_id' in request.POST):
+    if not request.GET or not ('message_id' in request.GET):
         raise Http404
-    messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
+    messages = select_new_messages_after_id(request.GET['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
     for message in messages:
         return_json['messages'].append({

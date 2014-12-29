@@ -29,9 +29,10 @@ body {
     height: 2.5em;
     line-height: 2.5em;
     text-align: center;
-    background: #dcdcdc;
-    border-bottom: 1px solid #D5CFCF;
-    box-shadow: 0 1px 6px rgb(111, 107, 107)inset, 0 1px 2px rgb(209, 209, 209);
+    background: rgb(234, 233, 233);
+    _background: #dcdcdc;
+    _border-bottom: 1px solid #D5CFCF;
+    _box-shadow: 0 1px 6px rgb(111, 107, 107)inset, 0 1px 2px rgb(209, 209, 209);
 }
 
 /*遮罩效果*/

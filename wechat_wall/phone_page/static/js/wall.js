@@ -192,7 +192,7 @@ window.visible = $("#refresh").animate("marginTop", "0px");
 $("#refresh").css("marginTop", "-" + loadheight + "px");
 $(window).scroll(function () {
     var st = $(window).scrollTop();
-    if (st <= 0) {
+    if (st < 0) {
         $("#refresh").animate({
             "marginTop": "0px"
         }, 200);
