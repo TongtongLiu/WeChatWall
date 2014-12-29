@@ -8,11 +8,11 @@ $(document).ready(function(){
         var documentHeight = $(document).height(),
             documentWidth = $(document).width();
         //雪花
-        var flake = $('<div id="flake" class="fa-spin"/>').css({'position': 'absolute', 'top': '-30px'}).html('&#10052;');
+        var flake = $('<div id="flake"/>').css({'position': 'absolute', 'top': '-30px'}).html('&#10052;');
         var defaults = {
                 minSize : 10,
                 maxSize : 18,
-                interval : 500,
+                interval : 800,
                 color : "#ffffff"
             },
             options = $.extend({},defaults,options);
@@ -48,18 +48,18 @@ function keywordRain(rainContent, options, addTop) {
         maxSize : 18,
         interval : 50,
         color : "#ffffff",
-        number : 50
+        number : 10
     },
     options = $.extend({},defaults,options);
     for(var i=0; i < options.number; i++) {
         setTimeout(function () {
             var rainSize = options.minSize + Math.random() * (options.maxSize - options.minSize),
                 startTop = addTop,
-                startHorizontal = Math.random() * documentWidth,
+                startHorizontal = documentWidth/2 + 50 - Math.random() * 100,
                 endBottom = documentHeight - 40,
                 endHorizontal = Math.random() * 100 - 50 + startHorizontal,
                 startOpacity = Math.random() + 0.5,
-                duration = Math.random() * (documentHeight - startTop) * 10 + 5000;
+                duration = Math.random() * (documentHeight - startTop) * 5 + 5000;
 
             rain
                 .clone()

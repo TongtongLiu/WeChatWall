@@ -161,7 +161,6 @@ body {
 .triangle {
     position:absolute;
     top:35%;
-    left: 1px;
     margin-top:-8px;
     display:block;
     width:0;
@@ -169,8 +168,8 @@ body {
     overflow:hidden;
     line-height:0;
     font-size:0;
-    border-bottom:8px solid rgb(226, 226, 226);
-    border-top:8px solid rgb(226, 226, 226);
+    border-bottom:8px solid rgb(234, 233, 233);
+    border-top:8px solid rgb(234, 233, 233);
     border-left:none;
     border-right:8px solid #F2F2F2;
 }
@@ -231,7 +230,7 @@ body {
 .self-triangle {
     position:absolute;
     top:35%;
-    right: 1px;
+    right: 0;
     margin-top:-8px;
     display:block;
     width:0;
@@ -239,8 +238,8 @@ body {
     overflow:hidden;
     line-height:0;
     font-size:0;
-    border-bottom:8px solid rgb(226, 226, 226);
-    border-top:8px solid rgb(226, 226, 226);
+    border-bottom:8px solid rgb(234, 233, 233);
+    border-top:8px solid rgb(234, 233, 233);
     border-left: 8px solid #B1E866;
     border-right:none;
 }
@@ -265,8 +264,6 @@ body {
 
 .footer {
     z-index: 50;
-    position: fixed;
-    bottom: 0;
     width: 100%;
     background: -webkit-linear-gradient(top, #dcdcdc, #c1c1c1);
     background: -moz-linear-gradient(top,#474d54,#2f363d);
@@ -275,6 +272,10 @@ body {
     background: linear-gradient(top,#474d54,#2f363d);
     border-top: 1px solid #C8C7C7;
     box-shadow: 0 -0.3px 1px rgb(126, 123, 123);
+}
+.footer-position {
+    position: fixed;
+    bottom: 0;
 }
 .exposed .footer {
     border-top: 1px solid rgba(0,0,0,0.3);
