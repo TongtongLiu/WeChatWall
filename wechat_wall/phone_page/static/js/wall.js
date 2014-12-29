@@ -207,10 +207,10 @@ $(window).scroll(function () {
 // 获取历史消息函数
 function getOldMessages() {
     var message_id;
-    if ($('#content-container .message_id').length == 0)
+    if ($('#content-container .message-id').length == 0)
         message_id = 0;
     else {
-        message_id = parseInt($('#content-container .message_id')[0].innerHTML);
+        message_id = parseInt($('#content-container .message-id')[0].innerHTML);
     }
 
     $.ajax({
@@ -238,11 +238,11 @@ function getOldMessages() {
 // 获取最新消息函数
 function getNewMessages() {
     var message_id;
-    if ($('#content-container .message_id').length == 0)
+    if ($('#content-container .message-id').length == 0)
         message_id = 0;
     else {
-        var len = $('#content-container .message_id').length;
-        message_id = parseInt($('#content-container .message_id')[len - 1].innerHTML);
+        var len = $('#content-container .message-id').length;
+        message_id = parseInt($('#content-container .message-id')[len - 1].innerHTML);
     }
 
     $.ajax({
