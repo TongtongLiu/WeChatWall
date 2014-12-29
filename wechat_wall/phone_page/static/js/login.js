@@ -74,11 +74,11 @@ function disableInput() {
 }
 
 function clickButton() {
-    button.addClass("clicked-button")
+    $('#submit-button').addClass("clicked-button")
 }
 
 function unclickButton() {
-    button.removeClass("clicked-button")
+    $('#submit-button').removeClass("clicked-button")
 }
 
 function submitButton() {
