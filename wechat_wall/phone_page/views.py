@@ -19,7 +19,7 @@ from wechat_wall.models import User, Message
 from wechat_wall.settings import PHOTO_DEFAULT_URL, PHOTO_UPLOAD_ROOT
 
 MESSAGES_NUM = 20
-DEFAULT_PHOTO_NUM = 3
+DEFAULT_PHOTO_NUM = 2
 
 ######################## Data Operation Begin ###############################
 
@@ -228,9 +228,3 @@ def w_get_old_messages(request):
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
-
-# tt test
-def tt(request, openid):
-    return render_to_response('tt_login.html',
-                              {'openid': openid, 'photo-num': 1},
-                              context_instance=RequestContext(request))
