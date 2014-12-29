@@ -59,9 +59,9 @@ WSGI_APPLICATION = 'wechat_wall.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'wx1_wall',
-        'USER': 'wx1',
-        'PASSWORD': 'FvhMOEu61Iiv3UHg',
+        'NAME': 'wx2_wall',
+        'USER': 'root',
+        'PASSWORD': 'admin',
         # 'USER': 'root',
         # 'PASSWORD': '19940121',
         'HOST': '127.0.0.1',

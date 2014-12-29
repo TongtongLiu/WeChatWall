@@ -3,6 +3,7 @@
 import base64
 import datetime
 from django.db.models import Q
+from django.forms.models import model_to_dict
 from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
@@ -82,7 +83,23 @@ def select_old_messages_before_id(message_id, max_len):
                                     message_id__lt=message_id),
                                   status=1).order_by('-time')[:max_len]
 
+
+def get_origin_messages(number):
+    now = datetime.datetime.now()
+    new_message_reviewed_models = Message.objects.filter(status=1, time__lt=now).order_by('-time')[0:number]
+    new_message_reviewed_list = []
+    for message in new_message_reviewed_models:
+        new_message_reviewed_list += [wrap_message_dict(message)]
+    return new_message_reviewed_list
+
 ######################## Data Operation End ###############################
+
+
+def wrap_message_dict(message):
+    return_dict = model_to_dict(message)
+    return_dict['user_name'] = message.user.name
+    return_dict['user_photo'] = message.user.photo
+    return return_dict
 
 
 def loading(request, openid):
@@ -164,9 +181,11 @@ def wall(request, openid):
     if not users:
         return redirect(s_reverse_login(openid))
     user = users[0]
+    origin_messages = get_origin_messages(MESSAGES_NUM)
     return render_to_response('wall.html',
-                               {'openid': openid, 'name': user.name, 'photo': user.photo},
-                               context_instance=RequestContext(request))
+                              {'openid': openid, 'name': user.name, 'photo': user.photo,
+                               'origin_messages': origin_messages},
+                              context_instance=RequestContext(request))
 
 @csrf_exempt
 def w_post_message(request):
@@ -190,9 +209,9 @@ def w_post_message(request):
 
 @csrf_exempt
 def w_get_new_messages(request):
-    if not request.POST or not ('message_id' in request.POST):
+    if not request.GET or not ('message_id' in request.GET):
         raise Http404
-    messages = select_new_messages_after_id(request.POST['message_id'], MESSAGES_NUM)
+    messages = select_new_messages_after_id(request.GET['message_id'], MESSAGES_NUM)
     return_json = {'messages': []}
     for message in messages:
         return_json['messages'].append({

@@ -281,8 +281,20 @@ function refresh() {
     setTimeout(getNewMessages, 2000 + Math.random() * 2000);
 }
 
-refresh();
+// 初始化页面
+function initMessage() {
+    for (var i = originalMessages.length - 1; i >= 0; i--) {
+         if (originalMessages[i].user_name == name) {
+             var message = createsSelfMessages(originalMessages[i]);
+         } else
+             var message = createsMessages(originalMessages[i]);
+         message.appendTo('#content-container');
+    }
+    $('body').animate({scrollTop: $(document).height()}, 800);
+    refresh();
+}
 
+initMessage();
 
 ////websocket
 //var messaged = function(data) {

@@ -480,6 +480,17 @@
         var photo = "{{ photo }}";
         var get_new_messages = "{% url 'phone_page.views.w_get_new_messages' %}";
         var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
+        var originalMessages = [
+            {% for message in origin_messages %}
+	            {
+	            	'id': {{ message.message_id }},
+	            	'content': '{{ message.content|escapejs }}',
+	            	'time': new Date('{{ message.time|date:"r" }}'),
+	            	'name': '{{ message.name|escapejs }}',
+	            	'avatar': '{{ message.photo|escapejs }}'
+	            }{% if forloop.last %}{% else %},{% endif %}
+            {% endfor %}
+        ];
     </script>
     <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
 <!--
