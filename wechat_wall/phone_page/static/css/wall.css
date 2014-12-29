@@ -18,6 +18,11 @@ body {
     background-color: rgb(234, 233, 233);
     color: rgb(69, 69, 69);
 }
+
+.wrap {
+    position:relative;
+}
+
 /*刷新*/
 .refresh {
     width: 100%;
