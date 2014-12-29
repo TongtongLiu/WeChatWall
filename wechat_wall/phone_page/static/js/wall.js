@@ -190,7 +190,8 @@ window.loadheight = $('#refresh').height();
 window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
 window.visible = $("#refresh").animate("marginTop", "0px");
 $("#refresh").css("marginTop", "-" + loadheight + "px");
-$(window).scroll(function () {
+$(window).scroll(function (event) {
+    event.preventDefault();
     var st = $(window).scrollTop();
     if (st < 0) {
         $("#refresh").animate({
@@ -200,8 +201,7 @@ $(window).scroll(function () {
             "marginTop": "-" + loadheight + "px"
         }, 500);
         //刷新响应处理函数
-        if (st == -loadheight)
-            getOldMessages();
+        getOldMessages();
     }
 });
 
