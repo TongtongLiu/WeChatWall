@@ -99,7 +99,8 @@ html, body {
 .loginFooter {
     display: block;
     position: absolute;
-    bottom: 0;
+    /*bottom: 0;*/
+    bottom: 65px;
     left: 50%;
     width: 200px;
     margin: 20px 0 20px -100px;
