@@ -48,9 +48,9 @@ function cleanError() {
 function enableButton() {
     var button = $('#submit-button');
     button.bind({
+        "mouseup": unclickButton,
         "click": submitButton,
-        "mousedown": button.addClass("clicked-button"),
-        "mouseup": button.removeClass("clicked-button")
+        "mousedown": clickButton
     });
     button.removeClass("disable-button");
 }
@@ -58,7 +58,9 @@ function enableButton() {
 function disableButton() {
     var button = $('#submit-button');
     button.addClass("disable-button");
+    button.unbind("mousedown", clickButton);
     button.unbind("click", submitButton);
+    button.unbind("mouseup", unclickButton);
 }
 
 function enableInput() {
@@ -69,6 +71,14 @@ function enableInput() {
 function disableInput() {
     $('#name-input').attr('readonly', 'readonly');
     $('#photo-file').attr('readonly', 'readonly');
+}
+
+function clickButton() {
+    button.addClass("clicked-button")
+}
+
+function unclickButton() {
+    button.removeClass("clicked-button")
 }
 
 function submitButton() {
