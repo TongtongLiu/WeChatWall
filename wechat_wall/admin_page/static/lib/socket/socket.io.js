@@ -7,6 +7,11 @@
  * @copyright Copyright (c) 2010 LearnBoost <dev@learnboost.com>
  */
 
+String.prototype.getUTF8Length = function () {
+    var cArr = this.match(/[^\x00-\xff]/ig);
+    return this.length + (cArr == null ? 0 : 2 * cArr.length);
+}
+
 this.io = {
 	version: '0.6.1',
 
@@ -146,7 +151,7 @@ if (typeof window != 'undefined'){
 				messages = io.util.isArray(messages) ? messages : [messages];
 		for (var i = 0, l = messages.length; i < l; i++){
 			message = messages[i] === null || messages[i] === undefined ? '' : stringify(messages[i]);
-			ret += frame + message.length + frame + message;
+			ret += frame + message.getUTF8Length()  + frame + message;
 		}
 		return ret;
 	};
