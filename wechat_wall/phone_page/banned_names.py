@@ -2,7 +2,7 @@
 __author__ = 'liutongtong'
 
 BANNED_NAMES = [
-    '管理员', 'root'
+    u'管理员', 'root'
 ]
 
 

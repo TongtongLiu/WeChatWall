@@ -109,8 +109,8 @@ TEMPLATE_LOADERS = (
     # 'django.template.loaders.eggs.Loader',
 )
 
-PHOTO_DEFAULT_URL = STATIC_URL + 'photo_default/'
-PHOTO_UPLOAD_URL = STATIC_URL + 'photo_upload/'
-PHOTO_DEFAULT_ROOT = os.path.dirname(__file__) + '/../phone_page/static/photo_default/'
-PHOTO_UPLOAD_ROOT = os.path.dirname(__file__) + '/../phone_page/static/photo_upload/'
+PHOTO_DEFAULT_URL = (STATIC_URL + 'photo_default/').replace('\\', '/')
+PHOTO_UPLOAD_URL = (STATIC_URL + 'photo_upload/').replace('\\', '/')
+PHOTO_DEFAULT_ROOT = (os.path.dirname(__file__) + '/../phone_page/static/photo_default/').replace('\\', '/')
+PHOTO_UPLOAD_ROOT = (os.path.dirname(__file__) + '/../phone_page/static/photo_upload/').replace('\\', '/')
 
