@@ -77,6 +77,9 @@ html, body {
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
 }
+#submit-button:active {
+    background: rgba(80, 205, 100, 0.85);
+}
 
 #submit-button.disable-button {
     background: rgba(80, 205, 100, 0.85);
