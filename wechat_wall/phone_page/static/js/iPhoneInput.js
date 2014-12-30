@@ -31,6 +31,9 @@ $(document).ready(function() {
         sendBtn.css("color","rgba(235, 244, 235,0.5)");
         $('.wrap').css("display","block");
         $('.iPhone-input').css("display","none");
+        var height = $(document).height() - $('.footer').height();
+        $(window).scrollTop(height);
+        createDialog("prompt", "已发送");
 
         $.ajax({
             url: $('#message_form').attr('action'),
@@ -50,8 +53,6 @@ $(document).ready(function() {
                         break;
 
                     case "Success":
-                        //滚动到页面底部
-                        $('body').animate({scrollTop: $(document).height()}, 1000);
                         refreshImmediately();
                         break;
 
