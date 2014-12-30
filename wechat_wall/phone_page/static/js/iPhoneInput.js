@@ -4,6 +4,40 @@
 
 //处理iPhone下fixed属性问题
 $(document).ready(function() {
+    var sendBtn = $('.iPhone-send');
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    $('#iPhone-div-content').bind('input propertychange', function() {
+        var input = $('#iPhone-div-content').html();
+        if(input == "") {
+            sendBtn.attr("disabled","disabled");
+            sendBtn.css("color","rgba(235, 244, 235,0.5)");
+        }
+        else {
+            sendBtn.removeAttr("disabled");
+            sendBtn.css("color","rgba(235, 244, 235,1)");
+        }
+    });
+    sendBtn.click(function() {
+        var content = $('#iPhone-div-content').text(),
+        message = {
+            type: 'user_message',
+            content: content,
+            openid: openid
+        };
+        socket.send(message);
+
+        $('.wrap').css("display","block");
+        $('.iPhone-input').css("display","none");
+
+        $('#iPhone-div-content').html("");
+        sendBtn.attr("disabled","disabled");
+        sendBtn.css("color","rgba(235, 244, 235,0.5)");
+        //跳转到页面底部
+        var height = $(document).height() - $('.footer').height();
+        $(window).scrollTop(height);
+        createDialog("prompt", "已发送");
+    });
     var browser = {
             versions: function () {
             var u = navigator.userAgent;
@@ -16,30 +50,16 @@ $(document).ready(function() {
     };
     if (browser.versions.iPhone) {
         $("#div-content").focus(function(){
-            var footer = $(".footer");
-            var docHeight = $(document).height() - $('.refresh').height();
-            var scrollTop = $(window).scrollTop();
-            var footerHeight = $(footer).height();
-            var startScrollY = $(window).scrollTop();
-            setTimeout(function () {
-                var interval = $(footer).offset().top - scrollTop;
-                var inputTopPos = $(footer).offset().top + footerHeight;
-                var inputPos = (inputTopPos + interval > docHeight) ? (docHeight - inputTopPos) : (docHeight - inputTopPos - interval);
-                $(footer).removeClass("footer-position");
-                $(footer).css({'position': 'absolute', 'bottom': inputPos});
+            $('.wrap').css("display","none");
+            $('.iPhone-input').css("display","block");
+            $('#iPhone-div-content').focus();
+        });
+        $('.iPhone-return').click(function() {
+            $('.wrap').css("display","block");
+            $('.iPhone-input').css("display","none");
 
-                //滚动事件
-                $(window).bind('scroll.iPhone', function () {
-                    var offset = $(window).scrollTop() - startScrollY;
-                    var afterScrollPos = inputPos - offset;
-
-                    footer.css({'position': 'absolute', 'bottom': afterScrollPos});
-                });
-            }, 100);
-        }).blur(function(){
-            $(".footer").addClass("footer-position");
-            $(".footer").css({'position':'fixed', 'bottom': 0});
-            $(window).unbind('scroll.iPhone');
+            var height = $(document).height() - $('.footer').height();
+            $(window).scrollTop(height);
         });
     }
 });
