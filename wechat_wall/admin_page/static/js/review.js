@@ -186,7 +186,7 @@ function showResult(result) {
 		$('#resultBox').slideUp(700)
 	}, 3700);
 }
-
+/*
 function messaged(data) {
 	if (data['type'] == 'review_message') {
 		if (data['result'] == 'success') {
@@ -220,6 +220,34 @@ function messaged(data) {
         toReviewMessages.push(data);
 	}
 }
+*/
+
+function reviewCallback(data) {
+	if (data['result'] == 'success') {
+			showResult('审核消息成功');
+		} else {
+			showResult('审核发生错误...');
+			return;
+		}
+
+		var messages_id = data['msg_id'].split(',');
+		for (var i = 0; i < messages_id.length; i++) {
+			$('#'+messages_id[i]).fadeOut(600);
+			for (var index = 0; index < toReviewMessages.length; index++) {
+				if (toReviewMessages[index]['id'] == messages_id[i]) {
+					var temp = toReviewMessages.splice(index, 1);
+					newMessagesReviewed.splice(0, 0, temp[0]);
+					newMessagesReviewed.pop();
+					if(data['action'] == 'pass')
+						addMessageToHead(temp[0]);
+					break;
+				}
+			}
+		}
+		setTimeout(function(){
+			$('#tbody-messages tr:hidden').remove();
+		}, 600);
+}
 
 function bindClickEvent(){
 	$('#tbody-messages .btn-success').click(passClick);
@@ -229,40 +257,36 @@ function bindClickEvent(){
 function passClick(e) {
 	var msgID = $(this).parent().parent().attr('id');
 	data = {};
-	data['type'] = 'review_message';
-	data['action'] = 'pass';
+	data['type'] = 'pass';
 	data['message_id'] = msgID;
-	socket.send(data);
+	reviewMessages(data);
 	return false;
 }
 
 function rejectClick(e) {
 	var msgID = $(this).parent().parent().attr('id');
 	data = {};
-	data['type'] = 'review_message';
-	data['action'] = 'reject';
+	data['type'] = 'reject';
 	data['message_id'] = msgID;
-	socket.send(data);
+	reviewMessages(data);
 	return false;
 }
 
 $('#allPass').click(function(e) {
 	var msgID = getAllMsgID();
 	data = {};
-	data['type'] = 'review_message';
-	data['action'] = 'pass';
+	data['type'] = 'pass';
 	data['message_id'] = msgID;
-	socket.send(data);
+	reviewMessages(data);
 	return false;
 });
 
 $('#allReject').click(function(e) {
 	var msgID = getAllMsgID();
 	data = {};
-	data['type'] = 'review_message';
-	data['action'] = 'reject';
+	data['tpye'] = 'reject';
 	data['message_id'] = msgID;
-	socket.send(data);
+	reviewMessages(data);
 	return false;
 });
 
@@ -280,12 +304,17 @@ function getAllMsgID() {
 	return msgID;
 }
 
-function setReviewType(type) {
-	$('#review-type').val(type);
-}
-
-function setMsgID(IDs) {
-	$('#review-msgID').val(IDs);
+function reviewMessages(data) {
+	$.ajax({
+		url: reviewMessagesUrl,
+		type: 'POST',
+		data: data,
+		success: reviewCallback,
+		error: function(){
+			showResult('审核发生错误...');
+			return;
+		}
+	});
 }
 
 /*
@@ -302,13 +331,30 @@ $('#modifySystemMessage').click(function(e){
 		data = {};
 		data['type'] = 'admin_message';
 		data['content'] = $('.form-control').val();
-		socket.send(data);
+		$.ajax({
+			url: systemPostUrl,
+			type: 'POST',
+			data: data,
+			success: function(data){
+				if (data['result'] == 'success') {
+					showResult('系统消息发送成功');
+				} else {
+					showResult('系统消息发送失败，请重试...');
+					return;
+				}
+			},
+			error: function(){
+				showResult('系统消息发送失败，请重试...');
+				return;
+			}
+		});
 	}
 });
 
 /*
  * websocket
  */
+/*
 var connected = function() {
 	socket.subscribe('admin');
 }
@@ -322,3 +368,4 @@ var start = function() {
     };
 
 start();
+*/
