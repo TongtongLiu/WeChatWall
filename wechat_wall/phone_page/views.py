@@ -83,15 +83,6 @@ def select_old_messages_before_id(message_id, max_len):
                                     message_id__lt=message_id),
                                   status=1).order_by('-time')[:max_len]
 
-
-def get_origin_messages(number):
-    now = datetime.datetime.now()
-    new_message_reviewed_models = Message.objects.filter(status=1, time__lt=now).order_by('-time')[0:number]
-    new_message_reviewed_list = []
-    for message in new_message_reviewed_models:
-        new_message_reviewed_list += [wrap_message_dict(message)]
-    return new_message_reviewed_list
-
 ######################## Data Operation End ###############################
 
 
@@ -183,10 +174,8 @@ def wall(request, openid):
     if not users:
         return redirect(s_reverse_login(openid))
     user = users[0]
-    # origin_messages = get_origin_messages(MESSAGES_NUM)
     return render_to_response('wall.html',
                               {'openid': openid, 'name': user.name, 'photo': user.photo,},
-                              # 'origin_messages': origin_messages},
                               context_instance=RequestContext(request))
 
 @csrf_exempt
