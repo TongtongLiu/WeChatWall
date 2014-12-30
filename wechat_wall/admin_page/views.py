@@ -155,7 +155,7 @@ def review_message(request):
     }
     post = request.POST
     return_json = {}
-    messages_id = post['id'].split(',')
+    messages_id = post['message_id'].split(',')
     return_json['msg_id'] = ''
     for msg_id in messages_id:
         if not handler_list[post['type']](msg_id):
