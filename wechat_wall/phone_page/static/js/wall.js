@@ -186,54 +186,54 @@ function createDialog(type, content) {
 }
 
 //上拉刷新
-window.loadheight = $('#refresh').height();
-window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
-window.visible = $("#refresh").animate("marginTop", "0px");
-$("#refresh").css("marginTop", "-" + loadheight + "px");
-$(window).scroll(function () {
-    var st = $(window).scrollTop();
-    if (st < 0) {
-        $("#refresh").animate({
-            "marginTop": "0px"
-        }, 500);
-        $("#refresh").delay(500).animate({
-            "marginTop": "-" + loadheight + "px"
-        }, 500);
-        //刷新响应处理函数
-        getOldMessages();
-    }
-});
+//window.loadheight = $('#refresh').height();
+//window.hidden = $("#refresh").animate("marginTop", "-" + loadheight + "px");
+//window.visible = $("#refresh").animate("marginTop", "0px");
+//$("#refresh").css("marginTop", "-" + loadheight + "px");
+//$(window).scroll(function () {
+//    var st = $(window).scrollTop();
+//    if (st < 0) {
+//        $("#refresh").animate({
+//            "marginTop": "0px"
+//        }, 500);
+//        $("#refresh").delay(500).animate({
+//            "marginTop": "-" + loadheight + "px"
+//        }, 500);
+//        //刷新响应处理函数
+//        getOldMessages();
+//    }
+//});
 
 // 获取历史消息函数
-function getOldMessages() {
-    var message_id;
-    if ($('#content-container .message-id').length == 0)
-        message_id = 0;
-    else {
-        message_id = parseInt($('#content-container .message-id')[0].innerHTML);
-    }
-
-    $.ajax({
-        url: get_old_messages,
-        type: "GET",
-        data: {
-            message_id: message_id
-        },
-        success: function(data) {
-            var messages = data.messages;
-            for (var i = 0; i < messages.length; i++) {
-                 if (messages[i].user_name == name)
-                    var message = createsSelfMessages(messages[i]);
-                else
-                    var message = createsMessages(messages[i]);
-                message.prependTo('#content-container');
-            }
-        },
-        error: function (data){
-            console.info(data);
-        }
-    });
-}
+//function getOldMessages() {
+//    var message_id;
+//    if ($('#content-container .message-id').length == 0)
+//        message_id = 0;
+//    else {
+//        message_id = parseInt($('#content-container .message-id')[0].innerHTML);
+//    }
+//
+//    $.ajax({
+//        url: get_old_messages,
+//        type: "GET",
+//        data: {
+//            message_id: message_id
+//        },
+//        success: function(data) {
+//            var messages = data.messages;
+//            for (var i = 0; i < messages.length; i++) {
+//                 if (messages[i].user_name == name)
+//                    var message = createsSelfMessages(messages[i]);
+//                else
+//                    var message = createsMessages(messages[i]);
+//                message.prependTo('#content-container');
+//            }
+//        },
+//        error: function (data){
+//            console.info(data);
+//        }
+//    });
+//}
 
 // 获取最新消息函数
 function getNewMessages() {
