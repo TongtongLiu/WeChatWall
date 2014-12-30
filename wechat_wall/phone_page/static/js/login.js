@@ -130,18 +130,5 @@ $(document).ready(function() {
         $('#photo-base64').val(src);
     });
 
-    function onBridgeReady(){
-        WeixinJSBridge.call('hideOptionMenu');
-    }
-
-    if (typeof WeixinJSBridge == "undefined"){
-        if( document.addEventListener ){
-            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-        }else if (document.attachEvent){
-            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-        }
-    }else{
-        onBridgeReady();
-    }
+    window.setupWeixin({'optionMenu':false, 'toolbar':false});
 });
