@@ -2,6 +2,7 @@
  * Created by limeng on 2014/12/29.
  */
 
+    
 //处理iPhone下fixed属性问题
 var iPhoneSendBtn = $('.iPhone-send');
 
