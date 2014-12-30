@@ -4,38 +4,39 @@
 
 var sendBtn = $('.send');
 
-
 //监听输入框
 sendBtn.attr("disabled","disabled");
 sendBtn.css("color","rgba(235, 244, 235,0.5)");
-$('#div-content').bind('input propertychange', function() {
-    var input = $('#div-content').html();
-    if(input == "") {
-        sendBtn.attr("disabled","disabled");
-        sendBtn.css("color","rgba(235, 244, 235,0.5)");
+function handleInputChange() {
+    enableInput();
+    if ($('#div-content').html() == "") {
+        disableInput();
     }
-    else {
-        sendBtn.removeAttr("disabled");
-        sendBtn.css("color","rgba(235, 244, 235,1)");
-    }
-});
-$('#div-content').keydown(function(event){
-    var code = event.keyCode || event.which || event.charCode;
-    //回车
-    if (code == 13) {
-        sendBtn.click();
-    }
-});
+}
+function disableInput() {
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+}
+function enableInput() {
+    sendBtn.removeAttr("disabled");
+    sendBtn.css("color","rgba(235, 244, 235,1)");
+}
 
+//绑定回车
+$('#div-content').keydown(function(event) {
+    var code = event.keyCode || event.which || event.charCode;
+    if (code == 13) {
+        if($('#div-content').html() != ""){
+            sendBtn.click();
+        }
+    }
+});
 
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
     $('#div-content').html("");
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    disableInput();
     stopRefresh();
 
     $.ajax({
