@@ -4,12 +4,31 @@
 
 var sendBtn = $('.send');
 
+
+//监听输入框
+sendBtn.attr("disabled","disabled");
+sendBtn.css("color","rgba(235, 244, 235,0.5)");
+$('#div-content').bind('input propertychange', function() {
+    var input = $('#div-content').html();
+    if(input == "") {
+        sendBtn.attr("disabled","disabled");
+        sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    }
+    else {
+        sendBtn.removeAttr("disabled");
+        sendBtn.css("color","rgba(235, 244, 235,1)");
+    }
+});
+
+
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
     $('#div-content').html("");
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
 
     $.ajax({
         url: $('#message_form').attr('action'),
@@ -131,20 +150,6 @@ $('.bug').click(function(){
     setTimeout(function(){createDialog("warning","好多BUG Σ( ° △ °|||)︴");},3000);
 });
 
-//监听输入框
-sendBtn.attr("disabled","disabled");
-sendBtn.css("color","rgba(235, 244, 235,0.5)");
-$('#div-content').bind('input propertychange', function() {
-    var input = $('#div-content').html();
-    if(input == "") {
-        sendBtn.attr("disabled","disabled");
-        sendBtn.css("color","rgba(235, 244, 235,0.5)");
-    }
-    else {
-        sendBtn.removeAttr("disabled");
-        sendBtn.css("color","rgba(235, 244, 235,1)");
-    }
-});
 
 //创建通知框
 function createNoticeBar(content){
