@@ -3,6 +3,7 @@
  */
 
 var sendBtn = $('.send');
+var timeOuts = [];
 
 //监听输入框
 sendBtn.attr("disabled","disabled");
@@ -36,16 +37,8 @@ $('#div-content').keydown(function(event) {
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
-<<<<<<< HEAD
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
-    $('#div-content').text("");
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
-=======
     $('#div-content').html("");
     disableInput();
->>>>>>> fe58864323ab864ae36343accb93944d50224a38
     stopRefresh();
 
     $.ajax({
@@ -312,16 +305,17 @@ function getNewMessages() {
     });
 }
 
-var timeOut;
-
 // 轮询
 function refresh() {
-    timeOut = setTimeout(getNewMessages, 2000 + Math.random() * 2000);
+    timeOuts.push(setTimeout(getNewMessages, 2000 + Math.random() * 2000));
 }
 
 // 暂停刷新
 function stopRefresh() {
-    clearTimeout(timeOut);
+    for (timeOut in timeOuts) {
+        clearTimeout(timeOut);
+    }
+    timeOuts = [];
 }
 
 // 立即刷新
