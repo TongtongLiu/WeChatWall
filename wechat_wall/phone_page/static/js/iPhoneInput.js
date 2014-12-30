@@ -89,7 +89,7 @@ iPhoneSendBtn.click(function() {
             }
         },
         error: function(data) {
-            console.info(data);
+            //console.info(data);
             refreshImmediately();
         }
     });

@@ -21,7 +21,7 @@ function checkName(url) {
             }
         },
         error: function(data) {
-            console.info(data);
+            //console.info(data);
         }
     });
 }
@@ -100,7 +100,7 @@ function submitButton() {
             }
         },
         error: function(data) {
-            console.info(data);
+            //console.info(data);
         }
     });
 
