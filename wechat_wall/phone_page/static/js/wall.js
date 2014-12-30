@@ -7,11 +7,22 @@ var sendBtn = $('.send');
 //监听输入框
 sendBtn.attr("disabled","disabled");
 sendBtn.css("color","rgba(235, 244, 235,0.5)");
-
+<<<<<<< HEAD
+$('#div-content').bind('input propertychange', function() {
+    var input = $('#div-content').text();
+    if(input == "") {
+        sendBtn.attr("disabled","disabled");
+        sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    }
+    else {
+        sendBtn.removeAttr("disabled");
+        sendBtn.css("color","rgba(235, 244, 235,1)");
+=======
 function handleInputChange() {
     enableInput();
-    if ($('#div-content').text() == "") {
+    if ($('#div-content').html() == "") {
         disableInput();
+>>>>>>> fe58864323ab864ae36343accb93944d50224a38
     }
 }
 function disableInput() {
@@ -27,7 +38,7 @@ function enableInput() {
 $('#div-content').keydown(function(event) {
     var code = event.keyCode || event.which || event.charCode;
     if (code == 13) {
-        if($('#div-content').text() != ""){
+        if($('#div-content').html() != ""){
             sendBtn.click();
         }
     }
@@ -36,10 +47,16 @@ $('#div-content').keydown(function(event) {
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
+<<<<<<< HEAD
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
     $('#div-content').text("");
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
+=======
+    $('#div-content').html("");
     disableInput();
+>>>>>>> fe58864323ab864ae36343accb93944d50224a38
     stopRefresh();
 
     $.ajax({
@@ -291,11 +308,8 @@ function getNewMessages() {
                  if (messages[i].user_name == name) {
                      var message = createsSelfMessages(messages[i]);
                      keywordDetect(messages[i].content);
-                 } else if (messages[i].user_name == 'root'){
-                    createNoticeBar(messages[i].content);
-                 } else {
-                    var message = createsMessages(messages[i]);
-                 }
+                 } else
+                     var message = createsMessages(messages[i]);
                  message.appendTo('#content-container');
             }
             if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
