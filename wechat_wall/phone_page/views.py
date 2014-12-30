@@ -115,8 +115,10 @@ def login(request, openid):
     else:
         photo_num = random.randint(1, DEFAULT_PHOTO_NUM)
         photo_path = get_default_photo_path(photo_num)
+        photo_default_path = get_default_photo_path(0)
         return render_to_response('login.html',
-                                  {'openid': openid, 'photo_path': photo_path},
+                                  {'openid': openid, 'photo_path': photo_path,
+                                   'photo_default_path', photo_default_path},
                                   context_instance=RequestContext(request))
 
 

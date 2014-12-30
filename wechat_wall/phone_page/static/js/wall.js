@@ -266,7 +266,7 @@ function getNewMessages() {
                  message.appendTo('#content-container');
             }
             if (scrollTop >= docHeight - winHeight - 50)
-                     $('body').animate({scrollTop: $(document).height()}, 800);
+                 $('body').animate({scrollTop: $(document).height()}, 800);
         },
         error: function (data){
             console.info(data);
