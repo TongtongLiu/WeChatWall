@@ -39,8 +39,10 @@
             {% endfor %}
         ];
         var whether_review = {{ whether_review }};
-		var changeStateUrl =  "{% url "admin_page.views.change_review_state" %}"
-		var refreshUrl =  "{% url "admin_page.views.refresh_review_list" %}"
+		var changeStateUrl =  "{% url "admin_page.views.change_review_state" %}";
+		var refreshUrl =  "{% url "admin_page.views.refresh_review_list" %}";
+		var systemPostUrl = "{% url "admin_page.views.post_system_message" %}";
+		var reviewMessagesUrl = "{% url "admin_page.views.review_message" %}";
 
     </script>
 
@@ -137,7 +139,7 @@
 	</div>
     <form id="postForm" action="{% url "admin_page.views.review_message" %}" method="post" style="display:none;" role="form">
     	<input id="review-type" type="text" name="type" style="display:none" />
-    	<input id="review-msgID" type="text" name="id" style="display:none" />
+    	<input id="review-msgID" type="text" name="message_id" style="display:none" />
     </form>
 </div>
 {% endblock %}

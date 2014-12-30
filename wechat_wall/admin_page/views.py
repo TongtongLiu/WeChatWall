@@ -189,6 +189,26 @@ def reject_message(msg_id):
         return False
 
 
+@csrf_exempt
+def post_system_message(request):
+    if not request.is_ajax:
+        raise Http404
+
+    return_json = {}
+    try:
+        content = request.POST['content']
+        time = datetime.now()
+        status = 1
+        admin = get_admin()
+        new_message = Message.objects.create(user=admin, content=content,
+                                             time=time, status=status)
+        return_json['result'] = 'success'
+    except:
+        return_json['result'] = 'error'
+
+    return HttpResponse(json.dumps(return_json), content_type='application/json')
+
+
 def index(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect(s_reverse_admin_home())

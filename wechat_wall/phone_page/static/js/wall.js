@@ -188,6 +188,9 @@ $('.new-year').click(function(){
 
 //创建通知框
 function createNoticeBar(content){
+    var noticeExist = $('.notice');
+    if (noticeExist.length != 0)
+        noticeExist.remove();
     var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content"></p></div><span class="delete">×</span></div>');
     notice.find('.notice-content').text(content);
     $('.content-wrap').before(notice);
@@ -299,15 +302,19 @@ function getNewMessages() {
             var scrollTop = $('body').scrollTop();
             var winHeight = $(window).height();
             for (var i = messages.length - 1; i >= 0; i--) {
-                if (messages[i].message_id in messagesExist) {
+                if (messagesExist.indexOf(messages[i].message_id) != -1) {
                     continue;
                 }
                 messagesExist.push(messages[i].message_id);
-                if (messages[i].user_name == name) {
+                if (messages[i].user_name == 'root') {
+                    createNoticeBar(messages[i].content);
+                    continue;
+                } else if (messages[i].user_name == name) {
                     var message = createsSelfMessages(messages[i]);
                     keywordDetect(messages[i].content);
-                } else
+                } else {
                     var message = createsMessages(messages[i]);
+                }
                 message.appendTo('#content-container');
             }
             if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
