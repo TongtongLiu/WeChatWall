@@ -11,7 +11,7 @@ iPhoneSendBtn.attr("disabled","disabled");
 iPhoneSendBtn.css("color","rgba(235, 244, 235,0.5)");
 function iPhoneHandleInputChange() {
     iPhoneEnableInput();
-    if ($('#iPhone-div-content').html() == "") {
+    if ($('#iPhone-div-content').text() == "") {
         iPhoneDisableInput();
     }
 }
@@ -28,7 +28,7 @@ function iPhoneEnableInput() {
 $('#iPhone-div-content').keydown(function(event) {
     var code = event.keyCode || event.which || event.charCode;
     if (code == 13) {
-        if($('#iPhone-div-content').html() != ""){
+        if($('#iPhone-div-content').text() != ""){
             iPhoneSendBtn.click();
         }
     }
