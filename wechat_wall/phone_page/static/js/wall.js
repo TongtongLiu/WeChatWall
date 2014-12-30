@@ -7,22 +7,11 @@ var sendBtn = $('.send');
 //监听输入框
 sendBtn.attr("disabled","disabled");
 sendBtn.css("color","rgba(235, 244, 235,0.5)");
-<<<<<<< HEAD
-$('#div-content').bind('input propertychange', function() {
-    var input = $('#div-content').text();
-    if(input == "") {
-        sendBtn.attr("disabled","disabled");
-        sendBtn.css("color","rgba(235, 244, 235,0.5)");
-    }
-    else {
-        sendBtn.removeAttr("disabled");
-        sendBtn.css("color","rgba(235, 244, 235,1)");
-=======
+
 function handleInputChange() {
     enableInput();
     if ($('#div-content').html() == "") {
         disableInput();
->>>>>>> fe58864323ab864ae36343accb93944d50224a38
     }
 }
 function disableInput() {
