@@ -9,5 +9,4 @@ urlpatterns = patterns('',
                        url(r'^wall/new_messages/$', 'phone_page.views.w_get_new_messages'),
                        url(r'^wall/old_messages/$', 'phone_page.views.w_get_old_messages'),
                        url(r'^wall/(?P<openid>\S+)$', 'phone_page.views.wall'),
-                       url(r'^tt/(?P<openid>\S+)$', 'phone_page.views.tt')
                        )
