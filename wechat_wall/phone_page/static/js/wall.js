@@ -3,7 +3,8 @@
  */
 
 var sendBtn = $('.send');
-var timeOuts = [];
+// var timeOuts = [];
+var timeOut = 0;
 var messagesExist = [];
 
 //监听输入框
@@ -324,15 +325,18 @@ function getNewMessages() {
 // 轮询
 function refresh() {
     stopRefresh();
-    timeOuts.push(setTimeout(getNewMessages, 2000 + Math.random() * 2000));
+    // timeOuts.push(setTimeout(getNewMessages, 2000 + Math.random() * 2000));
+    timeOut = setTimeout(getNewMessages, 2000 + Math.random() * 2000);
 }
 
 // 暂停刷新
 function stopRefresh() {
-    for (timeOut in timeOuts) {
-        clearTimeout(timeOut);
-    }
-    timeOuts = [];
+//    var timeOut;
+//    for (timeOut in timeOuts) {
+//        clearTimeout(timeOut);
+//    }
+//    timeOuts = [];
+    clearTimeout(timeOut);
 }
 
 // 立即刷新
