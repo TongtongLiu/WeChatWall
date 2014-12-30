@@ -9,7 +9,7 @@ var sendBtn = $('.send');
 sendBtn.attr("disabled","disabled");
 sendBtn.css("color","rgba(235, 244, 235,0.5)");
 $('#div-content').bind('input propertychange', function() {
-    var input = $('#div-content').html();
+    var input = $('#div-content').text();
     if(input == "") {
         sendBtn.attr("disabled","disabled");
         sendBtn.css("color","rgba(235, 244, 235,0.5)");
@@ -33,7 +33,7 @@ $('.send').click(function() {
     var content = $('#div-content').text();
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
-    $('#div-content').html("");
+    $('#div-content').text("");
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
     stopRefresh();
@@ -173,7 +173,8 @@ $('.new-year').click(function(){
 
 //创建通知框
 function createNoticeBar(content){
-    var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content">'+content+'</p></div><span class="delete">×</span></div>');
+    var notice = $('<div class="notice"><div class="notice-wrap"><p class="notice-content"></p></div><span class="delete">×</span></div>');
+    notice.find('notice-content').text(content);
     $('.content-wrap').before(notice);
     $('.content-wrap').css("padding-top", "2em");
     $('.notice span.delete').click(function(){
@@ -202,7 +203,7 @@ function createNoticeBar(content){
 //创建提示框
 // type:提示框(prompt)、警告框(warning)、消息框(alert)
 function createDialog(type, content) {
-    var dialog = $('<div />').addClass("info-dialog").html(content);
+    var dialog = $('<div />').addClass("info-dialog").text(content);
     dialog.addClass(type);
     $('.wrap').append(dialog);
     dialog.css("margin-left", -(dialog.width())/2);
