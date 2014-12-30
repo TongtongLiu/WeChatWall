@@ -330,7 +330,7 @@ function getNewMessages() {
                 }
                 message.appendTo('#content-container');
             }
-            if ($('.iPhone-input').css('display') != "none") {
+            if ($('.iPhone-input').css('display') == "none") {
                 if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
                     $('body').animate({scrollTop: $(document).height()}, 800);
             }
