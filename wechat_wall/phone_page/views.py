@@ -18,6 +18,8 @@ from phone_page.banned_words import is_content_valid
 from phone_page.safe_reverse import *
 from wechat_wall.models import User, Message
 from wechat_wall.settings import PHOTO_DEFAULT_URL, PHOTO_UPLOAD_URL, PHOTO_UPLOAD_ROOT
+from weixinlib import http_get
+from weixinlib.weixin_urls import WEIXIN_URLS
 
 MESSAGES_NUM = 20
 DEFAULT_PHOTO_NUM = 2
@@ -97,7 +99,12 @@ def wrap_message_dict(message):
     return return_dict
 
 
-def loading(request, openid):
+def loading(request):
+    code = request.GET.get('code')
+    url = WEIXIN_URLS['get_openid'](code)
+    res = http_get(url)
+    rtn_json = json.loads(res)
+    openid = rtn_json['openid']
     if select_users_by_openid(openid).exists():
         return redirect(s_reverse_wall(openid))
     else:
