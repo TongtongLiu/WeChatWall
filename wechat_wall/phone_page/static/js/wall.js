@@ -11,7 +11,7 @@ sendBtn.css("color","rgba(235, 244, 235,0.5)");
 
 function handleInputChange() {
     enableInput();
-    if ($('#div-content').html() == "") {
+    if ($('#div-content').text() == "") {
         disableInput();
     }
 }
@@ -28,7 +28,7 @@ function enableInput() {
 $('#div-content').keydown(function(event) {
     var code = event.keyCode || event.which || event.charCode;
     if (code == 13) {
-        if($('#div-content').html() != ""){
+        if($('#div-content').text() != ""){
             sendBtn.click();
         }
     }
@@ -38,7 +38,7 @@ $('#div-content').keydown(function(event) {
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
-    $('#div-content').html("");
+    $('#div-content').text("");
     disableInput();
     stopRefresh();
 
