@@ -274,8 +274,8 @@ function getNewMessages() {
                      var message = createsMessages(messages[i]);
                  message.appendTo('#content-container');
             }
-            if (scrollTop >= docHeight - winHeight - 50)
-                 $('body').animate({scrollTop: $(document).height()}, 800);
+            if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
+                $('body').animate({scrollTop: $(document).height()}, 800);
         },
         error: function (data){
             console.info(data);

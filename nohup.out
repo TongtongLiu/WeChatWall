@@ -1,0 +1,8 @@
+FAILED to start flash policy server: [Errno 13] Permission denied: ('0.0.0.0', 843)
+FAILED to start flash policy server: [Errno 13] Permission denied: ('0.0.0.0', 843)
+59.66.137.81 - - [2014-12-29 08:15:10] "Socket.IO subscribe: wall"
+59.66.137.81 - - [2014-12-29 08:15:16] "Socket.IO subscribe: wall"
+/home/wx1/wechatwall/local/lib/python2.7/site-packages/django/db/models/fields/__init__.py:903: RuntimeWarning: DateTimeField Message.time received a naive datetime (2014-12-29 08:15:20.791574) while time zone support is active.
+  RuntimeWarning)
+
+59.66.137.81 - - [2014-12-29 08:15:20] "Socket.IO message: {u'content': u'\u5475\u5475\u5475\u5475\u5475', u'openid': u'1', u'type': u'user_message'}"
