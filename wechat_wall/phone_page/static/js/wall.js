@@ -2,33 +2,33 @@
  * Created by limeng on 2014/12/24.
  */
 
-var foot_height = $('.footer-position').css('height');
-foot_height = parseInt(foot_height.substring(0, foot_height.length));
-var body_height = (document.body.clientHeight - foot_height) + 'px';
-$('.content-wrap').css('height', body_height);
+//var foot_height = $('.footer-position').css('height');
+//foot_height = parseInt(foot_height.substring(0, foot_height.length));
+//var body_height = (document.body.clientHeight - foot_height) + 'px';
+//$('.content-wrap').css('height', body_height);
 
 var sendBtn = $('.send');
 var timeOuts = [];
 var messagesExist = [];
 
 //监听输入框
-sendBtn.attr("disabled","disabled");
-sendBtn.css("color","rgba(235, 244, 235,0.5)");
+//sendBtn.attr("disabled","disabled");
+//sendBtn.css("color","rgba(235, 244, 235,0.5)");
 
-function handleInputChange() {
-    enableInput();
-    if ($('#div-content').text() == "") {
-        disableInput();
-    }
-}
-function disableInput() {
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
-}
-function enableInput() {
-    sendBtn.removeAttr("disabled");
-    sendBtn.css("color","rgba(235, 244, 235,1)");
-}
+//function handleInputChange() {
+//    enableInput();
+//    if ($('#div-content').text() == "") {
+//        disableInput();
+//    }
+//}
+//function disableInput() {
+//    sendBtn.attr("disabled","disabled");
+//    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+//}
+//function enableInput() {
+//    sendBtn.removeAttr("disabled");
+//    sendBtn.css("color","rgba(235, 244, 235,1)");
+//}
 
 //绑定回车
 $('#div-content').keydown(function(event) {
@@ -45,7 +45,7 @@ $('#div-content').keydown(function(event) {
 $('.send').click(function() {
     var content = $('#div-content').text();
     $('#div-content').html("");
-    disableInput();
+    //disableInput();
     stopRefresh();
 
     $.ajax({

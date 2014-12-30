@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <link href="{% static 'lib/fa/css/font-awesome.min.css'%}" rel="stylesheet">
     <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}?_=1"></script>
     <title>我要上墙</title>
 </head>
 
@@ -69,9 +68,10 @@
         var get_new_messages = "{% url 'phone_page.views.w_get_new_messages' %}";
         var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
     </script>
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}?_=1"></script>
     <script type="text/javascript" src="{% static 'js/wall.js' %}?_=1"></script>
     <script type="text/javascript" src="{% static 'js/EasterEggs.js' %}?_=1"></script>
-{#    <script type="text/javascript" src="{% static 'js/iPhoneInput.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'js/iPhoneInput.js' %}"></script>
 
 </body>
 </html>

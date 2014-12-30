@@ -3,15 +3,6 @@
     padding: 0;
 }
 
-html, body {
-    margin: 0;
-    height: 100%;
-}
-
-.wrap {
-    height: 100%;
-}
-
 html {
 	font-family: sans-serif;
 	-webkit-text-size-adjust: 100%;
@@ -128,9 +119,7 @@ body {
 
 /*主内容*/
 .content-wrap {
-    /*padding-bottom: 3.5em;*/
-    height: 100%;
-    overflow: scroll;
+    padding-bottom: 3.5em;
 }
 
 .content {
