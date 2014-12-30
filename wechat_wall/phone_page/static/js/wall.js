@@ -282,57 +282,20 @@ function refresh() {
 
 // 初始化页面
 function initMessage() {
-    for (var i = originalMessages.length - 1; i >= 0; i--) {
-         if (originalMessages[i].user_name == name) {
-             var message = createsSelfMessages(originalMessages[i]);
-         } else
-             var message = createsMessages(originalMessages[i]);
-         message.appendTo('#content-container');
-    }
-    $('body').animate({scrollTop: $(document).height()}, 800);
-    refresh();
+    getNewMessages();
 }
-
 initMessage();
 
-////websocket
-//var messaged = function(data) {
-//     console.log(data);
-//     if (data.result == 'Success') {
-//         if (data.type == 'user_message') {
-//             if (data.name == name) {
-//                 var message = createsSelfMessages(data);
-//                 keywordDetect(data.content);
-//             }
-//             else {
-//                 var message = createsMessages(data);
-//             }
-//             message.appendTo('#content-container');
-//
-//             var docHeight = $(document).height();
-//             var scrollTop = $('body').scrollTop();
-//             var winHeight = $(window).height();
-//             if (scrollTop >= docHeight - winHeight)
-//                 $('body').animate({scrollTop: height}, 800);
-//         } else if (data.type == 'admin_message') {
-//             createNoticeBar(data.content);
-//         }
-//     }
-//     if (data.result == 'BannedContent') {
-//
-//     }
-//};
+//function initMessage() {
+//    for (var i = originalMessages.length - 1; i >= 0; i--) {
+//         if (originalMessages[i].user_name == name) {
+//             var message = createsSelfMessages(originalMessages[i]);
+//         } else
+//             var message = createsMessages(originalMessages[i]);
+//         message.appendTo('#content-container');
+//    }
+//    $('body').animate({scrollTop: $(document).height()}, 800);
+//    refresh();
+//}
 
-// var connected = function() {
-//     socket.subscribe('wall');
-// }
-
-// var socket;
-// var start = function() {
-//     socket = new io.Socket(websocket_host, websocket_options);
-//     socket.on('connect', connected)
-//     socket.on('message', messaged);
-//     socket.connect();
-// };
-
-// start();
+//initMessage();

@@ -181,10 +181,10 @@ def wall(request, openid):
     if not users:
         return redirect(s_reverse_login(openid))
     user = users[0]
-    origin_messages = get_origin_messages(MESSAGES_NUM)
+    # origin_messages = get_origin_messages(MESSAGES_NUM)
     return render_to_response('wall.html',
-                              {'openid': openid, 'name': user.name, 'photo': user.photo,
-                               'origin_messages': origin_messages},
+                              {'openid': openid, 'name': user.name, 'photo': user.photo,},
+                              # 'origin_messages': origin_messages},
                               context_instance=RequestContext(request))
 
 @csrf_exempt
