@@ -51,7 +51,6 @@ $('.send').click(function() {
                 case "Success":
                     //滚动到页面底部
                     $('body').animate({scrollTop: $(document).height()}, 1000);
-                    refreshImmediately();
                     break;
 
                 default:
@@ -62,6 +61,8 @@ $('.send').click(function() {
             console.info(data);
         }
     });
+
+    refreshImmediately();
 });
 
 //创建一条信息
