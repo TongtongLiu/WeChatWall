@@ -232,3 +232,12 @@ def w_get_old_messages(request):
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
+
+def tt(request, openid):
+    users = select_users_by_openid(openid)
+    if not users:
+        return redirect(s_reverse_login(openid))
+    user = users[0]
+    return render_to_response('tt_wall.html',
+                              {'openid': openid, 'name': user.name, 'photo': user.photo},
+                              context_instance=RequestContext(request))

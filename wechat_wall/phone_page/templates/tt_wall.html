@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+    <link href="{% static 'lib/fa/css/font-awesome.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/tt_wall.css'%}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/tt_wall.js' %}"></script>
+    <title>我要上墙</title>
+</head>
+
+<body>
+    <div class="wrap">
+{#        <div class="refresh" id="refresh"><i class="fa fa-refresh fa-spin fa-2x"></i></div>#}
+        <div class="mask"></div>
+        <div class="content-wrap">
+            <div id="content-container" class="content">
+            </div>
+        </div>
+
+        <div class="footer footer-position">
+            <div class="footer-mask"></div>
+            <div class="menuItems">
+                <div class="item-wrap">
+                    <div class="menuItem snow"></div>
+                    <div class="menuItem bug"></div>
+                    <div class="menuItem new-year"></div>
+                </div>
+            </div>
+            <div  class="footer-wrap">
+                <div class="f_left">
+                    <div class="menu-wrap">
+                        <div id="menu" class="menu">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+                <form id="message_form" class="input_form" action="{% url 'phone_page.views.w_post_message' %}" method="post" onsubmit="return false;">
+                    {% csrf_token %}
+                    <input id="openid" name="openid" class="text_content" type="text" value="{{ openid }}" style="display: none">
+                    <div class="f_middle">
+                        <div id="div-content" class="text-content" contenteditable="true" onkeyup="handleInputChange();"></div>
+                        <textarea id="content" name="content" style="display: none" ></textarea>
+                    </div>
+                    <div class="f_right">
+                        <input class="send" type="button" value="发送">
+                    </div>
+                </form>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+    </div>
+    <div style="display: none" class="iPhone-input">
+
+        <div class="input-header">
+            <div class="iPhone-return"><i class="fa fa-chevron-left icon-return"></i></div>
+            <input class="iPhone-send" type="button" value="发送">
+        </div>
+        <div class="input-content">
+            <div id="iPhone-div-content" contenteditable="true" onkeyup="iPhoneHandleInputChange();"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var openid = "{{ openid }}";
+        var name = "{{ name }}";
+        var photo = "{{ photo }}";
+        var get_new_messages = "{% url 'phone_page.views.w_get_new_messages' %}";
+        var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
+    </script>
+    <script type="text/javascript" src="{% static 'js/EasterEggs.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'js/iPhoneInput.js' %}"></script>#}
+
+</body>
+</html>
