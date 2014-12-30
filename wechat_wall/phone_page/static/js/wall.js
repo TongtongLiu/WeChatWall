@@ -91,7 +91,12 @@ function createsMessages(message) {
     var divDialog = $('<div class="dialog"></div>');
     var divTriangle = $('<span class="triangle"></span>');
     var divContent = $('<div class="message-content"></div>');
-    divContent.text(message.content);
+    if (message.content=="") {
+        divContent.text(" ");
+    }
+    else {
+        divContent.text(message.content);
+    }
     var divId = $('<div class="message-id">'+message.message_id+'</div>');
     var divClear = $('<div style="clear: both"></div>');
 
@@ -119,7 +124,12 @@ function createsSelfMessages(message) {
     var divDialog = $('<div class="self-dialog"></div>');
     var divTriangle = $('<span class="self-triangle"></span>');
     var divContent = $('<div class="self-message-content"></div>');
-    divContent.text(message.content);
+    if (message.content=="") {
+        divContent.text(" ");
+    }
+    else {
+        divContent.text(message.content);
+    }
     var divId = $('<div class="message-id">'+message.message_id+'</div>');
     var divClear = $('<div style="clear: both"></div>');
 
