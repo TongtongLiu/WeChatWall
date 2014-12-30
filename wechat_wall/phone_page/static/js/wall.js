@@ -149,6 +149,10 @@ $('.bug').click(function(){
     $('#menu').click();
     setTimeout(function(){createDialog("warning","好多BUG Σ( ° △ °|||)︴");},3000);
 });
+$('.new-year').click(function(){
+    createDialog("prompt", "新年快乐┗|｀O′|┛ 嗷~~");
+    $('#menu').click();
+});
 
 
 //创建通知框
