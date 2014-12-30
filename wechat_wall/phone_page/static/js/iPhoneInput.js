@@ -21,6 +21,14 @@ $(document).ready(function() {
         }
     });
 
+    $('#iPhone-div-content').keydown(function(event){
+        var code = event.keyCode || event.which || event.charCode;
+        //回车
+        if (code == 13) {
+            sendBtn.click();
+        }
+    });
+
     //发送按钮点击事件
     sendBtn.click(function() {
         var content = $('#iPhone-div-content').text();

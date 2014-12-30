@@ -19,6 +19,13 @@ $('#div-content').bind('input propertychange', function() {
         sendBtn.css("color","rgba(235, 244, 235,1)");
     }
 });
+$('#div-content').keydown(function(event){
+    var code = event.keyCode || event.which || event.charCode;
+    //回车
+    if (code == 13) {
+        sendBtn.click();
+    }
+});
 
 
 //发送消息
@@ -42,27 +49,30 @@ $('.send').click(function() {
             switch (data) {
                 case "BannedContent":
                     createDialog("prompt", "小主不要乱说话喔o(╯□╰)o");
+                    refreshImmediately();
                     break;
 
                 case "Error":
                     createDialog("warning", "出现了奇怪的错误~~(>_<)~~");
+                    refreshImmediately();
                     break;
 
                 case "Success":
                     //滚动到页面底部
                     $('body').animate({scrollTop: $(document).height()}, 1000);
+                    refreshImmediately();
                     break;
 
                 default:
+                    refreshImmediately();
                     break;
             }
         },
         error: function(data) {
             console.info(data);
+            refreshImmediately();
         }
     });
-
-    refreshImmediately();
 });
 
 //创建一条信息
