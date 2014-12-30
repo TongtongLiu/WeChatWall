@@ -3,6 +3,7 @@
  */
 
 var sendBtn = $('.send');
+var timeOut;
 
 //发送消息
 $('.send').click(function() {
@@ -41,6 +42,8 @@ $('.send').click(function() {
             console.info(data);
         }
     });
+
+    refreshImmediately();
 });
 
 //创建一条信息
@@ -277,7 +280,13 @@ function getNewMessages() {
 
 // 轮询
 function refresh() {
-    setTimeout(getNewMessages, 2000 + Math.random() * 2000);
+    timeOut = setTimeout(getNewMessages, 2000 + Math.random() * 2000);
+}
+
+// 立即刷新
+function refreshImmediately() {
+    clearTimeout(timeOut);
+    getNewMessages();
 }
 
 // 初始化页面
