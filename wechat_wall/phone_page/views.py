@@ -160,7 +160,7 @@ def login_register(request):
     else:
         # base64 decode
         photo_data = base64.b64decode(photo_base64[len('data:image/jpeg;base64,'):])
-        photo_path = PHOTO_UPLOAD_ROOT + openid + '.png'
+        photo_path = PHOTO_UPLOAD_ROOT + openid + '.jpg'
         photo_file = open(photo_path, 'wb')
         photo_file.write(photo_data)
         photo_file.close()
@@ -177,7 +177,7 @@ def login_register(request):
 
 
 def get_default_photo_path(photo_num):
-    return PHOTO_DEFAULT_URL + str(photo_num) + '.png'
+    return PHOTO_DEFAULT_URL + str(photo_num) + '.jpg'
 
 
 def wall(request, openid):
