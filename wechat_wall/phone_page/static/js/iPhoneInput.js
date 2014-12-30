@@ -3,12 +3,12 @@
  */
 
 //处理iPhone下fixed属性问题
-var sendBtn = $('.iPhone-send');
+var iPhoneSendBtn = $('.iPhone-send');
 
 //监听输入框
 //监听输入框
-sendBtn.attr("disabled","disabled");
-sendBtn.css("color","rgba(235, 244, 235,0.5)");
+iPhoneSendBtn.attr("disabled","disabled");
+iPhoneSendBtn.css("color","rgba(235, 244, 235,0.5)");
 function iPhoneHandleInputChange() {
     iPhoneEnableInput();
     if ($('#iPhone-div-content').html() == "") {
@@ -16,12 +16,12 @@ function iPhoneHandleInputChange() {
     }
 }
 function iPhoneDisableInput() {
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    iPhoneSendBtn.attr("disabled","disabled");
+    iPhoneSendBtn.css("color","rgba(235, 244, 235,0.5)");
 }
 function iPhoneEnableInput() {
-    sendBtn.removeAttr("disabled");
-    sendBtn.css("color","rgba(235, 244, 235,1)");
+    iPhoneSendBtn.removeAttr("disabled");
+    iPhoneSendBtn.css("color","rgba(235, 244, 235,1)");
 }
 
 //绑定回车
@@ -29,17 +29,17 @@ $('#iPhone-div-content').keydown(function(event) {
     var code = event.keyCode || event.which || event.charCode;
     if (code == 13) {
         if($('#iPhone-div-content').html() != ""){
-            sendBtn.click();
+            iPhoneSendBtn.click();
         }
     }
 });
 
 
 //发送按钮点击事件
-sendBtn.click(function() {
+iPhoneSendBtn.click(function() {
     var content = $('#iPhone-div-content').text();
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    iPhoneSendBtn.attr("disabled","disabled");
+    iPhoneSendBtn.css("color","rgba(235, 244, 235,0.5)");
     $('#iPhone-div-content').html("");
     $('.wrap').css("display","block");
     $('.iPhone-input').css("display","none");
