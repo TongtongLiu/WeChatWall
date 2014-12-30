@@ -4,10 +4,10 @@
 
 var sendBtn = $('.send');
 
-
 //监听输入框
 sendBtn.attr("disabled","disabled");
 sendBtn.css("color","rgba(235, 244, 235,0.5)");
+<<<<<<< HEAD
 $('#div-content').bind('input propertychange', function() {
     var input = $('#div-content').text();
     if(input == "") {
@@ -17,25 +17,46 @@ $('#div-content').bind('input propertychange', function() {
     else {
         sendBtn.removeAttr("disabled");
         sendBtn.css("color","rgba(235, 244, 235,1)");
+=======
+function handleInputChange() {
+    enableInput();
+    if ($('#div-content').html() == "") {
+        disableInput();
+>>>>>>> fe58864323ab864ae36343accb93944d50224a38
     }
-});
-$('#div-content').keydown(function(event){
-    var code = event.keyCode || event.which || event.charCode;
-    //回车
-    if (code == 13) {
-        sendBtn.click();
-    }
-});
+}
+function disableInput() {
+    sendBtn.attr("disabled","disabled");
+    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+}
+function enableInput() {
+    sendBtn.removeAttr("disabled");
+    sendBtn.css("color","rgba(235, 244, 235,1)");
+}
 
+//绑定回车
+$('#div-content').keydown(function(event) {
+    var code = event.keyCode || event.which || event.charCode;
+    if (code == 13) {
+        if($('#div-content').html() != ""){
+            sendBtn.click();
+        }
+    }
+});
 
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
+<<<<<<< HEAD
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
     $('#div-content').text("");
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
+=======
+    $('#div-content').html("");
+    disableInput();
+>>>>>>> fe58864323ab864ae36343accb93944d50224a38
     stopRefresh();
 
     $.ajax({
