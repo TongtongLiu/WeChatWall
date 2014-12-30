@@ -4,6 +4,7 @@
 
 var sendBtn = $('.send');
 var timeOuts = [];
+var messagesExist = [];
 
 //监听输入框
 sendBtn.attr("disabled","disabled");
@@ -287,12 +288,17 @@ function getNewMessages() {
             var scrollTop = $('body').scrollTop();
             var winHeight = $(window).height();
             for (var i = messages.length - 1; i >= 0; i--) {
-                 if (messages[i].user_name == name) {
-                     var message = createsSelfMessages(messages[i]);
-                     keywordDetect(messages[i].content);
-                 } else
-                     var message = createsMessages(messages[i]);
-                 message.appendTo('#content-container');
+                if (messages[i].message_id in messagesExist) {
+                    continue;
+                } else {
+                    messagesExist.push(messages[i].message_id)
+                }
+                if (messages[i].user_name == name) {
+                    var message = createsSelfMessages(messages[i]);
+                    keywordDetect(messages[i].content);
+                } else
+                    var message = createsMessages(messages[i]);
+                message.appendTo('#content-container');
             }
             if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
                 $('body').animate({scrollTop: $(document).height()}, 800);
