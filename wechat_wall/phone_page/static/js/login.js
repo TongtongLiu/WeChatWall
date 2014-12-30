@@ -21,20 +21,20 @@ function checkName(url) {
             }
         },
         error: function(data) {
-            console.info(data);
+            //console.info(data);
         }
     });
 }
 
-function handleChange() {
-    cleanError();
-    if ($('#name-input').val() == "") {
-        disableButton();
-    }
-}
+//function handleChange() {
+//    cleanError();
+//    if ($('#name-input').val() == "") {
+//        //disableButton();
+//    }
+//}
 
 function showError(text) {
-    disableButton();
+    //disableButton();
     $('#name-error').text(text);
     $('.row-error').slideDown("fast");
 }
@@ -42,7 +42,7 @@ function showError(text) {
 function cleanError() {
     $('.row-error').slideUp("fast");
     $('#name-error').text("");
-    enableButton();
+    //enableButton();
 }
 
 function enableButton() {
@@ -52,11 +52,11 @@ function enableButton() {
     button.removeClass("disable-button");
 }
 
-function disableButton() {
-    var button = $('#submit-button');
-    button.addClass("disable-button");
-    button.unbind("click", submitButton);
-}
+//function disableButton() {
+//    var button = $('#submit-button');
+//    button.addClass("disable-button");
+//    button.unbind("click", submitButton);
+//}
 
 function enableInput() {
     $('#name-input').removeAttr('readonly');
@@ -70,7 +70,12 @@ function disableInput() {
 
 function submitButton() {
     disableInput();
-    disableButton();
+    //disableButton();
+
+    var name = $('#name-input').val();
+    if (name == "") {
+        return;
+    }
 
     $.ajax({
         url: $('#login-form').attr('action'),
@@ -95,12 +100,12 @@ function submitButton() {
             }
         },
         error: function(data) {
-            console.info(data);
+            //console.info(data);
         }
     });
 
     enableInput();
-    enableButton();
+    //enableButton();
 }
 
 $(document).ready(function() {
@@ -108,11 +113,13 @@ $(document).ready(function() {
         $('#photo-file').click();
     });
 
-    if ($('#name-input').val() == "") {
-        disableButton();
-    } else {
-        enableButton();
-    }
+    enableButton();
+
+//    if ($('#name-input').val() == "") {
+//        disableButton();
+//    } else {
+//        enableButton();
+//    }
 
     var width_px = $('#photo-input').css("width");
     var width_num = parseInt(width_px.substring(0, width_px.length - 2));
@@ -122,4 +129,6 @@ $(document).ready(function() {
         //console.log(src);
         $('#photo-base64').val(src);
     });
+
+    window.setupWeixin({'optionMenu':false, 'toolbar':false});
 });

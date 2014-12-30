@@ -54,7 +54,8 @@ function appendReviewingMsg(msg) {
     tr.find('.btn-success').click(passClick);
     tr.find('.btn-danger').click(rejectClick);
     $('#tbody-messages').append(tr);
-    tr.fadeIn(600);
+    //tr.fadeIn(400);
+    tr.show();
 }
 
 function showReviewingMsg() {
@@ -246,6 +247,8 @@ function reviewCallback(data) {
 		}
 		setTimeout(function(){
 			$('#tbody-messages tr:hidden').remove();
+			clearReviewingMsg();
+    		refresh();
 		}, 600);
 }
 
@@ -284,7 +287,7 @@ $('#allPass').click(function(e) {
 $('#allReject').click(function(e) {
 	var msgID = getAllMsgID();
 	data = {};
-	data['tpye'] = 'reject';
+	data['type'] = 'reject';
 	data['message_id'] = msgID;
 	reviewMessages(data);
 	return false;

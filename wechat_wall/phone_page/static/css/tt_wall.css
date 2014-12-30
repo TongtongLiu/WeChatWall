@@ -3,6 +3,15 @@
     padding: 0;
 }
 
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.wrap {
+    height: 100%;
+}
+
 html {
 	font-family: sans-serif;
 	-webkit-text-size-adjust: 100%;
@@ -119,7 +128,9 @@ body {
 
 /*主内容*/
 .content-wrap {
-    padding-bottom: 3.5em;
+    /*padding-bottom: 3.5em;*/
+    height: 100%;
+    overflow: scroll;
 }
 
 .content {
@@ -232,7 +243,7 @@ body {
     _height: 1em;
     font-size: 0.6em;
     text-align: right;
-    opacity: 0;
+    opacity: 0.4;
 }
 .self-dialog {
     position: relative;
@@ -284,7 +295,8 @@ body {
     box-shadow: 0 -0.3px 1px rgb(126, 123, 123);
 }
 .footer-position {
-    position: fixed;
+    /*position: fixed;*/
+    position: absolute;
     bottom: 0;
 }
 .exposed .footer {
@@ -618,24 +630,13 @@ form.input_form {
     box-shadow: 0 1px 0 #F9DF8B inset,1px 1px 3px #B7B7B7;
 }
 
-.loginFooter {
-    display: block;
-    position: absolute;
-    left: 50%;
-    width: 200px;
-    margin: 3px 0 20px -100px;
-    font-size: 17px;
-    text-align: center;
-    color: #e5d5d0;
-}
-
 /*For iPhone*/
 .iPhone-input {
 
 }
 .input-header {
-    height: 32px;
-    padding: 7px;
+    height: 2em;
+    padding:0.5em;
     border-bottom: 1px solid #999;
     box-shadow: 0 1px 3px #AAA7A7;
 }
@@ -668,8 +669,8 @@ form.input_form {
     width: 100%;
 }
 #iPhone-div-content {
-    min-height: 0;
-    max-height: 20em;
+    min-height: 20em;
+    max-height: 4em;
     outline: 0;
     padding: 0.5em 5%;
     border: 1px solid rgb(186, 178, 178);

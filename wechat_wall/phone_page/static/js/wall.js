@@ -2,28 +2,37 @@
  * Created by limeng on 2014/12/24.
  */
 
+//var foot_height = $('.footer-position').css('height');
+//foot_height = parseInt(foot_height.substring(0, foot_height.length));
+//var body_height = (document.body.clientHeight - foot_height) + 'px';
+//$('.content-wrap').css('height', body_height);
+
+window.setupWeixin({'optionMenu':false, 'toolbar':false});
+
 var sendBtn = $('.send');
 var timeOuts = [];
 var messagesExist = [];
 
 //监听输入框
-sendBtn.attr("disabled","disabled");
-sendBtn.css("color","rgba(235, 244, 235,0.5)");
+//sendBtn.attr("disabled","disabled");
+//sendBtn.css("color","rgba(235, 244, 235,0.5)");
 
-function handleInputChange() {
-    enableInput();
-    if ($('#div-content').text() == "") {
-        disableInput();
-    }
-}
-function disableInput() {
-    sendBtn.attr("disabled","disabled");
-    sendBtn.css("color","rgba(235, 244, 235,0.5)");
-}
+//function handleInputChange() {
+//    enableInput();
+//    if ($('#div-content').text() == "") {
+//        disableInput();
+//    }
+//}
+//function disableInput() {
+//    sendBtn.attr("disabled","disabled");
+//    sendBtn.css("color","rgba(235, 244, 235,0.5)");
+//}
 function enableInput() {
     sendBtn.removeAttr("disabled");
     sendBtn.css("color","rgba(235, 244, 235,1)");
 }
+
+enableInput();
 
 //绑定回车
 $('#div-content').keydown(function(event) {
@@ -39,8 +48,17 @@ $('#div-content').keydown(function(event) {
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
+    if (content.length == 0) {
+        return;
+    }
+    if (content == "我是傻逼") {
+        var tmp = window.location.href.split('/');
+        tmp[tmp.length - 2] = 'login';
+        window.location.href = tmp.join('/');
+    }
+
     $('#div-content').html("");
-    disableInput();
+    //disableInput();
     stopRefresh();
 
     $.ajax({
@@ -74,7 +92,7 @@ $('.send').click(function() {
             }
         },
         error: function(data) {
-            console.info(data);
+            //console.info(data);
             refreshImmediately();
         }
     });
@@ -208,7 +226,7 @@ function createNoticeBar(content){
         var speed = 3000;//越大越慢
         var time = width/100*speed;
         function move(t) {
-            p.animate({ left: -width }, time, "linear", function () {
+            p.animate({ left: -width }, t, "linear", function () {
                 p.css("left", dWidth);
                 t=((width+dWidth)/100)*speed;
                 move(t);
@@ -317,12 +335,14 @@ function getNewMessages() {
                 }
                 message.appendTo('#content-container');
             }
-            if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
-                $('body').animate({scrollTop: $(document).height()}, 800);
+            if ($('.iPhone-input').css('display') == "none") {
+                if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
+                    $('body').animate({scrollTop: $(document).height()}, 800);
+            }
             refresh();
         },
         error: function (data){
-            console.info(data);
+            //console.info(data);
             refresh();
         }
     });
@@ -331,7 +351,7 @@ function getNewMessages() {
 // 轮询
 function refresh() {
     stopRefresh();
-    timeOuts.push(setTimeout(getNewMessages, 2000 + Math.random() * 2000));
+    timeOuts.push(setTimeout(getNewMessages, 5000 + Math.random() * 5000));
 }
 
 // 暂停刷新
