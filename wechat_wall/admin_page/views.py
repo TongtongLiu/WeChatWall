@@ -156,12 +156,16 @@ def review_message(request):
     post = request.POST
     return_json = {}
     messages_id = post['message_id'].split(',')
-    return_json['msg_id'] = ''
-    for msg_id in messages_id:
-        if not handler_list[post['type']](msg_id):
-            return_json['result'] = 'error'
-            break
-        return_json['msg_id'] += (msg_id + ',')
+    if not handler_list[post['type']](messages_id):
+        return_json['result'] = 'error'
+    else:
+        return_json['msg_id'] = post['message_id']
+    # return_json['msg_id'] = ''
+    # for msg_id in messages_id:
+    #     if not handler_list[post['type']](msg_id):
+    #         return_json['result'] = 'error'
+    #         break
+    #     return_json['msg_id'] += (msg_id + ',')
     if not ('result' in return_json):
         return_json['type'] = post['type']
         return_json['result'] = 'success'
@@ -169,21 +173,23 @@ def review_message(request):
     return HttpResponse(json.dumps(return_json), content_type='application/json')
 
 
-def pass_message(msg_id):
+def pass_message(msg_ids):
     try:
-        message = Message.objects.get(message_id=msg_id)
-        message.status = 1
-        message.save()
+        Message.objects.filter(message_id__in=msg_ids).update(status=1)
+        # message = Message.objects.get(message_id=msg_id)
+        # message.status = 1
+        # message.save()
         return True
     except ObjectDoesNotExist:
         return False
 
 
-def reject_message(msg_id):
+def reject_message(msg_ids):
     try:
-        message = Message.objects.get(message_id=msg_id)
-        message.status = -1
-        message.save()
+        Message.objects.filter(message_id__in=msg_ids).update(status=-1)
+        # message = Message.objects.get(message_id=msg_id)
+        # message.status = -1
+        # message.save()
         return True
     except ObjectDoesNotExist:
         return False
