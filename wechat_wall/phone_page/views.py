@@ -175,7 +175,7 @@ def wall(request, openid):
         return redirect(s_reverse_login(openid))
     user = users[0]
     return render_to_response('wall.html',
-                              {'openid': openid, 'name': user.name, 'photo': user.photo,},
+                              {'openid': openid, 'name': user.name, 'photo': user.photo},
                               context_instance=RequestContext(request))
 
 @csrf_exempt
