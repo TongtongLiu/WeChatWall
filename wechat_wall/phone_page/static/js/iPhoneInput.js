@@ -7,7 +7,6 @@
 var iPhoneSendBtn = $('.iPhone-send');
 
 //监听输入框
-//监听输入框
 iPhoneSendBtn.attr("disabled","disabled");
 iPhoneSendBtn.css("color","rgba(235, 244, 235,0.5)");
 function iPhoneHandleInputChange() {
@@ -39,14 +38,14 @@ $('#iPhone-div-content').keydown(function(event) {
 //发送按钮点击事件
 iPhoneSendBtn.click(function() {
     var content = $('#iPhone-div-content').text();
-    iPhoneSendBtn.attr("disabled","disabled");
-    iPhoneSendBtn.css("color","rgba(235, 244, 235,0.5)");
+    iPhoneDisableInput();
     $('#iPhone-div-content').html("");
     $('.wrap').css("display","block");
     $('.iPhone-input').css("display","none");
     var height = $(document).height() - $('.footer').height();
     $(window).scrollTop(height);
     createDialog("prompt", "已发送");
+    stopRefresh();
 
     $.ajax({
         url: $('#message_form').attr('action'),
@@ -59,22 +58,28 @@ iPhoneSendBtn.click(function() {
             switch (data) {
                 case "BannedContent":
                     createDialog("prompt", "小主不要乱说话喔o(╯□╰)o");
+                    refreshImmediately();
                     break;
 
                 case "Error":
                     createDialog("warning", "出现了奇怪的错误~~(>_<)~~");
+                    refreshImmediately();
                     break;
 
                 case "Success":
+                    //滚动到页面底部
+                    $('body').animate({scrollTop: $(document).height()}, 1000);
                     refreshImmediately();
                     break;
 
                 default:
+                    refreshImmediately();
                     break;
             }
         },
         error: function(data) {
             console.info(data);
+            refreshImmediately();
         }
     });
 });

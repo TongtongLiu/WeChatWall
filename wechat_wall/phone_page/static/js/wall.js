@@ -3,7 +3,7 @@
  */
 
 var sendBtn = $('.send');
-var timeOut = 0;
+var timeOuts = [];
 var messagesExist = [];
 
 //监听输入框
@@ -330,13 +330,17 @@ function getNewMessages() {
 
 // 轮询
 function refresh() {
-    clearTimeout(timeOut);
-    timeOut = setTimeout(getNewMessages, 2000 + Math.random() * 2000);
+    stopRefresh();
+    timeOuts.push(setTimeout(getNewMessages, 2000 + Math.random() * 2000));
 }
 
 // 暂停刷新
 function stopRefresh() {
-    clearTimeout(timeOut);
+    var timeOut;
+    for (timeOut in timeOuts) {
+        clearTimeout(timeOut);
+    }
+    timeOuts = [];
 }
 
 // 立即刷新

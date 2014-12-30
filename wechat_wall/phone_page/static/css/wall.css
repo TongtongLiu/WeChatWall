@@ -232,7 +232,7 @@ body {
     _height: 1em;
     font-size: 0.6em;
     text-align: right;
-    opacity: 0.4;
+    opacity: 0;
 }
 .self-dialog {
     position: relative;
