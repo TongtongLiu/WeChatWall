@@ -228,9 +228,11 @@ body {
 
 .self-message-name {
     margin-right: 1em;
-    height: 1em;
+    margin-bottom: 3px;
+    _height: 1em;
     font-size: 0.6em;
     text-align: right;
+    opacity: 0.4;
 }
 .self-dialog {
     position: relative;
