@@ -284,7 +284,7 @@ $('#allPass').click(function(e) {
 $('#allReject').click(function(e) {
 	var msgID = getAllMsgID();
 	data = {};
-	data['tpye'] = 'reject';
+	data['type'] = 'reject';
 	data['message_id'] = msgID;
 	reviewMessages(data);
 	return false;
