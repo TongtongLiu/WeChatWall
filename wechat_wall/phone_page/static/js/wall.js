@@ -19,6 +19,13 @@ $('#div-content').bind('input propertychange', function() {
         sendBtn.css("color","rgba(235, 244, 235,1)");
     }
 });
+$('#div-content').keydown(function(event){
+    var code = event.keyCode || event.which || event.charCode;
+    //回车
+    if (code == 13) {
+        sendBtn.click();
+    }
+});
 
 
 //发送消息
