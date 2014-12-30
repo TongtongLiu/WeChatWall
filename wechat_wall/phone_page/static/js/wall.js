@@ -288,13 +288,13 @@ function getNewMessages() {
             }
             if (scrollTop >= docHeight - winHeight - 50 && messages.length > 0)
                 $('body').animate({scrollTop: $(document).height()}, 800);
+            refresh();
         },
         error: function (data){
             console.info(data);
+            refresh();
         }
     });
-
-    refresh();
 }
 
 var timeOut;
