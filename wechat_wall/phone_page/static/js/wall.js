@@ -25,10 +25,12 @@ var messagesExist = [];
 //    sendBtn.attr("disabled","disabled");
 //    sendBtn.css("color","rgba(235, 244, 235,0.5)");
 //}
-//function enableInput() {
-//    sendBtn.removeAttr("disabled");
-//    sendBtn.css("color","rgba(235, 244, 235,1)");
-//}
+function enableInput() {
+    sendBtn.removeAttr("disabled");
+    sendBtn.css("color","rgba(235, 244, 235,1)");
+}
+
+enableInput();
 
 //绑定回车
 $('#div-content').keydown(function(event) {
@@ -44,6 +46,10 @@ $('#div-content').keydown(function(event) {
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
+    if (content.length == 0) {
+        return;
+    }
+
     $('#div-content').html("");
     //disableInput();
     stopRefresh();
