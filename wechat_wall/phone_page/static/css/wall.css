@@ -168,7 +168,7 @@ body {
 }
 .triangle {
     position:absolute;
-    top:35%;
+    top:15px;
     margin-top:-8px;
     display:block;
     width:0;
@@ -239,7 +239,7 @@ body {
 }
 .self-triangle {
     position:absolute;
-    top:35%;
+    top:15px;
     right: 0;
     margin-top:-8px;
     display:block;
