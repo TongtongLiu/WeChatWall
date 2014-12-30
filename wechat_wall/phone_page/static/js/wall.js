@@ -31,6 +31,7 @@ $('.send').click(function() {
                 case "Success":
                     //滚动到页面底部
                     $('body').animate({scrollTop: $(document).height()}, 1000);
+                    refreshImmediately();
                     break;
 
                 default:
@@ -41,8 +42,6 @@ $('.send').click(function() {
             console.info(data);
         }
     });
-
-    refreshImmediately();
 });
 
 //创建一条信息
@@ -277,13 +276,16 @@ function getNewMessages() {
     refresh();
 }
 
+var timeOut;
+
 // 轮询
 function refresh() {
-    setTimeout(getNewMessages, 2000 + Math.random() * 2000);
+    timeOut = setTimeout(getNewMessages, 2000 + Math.random() * 2000);
 }
 
 // 立即刷新
 function refreshImmediately() {
+    clearTimeout(timeOut);
     getNewMessages();
 }
 
