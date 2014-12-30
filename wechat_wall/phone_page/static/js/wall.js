@@ -29,6 +29,7 @@ $('.send').click(function() {
     $('#div-content').html("");
     sendBtn.attr("disabled","disabled");
     sendBtn.css("color","rgba(235, 244, 235,0.5)");
+    stopRefresh();
 
     $.ajax({
         url: $('#message_form').attr('action'),
@@ -292,9 +293,13 @@ function refresh() {
     timeOut = setTimeout(getNewMessages, 2000 + Math.random() * 2000);
 }
 
+// 暂停刷新
+function stopRefresh() {
+    clearTimeout(timeOut);
+}
+
 // 立即刷新
 function refreshImmediately() {
-    clearTimeout(timeOut);
     getNewMessages();
 }
 
