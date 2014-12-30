@@ -81,10 +81,12 @@ function createsMessages(message) {
     var divMessageLeft = $('<div class="message-left"></div>');
     var divPhoto = $('<div class="message-photo"><img src="'+message.user_photo+'"/></div>');
     var divMessageRight = $('<div class="message-right"></div>');
-    var divMessageName = $('<div class="message-name">'+message.user_name+'</div>');
+    var divMessageName = $('<div class="message-name"></div>');
+    divMessageName.text(message.user_name);
     var divDialog = $('<div class="dialog"></div>');
     var divTriangle = $('<span class="triangle"></span>');
-    var divContent = $('<div class="message-content">'+message.content +'</div>');
+    var divContent = $('<div class="message-content"></div>');
+    divContent.text(message.content);
     var divId = $('<div class="message-id">'+message.message_id+'</div>');
     var divClear = $('<div style="clear: both"></div>');
 
@@ -107,10 +109,12 @@ function createsSelfMessages(message) {
     var divMessageRight = $('<div class="self-message-right"></div>');
     var divPhoto = $('<div class="self-message-photo"><img src="'+message.user_photo+'"/></div>');
     var divMessageLeft = $('<div class="self-message-left"></div>');
-    var divMessageName = $('<div class="self-message-name">'+message.user_name+'</div>');
+    var divMessageName = $('<div class="self-message-name"></div>');
+    divMessageName.text(message.user_name);
     var divDialog = $('<div class="self-dialog"></div>');
     var divTriangle = $('<span class="self-triangle"></span>');
-    var divContent = $('<div class="self-message-content">'+message.content +'</div>');
+    var divContent = $('<div class="self-message-content"></div>');
+    divContent.text(message.content);
     var divId = $('<div class="message-id">'+message.message_id+'</div>');
     var divClear = $('<div style="clear: both"></div>');
 
