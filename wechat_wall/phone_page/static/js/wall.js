@@ -38,7 +38,7 @@ $('#div-content').keydown(function(event) {
 //发送消息
 $('.send').click(function() {
     var content = $('#div-content').text();
-    $('#div-content').text("");
+    $('#div-content').html("");
     disableInput();
     stopRefresh();
 
