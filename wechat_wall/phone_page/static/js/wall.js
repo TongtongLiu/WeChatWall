@@ -351,7 +351,7 @@ function getNewMessages() {
 // 轮询
 function refresh() {
     stopRefresh();
-    timeOuts.push(setTimeout(getNewMessages, 2000 + Math.random() * 2000));
+    timeOuts.push(setTimeout(getNewMessages, 5000 + Math.random() * 5000));
 }
 
 // 暂停刷新
