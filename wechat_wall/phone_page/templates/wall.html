@@ -4,31 +4,17 @@
 <head lang="zh-CN">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-
     <link href="{% static 'lib/fa/css/font-awesome.min.css'%}" rel="stylesheet">
     <link href="{% static 'css/wall.css'%}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
     <title>我要上墙</title>
 </head>
 
 <body>
     <div class="wrap">
-{#        <div class="refresh" id="refresh"><i class="fa fa-refresh fa-spin fa-2x"></i></div>#}
         <div class="mask"></div>
         <div class="content-wrap">
             <div id="content-container" class="content">
-{#不要删                <div class="message">#}
-{#                    <div class="message-left">#}
-{#                        <div class="message-photo"></div>#}
-{#                    </div>#}
-{#                    <div class="message-right">#}
-{#                        <div class="message-name">sdafs</div>#}
-{#                        <div class="dialog">#}
-{#                            <div class="triangle"></div>#}
-{#                            <div class="message-content">asdfsad</div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div style="clear: both"></div>#}
-{#                </div>#}
             </div>
         </div>
 
@@ -65,16 +51,16 @@
             </div>
         </div>
     </div>
-    <div style="display: none" class="iPhone-input">
-
-        <div class="input-header">
-            <div class="iPhone-return"><i class="fa fa-chevron-left icon-return"></i></div>
-            <input class="iPhone-send" type="button" value="发送">
-        </div>
-        <div class="input-content">
-            <div id="iPhone-div-content" contenteditable="true" onkeyup="iPhoneHandleInputChange();"></div>
-        </div>
-    </div>
+{#    <div style="display: none" class="iPhone-input">#}
+{##}
+{#        <div class="input-header">#}
+{#            <div class="iPhone-return"><i class="fa fa-chevron-left icon-return"></i></div>#}
+{#            <input class="iPhone-send" type="button" value="发送">#}
+{#        </div>#}
+{#        <div class="input-content">#}
+{#            <div id="iPhone-div-content" contenteditable="true" onkeyup="iPhoneHandleInputChange();"></div>#}
+{#        </div>#}
+{#    </div>#}
 
     <script type="text/javascript">
         var openid = "{{ openid }}";
@@ -83,10 +69,10 @@
         var get_new_messages = "{% url 'phone_page.views.w_get_new_messages' %}";
         var get_old_messages = "{% url 'phone_page.views.w_get_old_messages' %}";
     </script>
-    <script type="text/javascript" src="{% static 'lib/jq/jquery-1.10.2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/EasterEggs.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/wall.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/iPhoneInput.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'js/iPhoneInput.js' %}"></script>#}
 
 </body>
 </html>

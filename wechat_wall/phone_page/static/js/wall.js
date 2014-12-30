@@ -2,6 +2,11 @@
  * Created by limeng on 2014/12/24.
  */
 
+var foot_height = $('.footer-position').css('height');
+foot_height = parseInt(foot_height.substring(0, foot_height.length));
+var body_height = (document.body.clientHeight - foot_height) + 'px';
+$('.content-wrap').css('height', body_height);
+
 var sendBtn = $('.send');
 var timeOuts = [];
 var messagesExist = [];
