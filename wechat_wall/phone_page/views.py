@@ -118,7 +118,7 @@ def login(request, openid):
         photo_default_path = get_default_photo_path(0)
         return render_to_response('login.html',
                                   {'openid': openid, 'photo_path': photo_path,
-                                   'photo_default_path', photo_default_path},
+                                   'photo_default_path': photo_default_path},
                                   context_instance=RequestContext(request))
 
 
