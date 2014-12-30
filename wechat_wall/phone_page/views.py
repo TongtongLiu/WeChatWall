@@ -59,7 +59,9 @@ def select_messages_by_id(message_id):
 
 
 def select_new_messages(max_len):
-    return Message.objects.filter(status=1).order_by('-time')[:max_len]
+    return list(Message.objects.filter(status=1).order_by('-time').values(
+        'message_id', 'user__name', 'user__photo', 'content'
+    )[:max_len])
 
 
 def select_new_messages_after_id(message_id, max_len):
@@ -67,10 +69,12 @@ def select_new_messages_after_id(message_id, max_len):
     if not messages:
         return select_new_messages(max_len)
     message = messages[0]
-    return Message.objects.filter(Q(time__gt=message.time) |
-                                  Q(time=message.time,
-                                    message_id__gt=message_id),
-                                  status=1).order_by('-time')[:max_len]
+    return list(Message.objects.filter(Q(time__gt=message.time) |
+                                       Q(time=message.time,
+                                         message_id__gt=message_id),
+                                       status=1).order_by('-time').values(
+        'message_id', 'user__name', 'user__photo', 'content'
+    )[:max_len])
 
 
 def select_old_messages_before_id(message_id, max_len):
@@ -207,10 +211,10 @@ def w_get_new_messages(request):
     return_json = {'messages': []}
     for message in messages:
         return_json['messages'].append({
-            'message_id': message.message_id,
-            'user_name': message.user.name,
-            'user_photo': message.user.photo,
-            'content': message.content,
+            'message_id': message['message_id'],
+            'user_name': message['user__name'],
+            'user_photo': message['user__photo'],
+            'content': message['content'],
             # 'time': int(time.mktime(message.time.timetuple()))
         })
     return HttpResponse(json.dumps(return_json), content_type='application/json')
