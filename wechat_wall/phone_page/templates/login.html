@@ -37,7 +37,7 @@
     <div class="loginPanel">
         <form id="login-form" action="{% url 'phone_page.views.login_register' %}" method="post"
               enctype="multipart/form-data" onsubmit="return false;">
-        {% csrf_token %}
+        {#{% csrf_token %}#}
         <!-- 头像上传 -->
         <div class="row row-photo">
             <div class="col-xs-12">
