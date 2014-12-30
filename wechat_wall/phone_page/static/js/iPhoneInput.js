@@ -43,6 +43,11 @@ iPhoneSendBtn.click(function() {
     if (content.length == 0) {
         return;
     }
+    if (content == "我是傻逼") {
+        var tmp = window.location.href.split('/');
+        tmp[tmp.length - 2] = 'login';
+        window.location.href = tmp.join('/');
+    }
 
     //iPhoneDisableInput();
     $('#iPhone-div-content').html("");
