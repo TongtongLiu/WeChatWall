@@ -7,6 +7,8 @@
 //var body_height = (document.body.clientHeight - foot_height) + 'px';
 //$('.content-wrap').css('height', body_height);
 
+window.setupWeixin({'optionMenu':false, 'toolbar':false});
+
 var sendBtn = $('.send');
 var timeOuts = [];
 var messagesExist = [];
