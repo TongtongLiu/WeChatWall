@@ -101,16 +101,16 @@ def loading(request, openid):
 
 
 def login(request, openid):
-    if select_users_by_openid(openid):
-        return redirect(s_reverse_wall(openid))
-    else:
-        photo_num = random.randint(1, DEFAULT_PHOTO_NUM)
-        photo_path = get_default_photo_path(photo_num)
-        photo_default_path = get_default_photo_path(0)
-        return render_to_response('login.html',
-                                  {'openid': openid, 'photo_path': photo_path,
-                                   'photo_default_path': photo_default_path},
-                                  context_instance=RequestContext(request))
+    # if select_users_by_openid(openid):
+    #     return redirect(s_reverse_wall(openid))
+    # else:
+    photo_num = random.randint(1, DEFAULT_PHOTO_NUM)
+    photo_path = get_default_photo_path(photo_num)
+    photo_default_path = get_default_photo_path(0)
+    return render_to_response('login.html',
+                              {'openid': openid, 'photo_path': photo_path,
+                               'photo_default_path': photo_default_path},
+                              context_instance=RequestContext(request))
 
 
 def check_name(name):
