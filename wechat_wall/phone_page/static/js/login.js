@@ -74,6 +74,13 @@ function submitButton() {
 
     var name = $('#name-input').val();
     if (name == "") {
+        showError("没有昵称怎么做朋友o(╯□╰)o");
+        return;
+    }
+
+    var photo = $('#photo-base64').val();
+    if (photo == "") {
+        showError("没有头像怎么做朋友o(╯□╰)o");
         return;
     }
 
