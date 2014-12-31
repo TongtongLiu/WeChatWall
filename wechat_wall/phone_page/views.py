@@ -40,6 +40,10 @@ def select_users_by_name(name):
     return User.objects.filter(name=name)
 
 
+def get_admin():
+    return User.objects.get(name="root")
+
+
 def update_user_by_openid(openid, name, photo):
     user = select_users_by_openid(openid)[0]
     user.name = name
@@ -56,14 +60,24 @@ def insert_message(user, content, time, status):
     user.save()
 
 
+def select_system_message():
+    admin = get_admin()
+    return Message.objects.filter(user=admin).order_by('-time').values(
+        'message_id', 'user__name', 'user__photo', 'content'
+    )[0]
+
+
 def select_messages_by_id(message_id):
     return Message.objects.filter(message_id=message_id)
 
 
 def select_new_messages(max_len):
-    return list(Message.objects.filter(status=1).order_by('-time').values(
+    new_messages = list(Message.objects.filter(status=1).order_by('-time').values(
         'message_id', 'user__name', 'user__photo', 'content'
     )[:max_len])
+    system_message = select_system_message()
+    new_messages.append(system_message)
+    return new_messages
 
 
 def select_new_messages_after_id(message_id, max_len):
