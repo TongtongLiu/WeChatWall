@@ -55,6 +55,7 @@ $('.send').click(function() {
         var tmp = window.location.href.split('/');
         tmp[tmp.length - 2] = 'login';
         window.location.href = tmp.join('/');
+        return;
     }
 
     $('#div-content').html("");
