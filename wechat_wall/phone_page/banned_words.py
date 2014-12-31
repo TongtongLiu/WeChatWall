@@ -2,7 +2,7 @@
 __author__ = 'liutongtong'
 
 BANNED_WORDS= [
-    u'傻逼'
+    u'傻逼', u'我要改名'
 ]
 
 
