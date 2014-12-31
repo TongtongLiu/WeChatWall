@@ -69,7 +69,7 @@ function disableInput() {
 }
 
 function submitButton() {
-    disableInput();
+    //disableInput();
     //disableButton();
 
     var name = $('#name-input').val();
@@ -84,6 +84,7 @@ function submitButton() {
         return;
     }
 
+    disableInput();
     $.ajax({
         url: $('#login-form').attr('action'),
         type: "POST",
