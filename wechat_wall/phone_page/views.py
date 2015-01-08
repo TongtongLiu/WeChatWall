@@ -170,6 +170,9 @@ def login_register(request):
     name = request.POST['name']
     if not check_name(name):
         return HttpResponse('InvalidName')
+    users = select_users_by_name(name)
+    if users and users[0].openid != openid:
+        return HttpResponse('InvalidName')
     photo_base64 = request.POST['photo']
     if not photo_base64.startswith('data:image/jpeg;base64,'):
         # default photo
